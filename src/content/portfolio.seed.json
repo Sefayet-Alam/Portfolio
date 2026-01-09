@@ -162,8 +162,8 @@
                 "Interactive UI: cursor effects + dynamic background + intro greeting loader",
                 "Includes Fun Site page inside the same project"
             ],
-            "repo": "https://github.com/Sefayet-Alam/sefayet-portfolio",
-            "live": "https://YOUR-VERCEL-URL.vercel.app"
+            "repo": "https://github.com/Sefayet-Alam/Portfolio/tree/main",
+            "live": "https://sefayet-alam.vercel.app/"
         },
         {
             "name": "Blog-Agency-App",
