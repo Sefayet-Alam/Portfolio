@@ -249,3 +249,64 @@ Hydration warning mentioning cz-shortcut-listen
 - LinkedIn: https://www.linkedin.com/in/sefayet-alam-8333b4242
 - Codeforces: https://codeforces.com/profile/The_Ruthless
 
+
+## Hosting (Free)
+
+Recommended setup:
+- Frontend + API routes: Vercel (free)
+- Database: MongoDB Atlas M0 (free)
+
+Why:
+- Next.js deploy is zero-config on Vercel.
+- Atlas M0 is free-forever and good for a KB-sized database.
+
+### Deploy to Vercel
+1) Push this repo to GitHub.
+2) Vercel → New Project → Import repo → Deploy.
+
+### Create MongoDB Atlas (Free)
+1) Create Atlas M0 cluster.
+2) Create DB user/password.
+3) Network Access:
+   - For quick testing: allow access from anywhere (0.0.0.0/0)
+   - Later: restrict to safer IP rules.
+4) Copy the connection string (mongodb+srv://...).
+
+### Set environment variables on Vercel
+Project → Settings → Environment Variables:
+
+- MONGODB_URI = mongodb+srv://.../sefayet_portfolio?retryWrites=true&w=majority
+- GROQ_API_KEY = your_groq_key_here
+- ADMIN_TOKEN = your_admin_token_here
+
+Important:
+- After changing env vars, you must Redeploy for changes to take effect.
+
+---
+
+## Updating Content After Hosting
+
+### Update portfolio cards (Projects / Skills / Certificates / Achievements)
+Source of truth:
+- src/content/portfolio.seed.json
+- public/projects (project images)
+- public/certs (certificate images)
+
+Steps:
+1) Edit src/content/portfolio.seed.json
+2) Add/replace images in public/
+3) Commit + push to GitHub
+4) Vercel auto redeploys the site
+
+### Update AI knowledge (MongoDB kb_chunks)
+AI answers come from MongoDB collection: kb_chunks
+
+Ways to update:
+Option A) Atlas Data Explorer:
+- Insert/update documents in kb_chunks
+
+Option B) Compass:
+- Connect to Atlas cluster and import JSON docs
+
+Option C) Admin seed endpoint (if enabled):
+- Call /api/admin with x-admin-token header to seed/update KB
