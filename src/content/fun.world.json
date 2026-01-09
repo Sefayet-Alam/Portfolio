@@ -1,0 +1,485 @@
+{
+  "seed": 1402,
+  "size": {
+    "w": 3800,
+    "h": 2500
+  },
+  "playerSpawn": {
+    "x": 330,
+    "y": 420
+  },
+  "neighborhoods": [
+    {
+      "id": "nb1",
+      "name": "Neighborhood 1 — Roots",
+      "bounds": {
+        "x": 80,
+        "y": 80,
+        "w": 1700,
+        "h": 1020
+      },
+      "stops": [
+        {
+          "id": "nb1-birth",
+          "title": "My Birth & Rajshahi",
+          "subtitle": "Beside the Padma River",
+          "body": [
+            "I was born in Rajshahi. It was a rural area, and my homeland was a beautiful place beside the Padma river.",
+            "This is the beginning of everything — quiet mornings, wide skies, and a deep attachment to home."
+          ],
+          "images": [
+            "/fun/stories/nb1/birth-1.jpg",
+            "/fun/stories/nb1/birth-2.jpg"
+          ],
+          "house": {
+            "x": 300,
+            "y": 240,
+            "w": 240,
+            "h": 170
+          },
+          "knight": {
+            "x": 430,
+            "y": 470
+          }
+        },
+        {
+          "id": "nb1-school",
+          "title": "School Life",
+          "subtitle": "Govt Laboratory High School",
+          "body": [
+            "School life was one of my best times. I made a lot of friends there.",
+            "I was once a regional runner-up in a Math Olympiad — one of those moments that made me believe I could do hard things."
+          ],
+          "images": [
+            "/fun/stories/nb1/school-1.jpg",
+            "/fun/stories/nb1/school-2.jpg"
+          ],
+          "house": {
+            "x": 820,
+            "y": 190,
+            "w": 240,
+            "h": 170
+          },
+          "knight": {
+            "x": 950,
+            "y": 420
+          }
+        },
+        {
+          "id": "nb1-admission",
+          "title": "College Admission Stress",
+          "subtitle": "The BUET regret",
+          "body": [
+            "The admission phase was full of stress — I couldn’t get into the best college in my city.",
+            "Despite that, I cracked BUET. But my father didn’t let me enroll because the subject available for me (IPE) wasn’t to his liking.",
+            "I still regret not joining BUET."
+          ],
+          "images": [
+            "/fun/stories/nb1/admission-1.jpg"
+          ],
+          "house": {
+            "x": 1260,
+            "y": 340,
+            "w": 240,
+            "h": 170
+          },
+          "knight": {
+            "x": 1390,
+            "y": 570
+          }
+        }
+      ]
+    },
+    {
+      "id": "nb2",
+      "name": "Neighborhood 2 — RUET & RAPL",
+      "bounds": {
+        "x": 2020,
+        "y": 80,
+        "w": 1700,
+        "h": 1020
+      },
+      "stops": [
+        {
+          "id": "nb2-ruet",
+          "title": "RUET Life",
+          "subtitle": "Learning to fit in",
+          "body": [
+            "I got admitted to RUET and struggled a lot to fit in at first.",
+            "Over time, I learned how to survive pressure, keep showing up, and grow into my own pace."
+          ],
+          "images": [
+            "/fun/stories/nb2/ruet-1.jpg",
+            "/fun/stories/nb2/ruet-2.jpg"
+          ],
+          "house": {
+            "x": 2140,
+            "y": 210,
+            "w": 240,
+            "h": 170
+          },
+          "knight": {
+            "x": 2270,
+            "y": 440
+          }
+        },
+        {
+          "id": "nb2-rapl",
+          "title": "RAPL",
+          "subtitle": "Where I truly fit in",
+          "body": [
+            "RAPL is where I finally felt like I belonged. I found amazing people — met Nafis, Shoikat, Rithik.",
+            "We participated in IUPCs and ICPCs and learned how to improve together."
+          ],
+          "images": [
+            "/fun/stories/nb2/rapl-1.jpg",
+            "/fun/stories/nb2/rapl-2.jpg",
+            "/fun/stories/nb2/rapl-3.jpg"
+          ],
+          "house": {
+            "x": 2660,
+            "y": 360,
+            "w": 240,
+            "h": 170
+          },
+          "knight": {
+            "x": 2790,
+            "y": 590
+          }
+        },
+        {
+          "id": "nb2-seniors",
+          "title": "RAPL Seniors",
+          "subtitle": "Adopted (in the best way)",
+          "body": [
+            "The seniors were the most lovely people. They took me in like they adopted me.",
+            "They taught me the art of problem solving — not just tricks, but thinking."
+          ],
+          "images": [
+            "/fun/stories/nb2/seniors-1.jpg",
+            "/fun/stories/nb2/seniors-2.jpg"
+          ],
+          "house": {
+            "x": 3100,
+            "y": 210,
+            "w": 240,
+            "h": 170
+          },
+          "knight": {
+            "x": 3230,
+            "y": 440
+          }
+        },
+        {
+          "id": "nb2-juniors",
+          "title": "RAPL Juniors",
+          "subtitle": "Lovely kids",
+          "body": [
+            "The juniors were lovely — they respected me a lot and kept the environment warm and fun.",
+            "It felt good to become someone who could help others the same way seniors helped me."
+          ],
+          "images": [
+            "/fun/stories/nb2/juniors-1.jpg",
+            "/fun/stories/nb2/juniors-2.jpg"
+          ],
+          "house": {
+            "x": 3340,
+            "y": 520,
+            "w": 240,
+            "h": 170
+          },
+          "knight": {
+            "x": 3470,
+            "y": 750
+          }
+        }
+      ]
+    },
+    {
+      "id": "nb3",
+      "name": "Neighborhood 3 — Professional Life",
+      "bounds": {
+        "x": 80,
+        "y": 1180,
+        "w": 1700,
+        "h": 1240
+      },
+      "stops": [
+        {
+          "id": "nb3-vivasoft",
+          "title": "Vivasoft",
+          "subtitle": "Industrial Trainee (Apprenticeship)",
+          "body": [
+            "Completed a 12-day mentor-led MERN attachment; built the SellSense MVP.",
+            "Tech: Next.js/Redux, Express REST APIs, MongoDB + LangChain-based summarization.",
+            "Worked with Git/GitHub, Husky hooks, and Postman for validation."
+          ],
+          "images": [
+            "/fun/stories/nb3/vivasoft-1.jpg"
+          ],
+          "house": {
+            "x": 320,
+            "y": 1360,
+            "w": 260,
+            "h": 180
+          },
+          "knight": {
+            "x": 455,
+            "y": 1600
+          }
+        },
+        {
+          "id": "nb3-projects",
+          "title": "Side Quests",
+          "subtitle": "Codebook • SellSense • Blog Agency",
+          "body": [
+            "Codebook App — Flutter snippet manager with Firebase sync, AI assistant (Groq), and PDF export.",
+            "SellSense — LangChain prototype to summarize buyer–seller chats into structured records.",
+            "Blog-Agency-App — MERN dashboard with role-aware CRUD and RESTful API backed by MongoDB."
+          ],
+          "images": [
+            "/fun/stories/nb3/projects-1.jpg",
+            "/fun/stories/nb3/projects-2.jpg",
+            "/fun/stories/nb3/projects-3.jpg"
+          ],
+          "house": {
+            "x": 920,
+            "y": 1510,
+            "w": 260,
+            "h": 180
+          },
+          "knight": {
+            "x": 1055,
+            "y": 1750
+          }
+        },
+        {
+          "id": "nb3-empty",
+          "title": "(Empty House)",
+          "subtitle": "Will be added later",
+          "body": [
+            "This house is intentionally empty.",
+            "Future story drop will live here."
+          ],
+          "images": [
+            "/fun/stories/nb3/me-1.jpg"
+          ],
+          "house": {
+            "x": 1370,
+            "y": 1360,
+            "w": 260,
+            "h": 180
+          },
+          "knight": {
+            "x": 1505,
+            "y": 1600
+          }
+        }
+      ]
+    },
+    {
+      "id": "nb4",
+      "name": "Neighborhood 4 — Future Plans",
+      "bounds": {
+        "x": 2020,
+        "y": 1180,
+        "w": 1700,
+        "h": 1240
+      },
+      "stops": [
+        {
+          "id": "nb4-abroad",
+          "title": "Going Abroad",
+          "subtitle": "No news so far",
+          "body": [
+            "Plan: go abroad for higher studies / bigger opportunities.",
+            "No confirmed updates yet — this house will evolve when life updates arrive."
+          ],
+          "images": [
+            "/fun/stories/nb4/abroad-1.jpg"
+          ],
+          "house": {
+            "x": 2170,
+            "y": 1360,
+            "w": 260,
+            "h": 180
+          },
+          "knight": {
+            "x": 2305,
+            "y": 1600
+          }
+        },
+        {
+          "id": "nb4-more",
+          "title": "More Future Plans",
+          "subtitle": "My next levels",
+          "body": [
+            "Become a stronger engineer: ship end-to-end without fear.",
+            "Build tools for developers (and maybe a tiny startup).",
+            "Keep competitive programming as a lifelong skill gym.",
+            "Give back: mentoring juniors, writing, and open-source."
+          ],
+          "images": [
+            "/fun/stories/nb4/future-1.jpg"
+          ],
+          "house": {
+            "x": 2730,
+            "y": 1560,
+            "w": 260,
+            "h": 180
+          },
+          "knight": {
+            "x": 2865,
+            "y": 1800
+          }
+        }
+      ]
+    }
+  ],
+  "npcs": [
+    {
+      "id": "kid-1",
+      "kind": "kid",
+      "name": "Mimi",
+      "avatar": "/fun/avatars/girl.jpg",
+      "message": "Hi..Hope u are having a great day..",
+      "x": 520,
+      "y": 610
+    },
+    {
+      "id": "kid-2",
+      "kind": "kid",
+      "name": "Rafi",
+      "avatar": "/fun/avatars/boy.jpg",
+      "message": "Hi..Hope u are having a great day..",
+      "x": 1010,
+      "y": 760
+    },
+    {
+      "id": "kid-3",
+      "kind": "kid",
+      "name": "Tisha",
+      "avatar": "/fun/avatars/girl.jpg",
+      "message": "Hi..Hope u are having a great day..",
+      "x": 2380,
+      "y": 650
+    },
+    {
+      "id": "kid-4",
+      "kind": "kid",
+      "name": "Sami",
+      "avatar": "/fun/avatars/boy.jpg",
+      "message": "Hi..Hope u are having a great day..",
+      "x": 2950,
+      "y": 860
+    },
+    {
+      "id": "kid-5",
+      "kind": "kid",
+      "name": "Nila",
+      "avatar": "/fun/avatars/girl.jpg",
+      "message": "Hi..Hope u are having a great day..",
+      "x": 500,
+      "y": 2070
+    },
+    {
+      "id": "kid-6",
+      "kind": "kid",
+      "name": "Aron",
+      "avatar": "/fun/avatars/boy.jpg",
+      "message": "Hi..Hope u are having a great day..",
+      "x": 1120,
+      "y": 1950
+    },
+    {
+      "id": "kid-7",
+      "kind": "kid",
+      "name": "Piu",
+      "avatar": "/fun/avatars/girl.jpg",
+      "message": "Hi..Hope u are having a great day..",
+      "x": 2320,
+      "y": 1890
+    },
+    {
+      "id": "kid-8",
+      "kind": "kid",
+      "name": "Rion",
+      "avatar": "/fun/avatars/boy.jpg",
+      "message": "Hi..Hope u are having a great day..",
+      "x": 3180,
+      "y": 2100
+    },
+    {
+      "id": "cat-1",
+      "kind": "cat",
+      "name": "Nodi",
+      "avatar": "/fun/avatars/cat.jpg",
+      "message": "Meow~ exploring the village 😺",
+      "x": 720,
+      "y": 860
+    },
+    {
+      "id": "cat-2",
+      "kind": "cat",
+      "name": "Chiku",
+      "avatar": "/fun/avatars/cat.jpg",
+      "message": "Meow~ found a sunny spot ☀️",
+      "x": 1450,
+      "y": 520
+    },
+    {
+      "id": "cat-3",
+      "kind": "cat",
+      "name": "Padma",
+      "avatar": "/fun/avatars/cat.jpg",
+      "message": "Meow~ keep going, hero 😺",
+      "x": 2400,
+      "y": 420
+    },
+    {
+      "id": "cat-4",
+      "kind": "cat",
+      "name": "Mochi",
+      "avatar": "/fun/avatars/cat.jpg",
+      "message": "Meow~ quietly watching the world 🌿",
+      "x": 3520,
+      "y": 430
+    },
+    {
+      "id": "cat-5",
+      "kind": "cat",
+      "name": "Jol",
+      "avatar": "/fun/avatars/cat.jpg",
+      "message": "Meow~ don’t fall in the pond 😼",
+      "x": 650,
+      "y": 2150
+    },
+    {
+      "id": "dog-1",
+      "kind": "dog",
+      "name": "Browny",
+      "avatar": "/fun/avatars/dog.jpg",
+      "message": "Woof! Keep going — you're doing great 🐶",
+      "x": 1220,
+      "y": 940
+    },
+    {
+      "id": "dog-2",
+      "kind": "dog",
+      "name": "Togo",
+      "avatar": "/fun/avatars/dog.jpg",
+      "message": "Woof! Wanna race around? 🐾",
+      "x": 3000,
+      "y": 780
+    },
+    {
+      "id": "dog-3",
+      "kind": "dog",
+      "name": "Bolt",
+      "avatar": "/fun/avatars/dog.jpg",
+      "message": "Woof! I’ll guard this neighborhood 😤",
+      "x": 1450,
+      "y": 1950
+    }
+  ]
+}

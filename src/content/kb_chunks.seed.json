@@ -1,0 +1,138 @@
+[
+  {
+    "key": "profile_core",
+    "title": "Profile",
+    "text": "• Name: Khandoker Sefayet Alam\n• Location: Rajshahi, Bangladesh\n• Roles: Full-Stack Developer (MERN), Flutter Developer, Competitive Programmer\n• Snapshot: Codeforces Expert (max 1734), 3500+ problems solved\n• Interests: Clean UI, reliable APIs, real products, LLM tooling (LangChain)\n• Fast proof: Strong contest results + multiple shipped projects",
+    "tags": ["profile", "summary", "hireability"],
+    "source": "manual_kb_import",
+    "updatedAt": { "$date": "2026-01-09T00:00:00.000Z" }
+  },
+  {
+    "key": "contact",
+    "title": "Contact",
+    "text": "• Email: sefayetalam14@gmail.com\n• Phone: +8801919030974\n• If any detail is missing or unclear, tell the recruiter to contact me via phone/email.",
+    "tags": ["contact", "email", "phone"],
+    "source": "manual_kb_import",
+    "updatedAt": { "$date": "2026-01-09T00:00:00.000Z" }
+  },
+  {
+    "key": "links",
+    "title": "Links",
+    "text": "• GitHub: https://github.com/Sefayet-Alam\n• LinkedIn: https://www.linkedin.com/in/sefayet-alam-8333b4242\n• Codeforces: https://codeforces.com/profile/The_Ruthless\n• Resume (site): /resume.pdf",
+    "tags": ["links", "github", "linkedin", "codeforces", "resume"],
+    "source": "manual_kb_import",
+    "updatedAt": { "$date": "2026-01-09T00:00:00.000Z" }
+  },
+  {
+    "key": "salary_expectations",
+    "title": "Salary & Negotiation",
+    "text": "• Expected salary (BDT): 50k–100k\n• Negotiation factors: role scope, responsibilities, team quality, tech stack, growth, benefits, and remote/onsite setup\n• Open to fair negotiation if the role has strong learning + impact\n• If recruiter asks for exact number: propose within range based on scope and benefits",
+    "tags": ["salary", "compensation", "negotiation"],
+    "source": "manual_kb_import",
+    "updatedAt": { "$date": "2026-01-09T00:00:00.000Z" }
+  },
+  {
+    "key": "quick_6_bullets",
+    "title": "6-Bullet Summary",
+    "text": "• Full-Stack (MERN) + Flutter developer\n• Competitive Programmer: Codeforces Expert (max 1734), 3500+ problems solved\n• Strong contest performance (IUPC/ICPC regional placements)\n• Built production-style dashboards/APIs with MongoDB + Express\n• Experience with LangChain-style summarization + LLM workflows\n• Strong fundamentals: DSA, debugging, clean architecture, fast iteration",
+    "tags": ["summary", "recruiter", "hireability"],
+    "source": "manual_kb_import",
+    "updatedAt": { "$date": "2026-01-09T00:00:00.000Z" }
+  },
+  {
+    "key": "skills",
+    "title": "Skills",
+    "text": "Strengths:\n• Data Structures & Algorithms\n• Problem Solving\n\nLanguages:\n• C/C++\n• Java\n• Python\n• JavaScript\n• Dart\n\nFrameworks:\n• React\n• Express.js\n• Django\n• DRF\n• Flutter\n• LangChain\n\nDatabases:\n• MongoDB\n• Firebase (Auth/Firestore)\n• MySQL (basic)\n\nTools:\n• Git/GitHub\n• Postman\n• REST APIs",
+    "tags": ["skills", "stack"],
+    "source": "manual_kb_import",
+    "updatedAt": { "$date": "2026-01-09T00:00:00.000Z" }
+  },
+  {
+    "key": "competitive_profiles",
+    "title": "Competitive Programming Profiles",
+    "text": "• Codeforces: Expert (max 1734) — The_Ruthless\n• CodeChef: 5★ (max 2019) — ghost_014\n• AtCoder: Cyan (max 1271) — Ruthless__\n• LeetCode: Knight",
+    "tags": ["competitive", "codeforces", "codechef", "atcoder", "leetcode"],
+    "source": "manual_kb_import",
+    "updatedAt": { "$date": "2026-01-09T00:00:00.000Z" }
+  },
+  {
+    "key": "experience_work_vivasoft",
+    "title": "Work: Industrial Trainee (Apprenticeship) — Vivasoft Limited",
+    "text": "Date: Mar 2025\n• 12-day mentor-led MERN attachment\n• Built MVP with Next.js/Redux + Express REST + MongoDB\n• LangChain summarization; Git/Husky; Postman validation",
+    "tags": ["experience", "work", "mern"],
+    "source": "manual_kb_import",
+    "updatedAt": { "$date": "2026-01-09T00:00:00.000Z" }
+  },
+  {
+    "key": "experience_work_outlier",
+    "title": "Work: Software Engineer / LLM Evaluator (Contract) — Remotasks (Outlier)",
+    "text": "Date: Aug 2023 – Sep 2023\n• Evaluated programming task outputs\n• Improved correctness and response quality\n• Worked on Dolphin, Bee, Bulba projects",
+    "tags": ["experience", "work", "llm", "evaluation"],
+    "source": "manual_kb_import",
+    "updatedAt": { "$date": "2026-01-09T00:00:00.000Z" }
+  },
+  {
+    "key": "education_ruet",
+    "title": "Studies: B.Sc. in CSE — RUET",
+    "text": "Date: Apr 2022 – May 2026 (Expected)\n• Focus: DSA + competitive programming\n• Built web + mobile projects alongside contests",
+    "tags": ["education", "studies", "ruet"],
+    "source": "manual_kb_import",
+    "updatedAt": { "$date": "2026-01-09T00:00:00.000Z" }
+  },
+  {
+    "key": "project_portfolio",
+    "title": "Project: Sefayet Portfolio (Next.js + AI Recruiter Assistant)",
+    "text": "Stack: Next.js, TypeScript, Tailwind CSS, MongoDB, LangChain, Groq API\n• Professional portfolio with recruiter-friendly layout\n• Floating chat assistant (Sef-AI-yet) that answers from a database KB\n• KB designed to be editable + extendable from JSON / CV / GitHub\nRepo: (add GitHub repo link when ready)\nLive: (add Vercel link when deployed)",
+    "tags": ["project", "portfolio", "ai", "nextjs"],
+    "source": "manual_kb_import",
+    "updatedAt": { "$date": "2026-01-09T00:00:00.000Z" }
+  },
+  {
+    "key": "project_blog_agency",
+    "title": "Project: Blog-Agency-App",
+    "text": "Stack: React, Express, MongoDB, Nodejs\n• Dashboard for blogs, teams, and services\n• Role-aware CRUD flows\n• RESTful Express API backed by MongoDB\nRepo: https://github.com/Sefayet-Alam/Blog_app\nLive: https://blog-agency-sef.netlify.app/",
+    "tags": ["project", "mern", "dashboard"],
+    "source": "manual_kb_import",
+    "updatedAt": { "$date": "2026-01-09T00:00:00.000Z" }
+  },
+  {
+    "key": "project_sellsense",
+    "title": "Project: SellSense (LangChain)",
+    "text": "Stack: JavaScript, LangChain, LLMs\n• Summarizes buyer–seller chats\n• Outputs structured records\n• Designed for storage + retrieval\nRepo: https://github.com/Sefayet-Alam/SellSense_LangChain",
+    "tags": ["project", "langchain", "llm"],
+    "source": "manual_kb_import",
+    "updatedAt": { "$date": "2026-01-09T00:00:00.000Z" }
+  },
+  {
+    "key": "project_codebook",
+    "title": "Project: Codebook App",
+    "text": "Stack: Flutter, Firebase, Groq API\n• Snippet manager with real-time sync\n• AI assistant for explanation/review\n• PDF export for code snippets\nRepo: https://github.com/Sefayet-Alam/Codebook-App",
+    "tags": ["project", "flutter", "firebase", "ai"],
+    "source": "manual_kb_import",
+    "updatedAt": { "$date": "2026-01-09T00:00:00.000Z" }
+  },
+  {
+    "key": "highlights_achievements",
+    "title": "Highlights: Achievements",
+    "text": "• UIU IUPC 2025 — 8th (120+ teams) — Team: 1000000007\n• IUT IUPC 2024 — 20th (100+ teams) — Team: RUET_Onirban\n• BUET IUPC 2024 — 23rd (120+ teams) — Team: RUET_a_bit_slower\n• ICPC Asia Dhaka Regional 2024 — 30th (300+ teams) — Team: RUET_a_bit_slower\n• ICPC Asia Dhaka Regional 2025 — 38th (313 teams) — Team: Insoluble_Heralds\n• SRBD Code Contest 2025 — 62nd (~1.4k+ participants) — Onsite qualifier\n• Meta Hacker Cup 2025 — Rank 1663 (5k+ participants) — received official T-shirt\n• Code Samurai 2024 — Onsite round; 14th preliminary — Team: RUET_UNKNOWNS\n• BUET Game Fest 2023 — 16th / 40+ teams — 2D game using Godot\n• Codespark 2022 — 1st Runner-up (Intra RUET team)\n• Codesmash 2021 — 2nd Runner-up (Intra RUET individual)",
+    "tags": ["achievements", "highlights", "competitive"],
+    "source": "manual_kb_import",
+    "updatedAt": { "$date": "2026-01-09T00:00:00.000Z" }
+  },
+  {
+    "key": "publications",
+    "title": "Publications",
+    "text": "• No confirmed publications are stored yet.\n• If recruiter needs publication info, ask them to contact Sefayet via phone/email.",
+    "tags": ["publications"],
+    "source": "manual_kb_import",
+    "updatedAt": { "$date": "2026-01-09T00:00:00.000Z" }
+  },
+  {
+    "key": "missing_info_policy",
+    "title": "Missing Info Policy",
+    "text": "If any question cannot be answered using KB context:\n• Say: “I may be missing that detail — please contact Sefayet.”\n• Provide: Phone +8801919030974, Email sefayetalam14@gmail.com\n• Do not guess or invent anything.",
+    "tags": ["policy", "fallback", "contact"],
+    "source": "manual_kb_import",
+    "updatedAt": { "$date": "2026-01-09T00:00:00.000Z" }
+  }
+]
