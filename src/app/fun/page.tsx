@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FunGame } from "@/components/fun/FunGame";
+import FunGameClient from "@components/fun/FunGameClient";
 
 export default function FunPage() {
   return (
@@ -21,7 +21,7 @@ export default function FunPage() {
         </div>
       </div>
 
-      <FunGame />
+      <FunGameClient />
     </main>
   );
 }

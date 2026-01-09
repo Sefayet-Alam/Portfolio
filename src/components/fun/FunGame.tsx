@@ -6,7 +6,7 @@ import { initVillage, type FunNpc, type FunStop } from "@/components/fun/village
 import { FunStoryOverlay } from "@/components/fun/FunStoryOverlay";
 import { FunNpcOverlay } from "@/components/fun/FunNpcOverlay";
 
-export function FunGame() {
+export default function FunGame() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   const [openStop, setOpenStop] = useState<FunStop | null>(null);
