@@ -26,11 +26,8 @@ export default function HomePage() {
         <Experience experience={portfolio.experience} />
         <Skills skills={portfolio.skills} />
         <Projects projects={portfolio.projects} />
-
-        {/* ✅ Certificates before highlights */}
-        <Certifications certifications={certs} />
-
         <Achievements highlights={portfolio.highlights} />
+        <Certifications certifications={certs} />
       </div>
 
       <Footer
