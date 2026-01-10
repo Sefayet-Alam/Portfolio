@@ -31,10 +31,18 @@
           "Leetcode: Knight"
         ],
         "links": [
-          { "url": "https://codeforces.com/profile/The_Ruthless" },
-          { "url": "https://www.codechef.com/users/ghost_014" },
-          { "url": "https://atcoder.jp/users/Ruthless__" },
-          { "url": "https://leetcode.com/u/SefayetAlam_14/" }
+          {
+            "url": "https://codeforces.com/profile/The_Ruthless"
+          },
+          {
+            "url": "https://www.codechef.com/users/ghost_014"
+          },
+          {
+            "url": "https://atcoder.jp/users/Ruthless__"
+          },
+          {
+            "url": "https://leetcode.com/u/SefayetAlam_14/"
+          }
         ]
       },
       {
@@ -42,9 +50,13 @@
         "title": "UIU IUPC 2025 — 8th",
         "org": "120+ teams • Team: 1000000007",
         "date": "2025",
-        "bullets": ["Top 10 finish in a major IUPC"],
+        "bullets": [
+          "Top 10 finish in a major IUPC"
+        ],
         "links": [
-            {"url":"https://bapsoj.org/contests/uiu-inter-university-programming-contest-2025/standings"}
+          {
+            "url": "https://bapsoj.org/contests/uiu-inter-university-programming-contest-2025/standings"
+          }
         ]
       },
       {
@@ -52,9 +64,13 @@
         "title": "IUT IUPC 2024 — 20th",
         "org": "100+ teams • Team: RUET_Onirban",
         "date": "2024",
-        "bullets": ["Top 20 finish"],
+        "bullets": [
+          "Top 20 finish"
+        ],
         "links": [
-            {"url":"https://toph.co/c/iut-11th-national-ict-fest-2024/standings"}
+          {
+            "url": "https://toph.co/c/iut-11th-national-ict-fest-2024/standings"
+          }
         ]
       },
       {
@@ -62,7 +78,9 @@
         "title": "BUET IUPC 2024 — 23rd",
         "org": "120+ teams • Team: RUET_a_bit_slower",
         "date": "2024",
-        "bullets": ["Strong placement among top teams"],
+        "bullets": [
+          "Strong placement among top teams"
+        ],
         "links": []
       },
       {
@@ -70,23 +88,37 @@
         "title": "ICPC Asia Dhaka Regional 2024 — 30th",
         "org": "300+ teams • Team: RUET_a_bit_slower",
         "date": "2024",
-        "bullets": ["Top 10% placement in regional contest"],
-        "links": []
+        "bullets": [
+          "Top 10% placement in regional contest"
+        ],
+        "links": [
+          {
+            "url": "https://bapsoj.org/contests/icpc-preliminary-dhaka-site-2024/standings"
+          }
+        ]
       },
       {
         "logo": "/logos/icpc.png",
         "title": "ICPC Asia Dhaka Regional 2025 — 38th",
         "org": "313 teams • Team: Insoluble_Heralds",
         "date": "2025",
-        "bullets": ["Consistent regional performance"],
-        "links": []
+        "bullets": [
+          "Consistent regional performance"
+        ],
+        "links": [
+          {
+            "url": "https://bapsoj.org/contests/icpc-dhaka-onsite-2025/standings"
+          }
+        ]
       },
       {
         "logo": "/logos/SRBD.png",
         "title": "SRBD Code Contest 2025 — 62nd",
         "org": "Onsite round qualifier • ~1.4k+ participants",
         "date": "2025",
-        "bullets": ["Qualified for onsite round"],
+        "bullets": [
+          "Qualified for onsite round"
+        ],
         "links": []
       },
       {
@@ -94,7 +126,9 @@
         "title": "Meta Hacker Cup 2025 — Rank 1663",
         "org": "5k+ participants",
         "date": "2025",
-        "bullets": ["Received official T-shirt"],
+        "bullets": [
+          "Received official T-shirt"
+        ],
         "links": [
           {
             "label": "Certificate",
@@ -107,7 +141,9 @@
         "title": "Code Samurai 2024 — Onsite Round",
         "org": "14th in preliminary • Team: RUET_UNKNOWNS",
         "date": "2024",
-        "bullets": ["Advanced to onsite round"],
+        "bullets": [
+          "Advanced to onsite round"
+        ],
         "links": []
       },
       {
@@ -115,7 +151,9 @@
         "title": "BUET Game Fest 2023 — 16th",
         "org": "40+ teams • Team: RUET_Unknowns",
         "date": "2023",
-        "bullets": ["Built a 2D game using Godot"],
+        "bullets": [
+          "Built a 2D game using Godot"
+        ],
         "links": []
       },
       {
@@ -123,7 +161,9 @@
         "title": "Codespark 2022 — 1st Runner-up",
         "org": "Intra RUET fresher team contest",
         "date": "2022",
-        "bullets": ["Runner-up finish"],
+        "bullets": [
+          "Runner-up finish"
+        ],
         "links": []
       },
       {
@@ -131,7 +171,9 @@
         "title": "Codesmash 2021 — 2nd Runner-up",
         "org": "Intra RUET fresher individual contest",
         "date": "2021",
-        "bullets": ["Runner-up finish"],
+        "bullets": [
+          "Runner-up finish"
+        ],
         "links": []
       }
     ],
@@ -141,10 +183,10 @@
         "title": "Sarcasm detection with NLP",
         "org": "Journal/Conference",
         "date": "July 2026 (expected)",
-        "bullets": ["Will add  paper title, venue, and link later"],
-        "links": [
-            
-        ]
+        "bullets": [
+          "Will add  paper title, venue, and link later"
+        ],
+        "links": []
       }
     ]
   },
@@ -152,7 +194,12 @@
     {
       "name": "Blog-Agency-App",
       "video": "https://youtu.be/7j0oCr-DjgY",
-      "stack": ["React", "Express", "MongoDB", "Nodejs"],
+      "stack": [
+        "React",
+        "Express",
+        "MongoDB",
+        "Nodejs"
+      ],
       "bullets": [
         "Dashboard for blogs, teams, and services",
         "Role-aware CRUD flows",
@@ -162,9 +209,27 @@
       "live": "https://blog-agency-sef.netlify.app/"
     },
     {
+      "name": "Conflicts-Within-The-Journey-for-Identity",
+      "video": "https://www.youtube.com/watch?v=peIEIWZZVPY",
+      "stack": [
+        "Godot"
+      ],
+      "bullets": [
+        "2D platformer built for BUET Game Jam 2023 (theme: “You are your own enemy”)",
+        "Playable build available via Google Drive download (extract and play)",
+        "Created by team Phantoms_Unmasked; secured 16th place out of 70+ teams"
+      ],
+      "repo": "https://github.com/Sefayet-Alam/My_First_Complete_Game",
+      "live": "https://drive.google.com/file/d/11jWS7crnwSl_V-sdg8dew23k6V74G9Tb/view?usp=sharing"
+    },
+    {
       "name": "SellSense (LangChain)",
       "video": "https://youtu.be/r3JBTnbjjNQ",
-      "stack": ["JavaScript", "LangChain", "LLMs"],
+      "stack": [
+        "JavaScript",
+        "LangChain",
+        "LLMs"
+      ],
       "bullets": [
         "Summarizes buyer-seller chats",
         "Outputs structured records",
@@ -175,7 +240,11 @@
     {
       "name": "Codebook App",
       "video": "https://www.youtube.com/shorts/3TbMfUGIhcw",
-      "stack": ["Flutter", "Firebase", "Groq API"],
+      "stack": [
+        "Flutter",
+        "Firebase",
+        "Groq API"
+      ],
       "bullets": [
         "Snippet manager with real-time sync",
         "AI assistant for explanation/review",
@@ -185,11 +254,34 @@
     }
   ],
   "skills": {
-    "strengths": ["Data Structures & Algorithms", "Problem Solving"],
-    "languages": ["C/C++", "Java", "Python", "JavaScript", "Dart"],
-    "frameworks": ["React", "Express.js", "Django", "Flutter", "LangChain"],
-    "databases": ["MongoDB", "Firebase (Auth/Firestore)", "MySQL"],
-    "tools": ["Git/GitHub", "Postman", "REST APIs"]
+    "strengths": [
+      "Data Structures & Algorithms",
+      "Problem Solving"
+    ],
+    "languages": [
+      "C/C++",
+      "Java",
+      "Python",
+      "JavaScript",
+      "Dart"
+    ],
+    "frameworks": [
+      "React",
+      "Express.js",
+      "Django",
+      "Flutter",
+      "LangChain"
+    ],
+    "databases": [
+      "MongoDB",
+      "Firebase (Auth/Firestore)",
+      "MySQL"
+    ],
+    "tools": [
+      "Git/GitHub",
+      "Postman",
+      "REST APIs"
+    ]
   },
   "experience": {
     "work": [
@@ -244,16 +336,22 @@
       "credentialId": "395099599401064",
       "image": "/certs/meta-hackercup-2025.jpg",
       "link": "https://web.facebook.com/codingcompetitions/hacker-cup/2025/certificate/395099599401064",
-      "bullets": ["Official competition certificate", "Global competitive programming contest track record"]
+      "bullets": [
+        "Official competition certificate",
+        "Global competitive programming contest track record"
+      ]
     },
     {
-      "name": "Meta Hacker Cup 2023 — Certificate",
-      "issuer": "Meta / Facebook Coding Competitions",
-      "issued": "Mar 2023",
+      "name": "ICPC Dhaka Regional 2024",
+      "issuer": "ICPC committee",
+      "issued": "Dec 2024",
       "credentialId": "395099599401064",
-      "image": "/certs/meta-hackercup-2023.jpg",
-      "link": "https://web.facebook.com/codingcompetitions/hacker-cup/2023/certificate/395099599401064",
-      "bullets": ["Reached Round 3", "Strong ranking among thousands of participants"]
+      "image": "/certs/icpc.jpg",
+      "link": "https://github.com/Sefayet-Alam/Achivemenets_-_Certificates-/upload",
+      "bullets": [
+        "Reached Onsite",
+        "Strong ranking 30th among e00+ teams"
+      ]
     },
     {
       "name": "Ostad — Full Stack Web Development (MERN)",
@@ -262,7 +360,10 @@
       "credentialId": "C19955",
       "image": "/certs/mern-1.jpg",
       "link": "https://github.com/Sefayet-Alam/Achivemenets_-_Certificates-/blob/main/Khandoker%20Sefayet%20Alam-mernstack%206-A19956.pdf",
-      "bullets": ["MERN fundamentals + project-based learning", "Practical web development skills validation"]
+      "bullets": [
+        "MERN fundamentals + project-based learning",
+        "Practical web development skills validation"
+      ]
     },
     {
       "name": "Udemy — Competitive Programming and Coding Interviews",
@@ -271,7 +372,10 @@
       "credentialId": "UC-42d63a33-3932-499f-8615-89e2eb52ae12",
       "image": "/certs/udemy-1.jpg",
       "link": "https://www.udemy.com/certificate/UC-42d63a33-3932-499f-8615-89e2eb52ae12/",
-      "bullets": ["Interview-style CP practice", "Algorithms + problem solving improvement"]
+      "bullets": [
+        "Interview-style CP practice",
+        "Algorithms + problem solving improvement"
+      ]
     }
   ]
 }
