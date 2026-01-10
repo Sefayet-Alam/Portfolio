@@ -9,7 +9,7 @@ A professional, recruiter-first portfolio with:
 ---
 
 ## Live
-- Live URL: (add after hosting)
+- Live URL: [Sefayet-Alam](https://sefayet-alam.vercel.app/)
 - Repo: this repository
 
 ---
