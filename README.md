@@ -14,6 +14,10 @@ A professional, recruiter-first portfolio with:
 
 ---
 
+## The files are in 
+/Users/sefayet/sefayet-portfolio in my Mac
+
+---
 ## Screenshots
 
 Screenshots are stored in:
