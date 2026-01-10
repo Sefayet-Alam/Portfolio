@@ -165,9 +165,9 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
   };
 
   const onKeyUp = (e: KeyboardEvent) => {
-    if (isMoveOrActionCode(e.code)) e.preventDefault();
-    keys.delete(e.code);
+  keys.delete(e.code);
   };
+
 
   // If the tab loses focus, clear pressed keys so movement doesn't get stuck.
   const onBlur = () => keys.clear();
@@ -980,8 +980,8 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
 
   return () => {
     cancelAnimationFrame(raf);
-    window.removeEventListener("keydown", onKeyDown as any);
-    window.removeEventListener("keyup", onKeyUp as any);
+    window.removeEventListener("keydown", onKeyDown);
+    window.removeEventListener("keyup", onKeyUp);
     window.removeEventListener("blur", onBlur);
     if (ro) ro.disconnect();
     else window.removeEventListener("resize", onWinResize);
