@@ -94,12 +94,19 @@ export function Hero({ profile }: HeroProps) {
               </a>
 
               <a
-                href={`mailto:${profile.email}`}
+                href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+                  profile.email
+                )}&su=${encodeURIComponent("Hello Sefayet")}&body=${encodeURIComponent(
+                  "Hi Sefayet,%0D%0A%0D%0AI visited your portfolio and would like to connect.%0D%0A%0D%0AThanks!"
+                )}`}
+                target="_blank"
+                rel="noreferrer noopener"
                 className="inline-flex items-center gap-2 rounded-md border border-zinc-200 bg-white/70 px-4 py-2 text-sm font-medium text-zinc-900 shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:bg-white dark:border-zinc-800 dark:bg-zinc-950/50 dark:text-zinc-100 dark:hover:bg-zinc-900"
               >
                 <Mail size={16} />
                 Email
               </a>
+
 
               <a
                 href={`tel:${profile.phone}`}

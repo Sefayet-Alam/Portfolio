@@ -47,19 +47,26 @@ function IconLink({
 function RowLink({
   href,
   children,
+  target,
+  rel,
 }: {
   href: string;
   children: React.ReactNode;
+  target?: string;
+  rel?: string;
 }) {
   return (
     <a
       href={href}
+      target={target}
+      rel={rel}
       className="underline-offset-4 hover:underline text-zinc-700 dark:text-zinc-200"
     >
       {children}
     </a>
   );
 }
+
 
 export function Footer({ email, phone, github, linkedin, codeforces }: FooterProps) {
   return (
@@ -74,7 +81,7 @@ export function Footer({ email, phone, github, linkedin, codeforces }: FooterPro
             <div className="space-y-4">
               <div>
                 <p className="text-base font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
-                  Let’s build something solid.
+                  Let's build something solid.
                 </p>
                 <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">
                   Full-Stack Developer • Flutter • Competitive Programming
@@ -85,7 +92,16 @@ export function Footer({ email, phone, github, linkedin, codeforces }: FooterPro
                 <p className="text-sm">
                   <span className="inline-flex items-center gap-2">
                     <Mail size={16} className="text-zinc-500 dark:text-zinc-400" />
-                    <RowLink href={`mailto:${email}`}>{email}</RowLink>
+                    <RowLink
+                      href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+                        "sefayetalam14@gmail.com"
+                      )}`}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                    >
+                      sefayetalam14@gmail.com
+                    </RowLink>
+
                   </span>
                 </p>
 
@@ -103,7 +119,7 @@ export function Footer({ email, phone, github, linkedin, codeforces }: FooterPro
               </div>
 
               <p className="text-xs text-zinc-500 dark:text-zinc-400">
-                © {new Date().getFullYear()} Khandoker Sefayet Alam 
+                © {new Date().getFullYear()} Khandoker Sefayet Alam
               </p>
             </div>
 
