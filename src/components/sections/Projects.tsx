@@ -1,8 +1,10 @@
 import Image from "next/image";
+import YouTubeCard from "@/components/YouTubeCard";
 
 type Project = {
   name: string;
-  image?: string;
+  image?: string; // fallback image (optional)
+  video?: string; // YouTube link
   stack: string[];
   bullets: string[];
   repo?: string;
@@ -53,9 +55,7 @@ export function Projects({ projects }: ProjectsProps) {
   return (
     <section id="projects" className="py-12">
       <h2 className="text-2xl font-semibold tracking-tight">Projects</h2>
-      <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-300">
-        Selected work — clean UI, solid APIs, and practical features.
-      </p>
+      <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-300"></p>
 
       <div className="mt-6 grid gap-6 md:grid-cols-2">
         {projects.map((p) => (
@@ -63,9 +63,11 @@ export function Projects({ projects }: ProjectsProps) {
             key={p.name}
             className="group overflow-hidden rounded-3xl border border-zinc-200 bg-white/55 shadow-sm backdrop-blur transition hover:-translate-y-0.5 dark:border-zinc-800 dark:bg-zinc-950/40"
           >
-            {/* Image (LOCKED size so it can never take over the page) */}
+            {/* Media (LOCKED size so it can never take over the page) */}
             <div className="relative aspect-[16/9] w-full overflow-hidden border-b border-zinc-200 dark:border-zinc-800">
-              {p.image ? (
+              {p.video ? (
+                <YouTubeCard url={p.video} title={p.name} />
+              ) : p.image ? (
                 <Image
                   src={p.image}
                   alt={p.name}
@@ -78,8 +80,8 @@ export function Projects({ projects }: ProjectsProps) {
                 <div className="h-full w-full bg-zinc-100 dark:bg-zinc-900" />
               )}
 
-              {/* subtle gradient to make text readable if you ever overlay later */}
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-70" />
+              {/* REMOVED gradient overlay (it can sit above iframe and cause endless loading feel) */}
+              {/* <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-70" /> */}
             </div>
 
             <div className="p-5">
@@ -89,8 +91,12 @@ export function Projects({ projects }: ProjectsProps) {
                 </h3>
 
                 <div className="flex items-center gap-2">
-                  {p.live ? <LinkBtn href={p.live} label="Live" variant="solid" /> : null}
-                  {p.repo ? <LinkBtn href={p.repo} label="Repo" variant="outline" /> : null}
+                  {p.live ? (
+                    <LinkBtn href={p.live} label="Live" variant="solid" />
+                  ) : null}
+                  {p.repo ? (
+                    <LinkBtn href={p.repo} label="Repo" variant="outline" />
+                  ) : null}
                 </div>
               </div>
 

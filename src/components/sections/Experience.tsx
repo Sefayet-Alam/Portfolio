@@ -60,10 +60,6 @@ export function Experience({ experience }: ExperienceProps) {
   return (
     <section id="experience" className="py-12">
       <h2 className="text-2xl font-semibold tracking-tight">Experience</h2>
-      <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-300">
-        Work and studies — clean timeline view.
-      </p>
-
       {/* Tabs (responsive + wide) */}
       <div className="mt-5 rounded-2xl border border-zinc-200 bg-white/55 p-3 shadow-sm backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/40">
         <div className="grid w-full grid-cols-2 gap-2">

@@ -3,13 +3,21 @@
 import Image from "next/image";
 import { useMemo, useState } from "react";
 
+type EntryLink = {
+  label?: string; // optional display name
+  url: string;
+};
+
 type Item = {
   logo?: string;
   title: string;
   org: string;
   date: string;
   bullets: string[];
+  // OLD (kept for backward compatibility, optional)
   link?: string;
+  // NEW
+  links?: EntryLink[];
 };
 
 type Props = {
@@ -18,6 +26,65 @@ type Props = {
     publications: Item[];
   };
 };
+
+// Domain -> nice name mapping
+const DOMAIN_LABELS: Record<string, string> = {
+  "codeforces.com": "Codeforces",
+  "codechef.com": "CodeChef",
+  "atcoder.jp": "AtCoder",
+  "leetcode.com": "LeetCode",
+  "github.com": "GitHub",
+  "linkedin.com": "LinkedIn",
+  "arxiv.org": "arXiv",
+  "ieeexplore.ieee.org": "IEEE Xplore",
+  "openreview.net": "OpenReview",
+  "facebook.com": "Facebook",
+  "web.facebook.com": "Facebook",
+};
+
+function prettyLabelFromUrl(url: string) {
+  try {
+    const u = new URL(url);
+    const host = u.hostname.toLowerCase().replace(/^www\./, "");
+    return DOMAIN_LABELS[host] ?? host;
+  } catch {
+    return "Link";
+  }
+}
+
+function LinkChips({ links, legacyLink }: { links?: EntryLink[]; legacyLink?: string }) {
+  const merged: EntryLink[] = [
+    ...(legacyLink ? [{ label: "Link", url: legacyLink }] : []),
+    ...(links ?? []),
+  ].filter((x) => x?.url);
+
+  if (!merged.length) return null;
+
+  return (
+    <div className="mt-3 flex flex-wrap gap-2">
+      {merged.map((l) => {
+        const label =
+          l.label && l.label.trim().length > 0 ? l.label.trim() : prettyLabelFromUrl(l.url);
+
+        return (
+          <a
+            key={`${label}-${l.url}`}
+            href={l.url}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1 rounded-full border border-zinc-200 bg-white/60 px-3 py-1 text-xs text-zinc-900 backdrop-blur hover:bg-white dark:border-zinc-800 dark:bg-zinc-950/40 dark:text-zinc-100 dark:hover:bg-zinc-900"
+            title={l.url}
+          >
+            {label}
+            <span aria-hidden="true" className="opacity-60">
+              ↗
+            </span>
+          </a>
+        );
+      })}
+    </div>
+  );
+}
 
 function Tabs({
   value,
@@ -89,17 +156,10 @@ function Timeline({ items }: { items: Item[] }) {
               <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
                 <p className="text-sm text-zinc-600 dark:text-zinc-300">{it.org}</p>
                 <span className="text-sm text-zinc-500 dark:text-zinc-400">{it.date}</span>
-                {it.link ? (
-                  <a
-                    href={it.link}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-sm text-zinc-600 underline-offset-4 hover:underline dark:text-zinc-300"
-                  >
-                    Link
-                  </a>
-                ) : null}
               </div>
+
+              {/* NEW: multiple links as chips (also supports old it.link) */}
+              <LinkChips links={it.links} legacyLink={it.link} />
             </div>
 
             <ul className="mt-4 space-y-2 text-sm text-zinc-600 dark:text-zinc-300">

@@ -98,12 +98,12 @@ export function Footer({ email, phone, github, linkedin, codeforces }: FooterPro
 
                 <p className="text-xs text-zinc-500 dark:text-zinc-400 inline-flex items-center gap-2">
                   <Sparkles size={14} />
-                  Available for internships, full-time, and freelance projects.
+                  Available for full-time,remote and freelance projects.
                 </p>
               </div>
 
               <p className="text-xs text-zinc-500 dark:text-zinc-400">
-                © {new Date().getFullYear()} Khandoker Sefayet Alam • Built with Next.js
+                © {new Date().getFullYear()} Khandoker Sefayet Alam 
               </p>
             </div>
 

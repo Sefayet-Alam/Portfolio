@@ -1,342 +1,277 @@
 {
-    "profile": {
-        "name": "Khandoker Sefayet Alam",
-        "title": " Competitive Programmer • Full-Stack Developer (MERN) ",
-        "tagline": "2x ICPC Dhaka Regional Participant • B.Sc in CSE • AI integration (LangChain) • Flutter",
-        "location": "🇧🇩 Rajshahi, Bangladesh",
-        "email": "sefayetalam14@gmail.com",
-        "images": {
-            "primary": "/images/me-1.jpg",
-            "hover": "/images/me-2.jpg"
-        },
-        "links": {
-            "github": "https://github.com/Sefayet-Alam",
-            "linkedin": "https://www.linkedin.com/in/sefayet-alam-8333b4242",
-            "codeforces": "https://codeforces.com/profile/The_Ruthless",
-            "resume": "/resume.pdf"
-        },
-        "phone": "+8801919030974"
+  "profile": {
+    "name": "Khandoker Sefayet Alam",
+    "title": " Competitive Programmer • Full-Stack Developer (MERN) ",
+    "tagline": "2x ICPC Dhaka Regional Participant • B.Sc in CSE • AI integration (LangChain) • Flutter",
+    "location": "🇧🇩 Rajshahi, Bangladesh",
+    "email": "sefayetalam14@gmail.com",
+    "images": {
+      "primary": "/images/mypic.jpg",
+      "hover": "/images/mypic2.jpg"
     },
-    "highlights": {
-        "achievements": [
-            {
-                "logo": "/logos/cf.png",
-                "title": "Competitive Programming Profiles",
-                "org": "Online Judges",
-                "date": "Ongoing",
-                "bullets": [
-                    "Codeforces: Expert (max rating 1734)- The_Ruthless",
-                    "CodeChef: 5★ (Max 2019) — ghost_014",
-                    "AtCoder: Cyan (Max 1271) — Ruthless__",
-                    "Leetcode: Knight"
-                ]
-            },
-            {
-                "logo": "/logos/uiu.png",
-                "title": "UIU IUPC 2025 — 8th",
-                "org": "120+ teams • Team: 1000000007",
-                "date": "2025",
-                "bullets": [
-                    "Top 10 finish in a major IUPC"
-                ]
-            },
-            {
-                "logo": "/logos/iut.png",
-                "title": "IUT IUPC 2024 — 20th",
-                "org": "100+ teams • Team: RUET_Onirban",
-                "date": "2024",
-                "bullets": [
-                    "Top 20 finish"
-                ]
-            },
-            {
-                "logo": "/logos/buet.png",
-                "title": "BUET IUPC 2024 — 23rd",
-                "org": "120+ teams • Team: RUET_a_bit_slower",
-                "date": "2024",
-                "bullets": [
-                    "Strong placement among top teams"
-                ]
-            },
-            {
-                "logo": "/logos/icpc.png",
-                "title": "ICPC Asia Dhaka Regional 2024 — 30th",
-                "org": "300+ teams • Team: RUET_a_bit_slower",
-                "date": "2024",
-                "bullets": [
-                    "Top 10% placement in regional contest"
-                ]
-            },
-            {
-                "logo": "/logos/icpc.png",
-                "title": "ICPC Asia Dhaka Regional 2025 — 38th",
-                "org": "313 teams • Team: Insoluble_Heralds",
-                "date": "2025",
-                "bullets": [
-                    "Consistent regional performance"
-                ]
-            },
-            {
-                "logo": "/logos/SRBD.png",
-                "title": "SRBD Code Contest 2025 — 62nd",
-                "org": "Onsite round qualifier • ~1.4k+ participants",
-                "date": "2025",
-                "bullets": [
-                    "Qualified for onsite round"
-                ]
-            },
-            {
-                "logo": "/logos/meta.png",
-                "title": "Meta Hacker Cup 2025 — Rank 1663",
-                "org": "5k+ participants",
-                "date": "2025",
-                "bullets": [
-                    "Received official T-shirt"
-                ]
-            },
-            {
-                "logo": "/logos/codesam.png",
-                "title": "Code Samurai 2024 — Onsite Round",
-                "org": "14th in preliminary • Team: RUET_UNKNOWNS",
-                "date": "2024",
-                "bullets": [
-                    "Advanced to onsite round"
-                ]
-            },
-            {
-                "logo": "/logos/buet.png",
-                "title": "BUET Game Fest 2023 — 16th",
-                "org": "40+ teams • Team: RUET_Unknowns",
-                "date": "2023",
-                "bullets": [
-                    "Built a 2D game using Godot"
-                ]
-            },
-            {
-                "logo": "/logos/ruet.png",
-                "title": "Codespark 2022 — 1st Runner-up",
-                "org": "Intra RUET fresher team contest",
-                "date": "2022",
-                "bullets": [
-                    "Runner-up finish"
-                ]
-            },
-            {
-                "logo": "/logos/ruet.png",
-                "title": "Codesmash 2021 — 2nd Runner-up",
-                "org": "Intra RUET fresher individual contest",
-                "date": "2021",
-                "bullets": [
-                    "Runner-up finish"
-                ]
-            }
-        ],
-        "publications": [
-            {
-                "logo": "/logos/IEEE.png",
-                "title": "Publication (Placeholder)",
-                "org": "Journal/Conference",
-                "date": "Year",
-                "bullets": [
-                    "Will add  paper title, venue, and link later"
-                ]
-            }
-        ]
+    "links": {
+      "github": "https://github.com/Sefayet-Alam",
+      "linkedin": "https://www.linkedin.com/in/sefayet-alam-8333b4242",
+      "codeforces": "https://codeforces.com/profile/The_Ruthless",
+      "resume": "/resume.pdf"
     },
-    "projects": [
-        {
-            "name": "Sefayet Portfolio (Next.js + AI Recruiter Assistant)",
-            "image": "/projects/portfolio.png",
-            "stack": [
-                "Next.js",
-                "TypeScript",
-                "Tailwind CSS",
-                "MongoDB",
-                "LangChain",
-                "Groq API"
-            ],
-            "bullets": [
-                "Professional portfolio with sticky navigation + dark/light theme",
-                "Recruiter-focused AI assistant (chat widget) powered by LangChain + Groq",
-                "MongoDB knowledge base seeded from portfolio JSON for accurate answers",
-                "Interactive UI: cursor effects + dynamic background + intro greeting loader",
-                "Includes Fun Site page inside the same project"
-            ],
-            "repo": "https://github.com/Sefayet-Alam/Portfolio/tree/main",
-            "live": "https://sefayet-alam.vercel.app/"
-        },
-        {
-            "name": "Blog-Agency-App",
-            "image": "/projects/blog-agency.png",
-            "stack": [
-                "React",
-                "Express",
-                "MongoDB",
-                "Nodejs"
-            ],
-            "bullets": [
-                "Dashboard for blogs, teams, and services",
-                "Role-aware CRUD flows",
-                "RESTful Express API backed by MongoDB"
-            ],
-            "repo": "https://github.com/Sefayet-Alam/Blog_app",
-            "live": "https://blog-agency-sef.netlify.app/"
-        },
-        {
-            "name": "SellSense (LangChain)",
-            "image": "/projects/sellsense.png",
-            "stack": [
-                "JavaScript",
-                "LangChain",
-                "LLMs"
-            ],
-            "bullets": [
-                "Summarizes buyer-seller chats",
-                "Outputs structured records",
-                "Designed for storage + retrieval"
-            ],
-            "repo": "https://github.com/Sefayet-Alam/SellSense_LangChain"
-        },
-        {
-            "name": "Codebook App",
-            "image": "/projects/codebook.jpg",
-            "stack": [
-                "Flutter",
-                "Firebase",
-                "Groq API"
-            ],
-            "bullets": [
-                "Snippet manager with real-time sync",
-                "AI assistant for explanation/review",
-                "PDF export for snippets"
-            ],
-            "repo": "https://github.com/Sefayet-Alam/Codebook-App"
-        }
-    ],
-    "skills": {
-        "strengths": [
-            "Data Structures & Algorithms",
-            "Problem Solving"
-        ],
-        "languages": [
-            "C/C++",
-            "Java",
-            "Python",
-            "JavaScript",
-            "Dart"
-        ],
-        "frameworks": [
-            "React",
-            "Express.js",
-            "Django",
-            "DRF",
-            "Flutter",
-            "LangChain"
-        ],
-        "databases": [
-            "MongoDB",
-            "Firebase (Auth/Firestore)",
-            "MySQL (basic)"
-        ],
-        "tools": [
-            "Git/GitHub",
-            "Postman",
-            "REST APIs"
-        ]
-    },
-    "experience": {
-        "work": [
-            {
-                "logo": "/logos/vivasoft.png",
-                "title": "Industrial Trainee (Apprenticeship)",
-                "org": "Vivasoft Limited",
-                "date": "Mar 2025",
-                "bullets": [
-                    "12-day mentor-led MERN attachment",
-                    "Built MVP with Next.js/Redux + Express REST + MongoDB",
-                    "LangChain summarization; Git/Husky; Postman"
-                ]
-            },
-            {
-                "logo": "/logos/outlier.png",
-                "title": "Software Engineer / LLM Evaluator (Contract)",
-                "org": "Remotasks (Outlier)",
-                "date": "Aug 2023 – Sep 2023",
-                "bullets": [
-                    "Evaluated programming task outputs",
-                    "Improved correctness and response quality",
-                    "Worked on Dolphin, Bee, Bulba projects"
-                ]
-            }
-        ],
-        "studies": [
-            {
-                "logo": "/logos/ruet.png",
-                "title": "B.Sc. in Computer Science & Engineering",
-                "org": "Rajshahi University of Engineering & Technology (RUET)",
-                "date": "Apr 2022 – May 2026 (Expected)",
-                "bullets": [
-                    "Strong focus on DSA and competitive programming",
-                    "Built web + mobile projects alongside contests"
-                ]
-            }
-        ]
-    },
+    "phone": "+8801919030974"
+  },
+  "highlights": {
     "achievements": [
-        "UIU IUPC 2025 — 8th (120+ teams)",
-        "ICPC Asia Dhaka Regional 2024 — 30th (300+ teams)",
-        "ICPC Asia Dhaka Regional 2025 — 38th (313 teams)",
-        "Meta Hacker Cup 2025 — rank 1663 (5k+ participants)",
-        "Meta Hacker Cup 2023 — Round 3; rank 1357 (6k+ participants)"
+      {
+        "logo": "/logos/cf.png",
+        "title": "Competitive Programming Profiles",
+        "org": "Online Judges",
+        "date": "Ongoing",
+        "bullets": [
+          "Codeforces: Expert (max rating 1734)- The_Ruthless",
+          "CodeChef: 5★ (Max 2019) — ghost_014",
+          "AtCoder: Cyan (Max 1271) — Ruthless__",
+          "Leetcode: Knight"
+        ],
+        "links": [
+          { "url": "https://codeforces.com/profile/The_Ruthless" },
+          { "url": "https://www.codechef.com/users/ghost_014" },
+          { "url": "https://atcoder.jp/users/Ruthless__" },
+          { "url": "https://leetcode.com/u/SefayetAlam_14/" }
+        ]
+      },
+      {
+        "logo": "/logos/uiu.png",
+        "title": "UIU IUPC 2025 — 8th",
+        "org": "120+ teams • Team: 1000000007",
+        "date": "2025",
+        "bullets": ["Top 10 finish in a major IUPC"],
+        "links": [
+            {"url":"https://bapsoj.org/contests/uiu-inter-university-programming-contest-2025/standings"}
+        ]
+      },
+      {
+        "logo": "/logos/iut.png",
+        "title": "IUT IUPC 2024 — 20th",
+        "org": "100+ teams • Team: RUET_Onirban",
+        "date": "2024",
+        "bullets": ["Top 20 finish"],
+        "links": [
+            {"url":"https://toph.co/c/iut-11th-national-ict-fest-2024/standings"}
+        ]
+      },
+      {
+        "logo": "/logos/buet.png",
+        "title": "BUET IUPC 2024 — 23rd",
+        "org": "120+ teams • Team: RUET_a_bit_slower",
+        "date": "2024",
+        "bullets": ["Strong placement among top teams"],
+        "links": []
+      },
+      {
+        "logo": "/logos/icpc.png",
+        "title": "ICPC Asia Dhaka Regional 2024 — 30th",
+        "org": "300+ teams • Team: RUET_a_bit_slower",
+        "date": "2024",
+        "bullets": ["Top 10% placement in regional contest"],
+        "links": []
+      },
+      {
+        "logo": "/logos/icpc.png",
+        "title": "ICPC Asia Dhaka Regional 2025 — 38th",
+        "org": "313 teams • Team: Insoluble_Heralds",
+        "date": "2025",
+        "bullets": ["Consistent regional performance"],
+        "links": []
+      },
+      {
+        "logo": "/logos/SRBD.png",
+        "title": "SRBD Code Contest 2025 — 62nd",
+        "org": "Onsite round qualifier • ~1.4k+ participants",
+        "date": "2025",
+        "bullets": ["Qualified for onsite round"],
+        "links": []
+      },
+      {
+        "logo": "/logos/meta.png",
+        "title": "Meta Hacker Cup 2025 — Rank 1663",
+        "org": "5k+ participants",
+        "date": "2025",
+        "bullets": ["Received official T-shirt"],
+        "links": [
+          {
+            "label": "Certificate",
+            "url": "https://web.facebook.com/codingcompetitions/hacker-cup/2025/certificate/395099599401064"
+          }
+        ]
+      },
+      {
+        "logo": "/logos/codesam.png",
+        "title": "Code Samurai 2024 — Onsite Round",
+        "org": "14th in preliminary • Team: RUET_UNKNOWNS",
+        "date": "2024",
+        "bullets": ["Advanced to onsite round"],
+        "links": []
+      },
+      {
+        "logo": "/logos/buet.png",
+        "title": "BUET Game Fest 2023 — 16th",
+        "org": "40+ teams • Team: RUET_Unknowns",
+        "date": "2023",
+        "bullets": ["Built a 2D game using Godot"],
+        "links": []
+      },
+      {
+        "logo": "/logos/ruet.png",
+        "title": "Codespark 2022 — 1st Runner-up",
+        "org": "Intra RUET fresher team contest",
+        "date": "2022",
+        "bullets": ["Runner-up finish"],
+        "links": []
+      },
+      {
+        "logo": "/logos/ruet.png",
+        "title": "Codesmash 2021 — 2nd Runner-up",
+        "org": "Intra RUET fresher individual contest",
+        "date": "2021",
+        "bullets": ["Runner-up finish"],
+        "links": []
+      }
     ],
-    "certifications": [
-        {
-            "name": "Meta Hacker Cup 2025 — Certificate",
-            "issuer": "Meta / Facebook Coding Competitions",
-            "issued": "Nov 2025",
-            "credentialId": "395099599401064",
-            "image": "/certs/meta-hackercup-2025.jpg",
-            "link": "https://web.facebook.com/codingcompetitions/hacker-cup/2025/certificate/395099599401064",
-            "bullets": [
-                "Official competition certificate",
-                "Global competitive programming contest track record"
-            ]
-        },
-        {
-            "name": "Meta Hacker Cup 2023 — Certificate",
-            "issuer": "Meta / Facebook Coding Competitions",
-            "issued": "Mar 2023",
-            "credentialId": "395099599401064",
-            "image": "/certs/meta-hackercup-2023.jpg",
-            "link": "https://web.facebook.com/codingcompetitions/hacker-cup/2023/certificate/395099599401064",
-            "bullets": [
-                "Reached Round 3",
-                "Strong ranking among thousands of participants"
-            ]
-        },
-        {
-            "name": "Ostad — Full Stack Web Development (MERN)",
-            "issuer": "Ostad",
-            "issued": "Dec 2024",
-            "credentialId": "C19955",
-            "image": "/certs/mern-1.jpg",
-            "link": "https://github.com/Sefayet-Alam/Achivemenets_-_Certificates-/blob/main/Khandoker%20Sefayet%20Alam-mernstack%206-A19956.pdf",
-            "bullets": [
-                "MERN fundamentals + project-based learning",
-                "Practical web development skills validation"
-            ]
-        },
-        {
-            "name": "Udemy — Competitive Programming and Coding Interviews",
-            "issuer": "Udemy",
-            "issued": "Feb 2024",
-            "credentialId": "UC-42d63a33-3932-499f-8615-89e2eb52ae12",
-            "image": "/certs/udemy-1.jpg",
-            "link": "https://www.udemy.com/certificate/UC-42d63a33-3932-499f-8615-89e2eb52ae12/",
-            "bullets": [
-                "Interview-style CP practice",
-                "Algorithms + problem solving improvement"
-            ]
-        }
+    "publications": [
+      {
+        "logo": "/logos/IEEE.png",
+        "title": "Sarcasm detection with NLP",
+        "org": "Journal/Conference",
+        "date": "July 2026 (expected)",
+        "bullets": ["Will add  paper title, venue, and link later"],
+        "links": [
+            
+        ]
+      }
     ]
+  },
+  "projects": [
+    {
+      "name": "Blog-Agency-App",
+      "video": "https://youtu.be/7j0oCr-DjgY",
+      "stack": ["React", "Express", "MongoDB", "Nodejs"],
+      "bullets": [
+        "Dashboard for blogs, teams, and services",
+        "Role-aware CRUD flows",
+        "RESTful Express API backed by MongoDB"
+      ],
+      "repo": "https://github.com/Sefayet-Alam/Blog_app",
+      "live": "https://blog-agency-sef.netlify.app/"
+    },
+    {
+      "name": "SellSense (LangChain)",
+      "video": "https://youtu.be/r3JBTnbjjNQ",
+      "stack": ["JavaScript", "LangChain", "LLMs"],
+      "bullets": [
+        "Summarizes buyer-seller chats",
+        "Outputs structured records",
+        "Designed for storage + retrieval"
+      ],
+      "repo": "https://github.com/Sefayet-Alam/SellSense_LangChain"
+    },
+    {
+      "name": "Codebook App",
+      "video": "https://www.youtube.com/shorts/3TbMfUGIhcw",
+      "stack": ["Flutter", "Firebase", "Groq API"],
+      "bullets": [
+        "Snippet manager with real-time sync",
+        "AI assistant for explanation/review",
+        "PDF export for snippets"
+      ],
+      "repo": "https://github.com/Sefayet-Alam/Codebook-App"
+    }
+  ],
+  "skills": {
+    "strengths": ["Data Structures & Algorithms", "Problem Solving"],
+    "languages": ["C/C++", "Java", "Python", "JavaScript", "Dart"],
+    "frameworks": ["React", "Express.js", "Django", "Flutter", "LangChain"],
+    "databases": ["MongoDB", "Firebase (Auth/Firestore)", "MySQL"],
+    "tools": ["Git/GitHub", "Postman", "REST APIs"]
+  },
+  "experience": {
+    "work": [
+      {
+        "logo": "/logos/vivasoft.png",
+        "title": "Industrial Trainee (Apprenticeship)",
+        "org": "Vivasoft Limited",
+        "date": "Mar 2025",
+        "bullets": [
+          "12-day mentor-led MERN attachment",
+          "Built MVP with Next.js/Redux + Express REST + MongoDB",
+          "LangChain summarization; Git/Husky; Postman"
+        ]
+      },
+      {
+        "logo": "/logos/outlier.png",
+        "title": "Software Engineer / LLM Evaluator (Contract)",
+        "org": "Remotasks (Outlier)",
+        "date": "Aug 2023 – Sep 2023",
+        "bullets": [
+          "Evaluated programming task outputs",
+          "Improved correctness and response quality",
+          "Worked on Dolphin, Bee, Bulba projects"
+        ]
+      }
+    ],
+    "studies": [
+      {
+        "logo": "/logos/ruet.png",
+        "title": "B.Sc. in Computer Science & Engineering",
+        "org": "Rajshahi University of Engineering & Technology (RUET)",
+        "date": "Apr 2022 – May 2026 (Expected)",
+        "bullets": [
+          "Strong focus on DSA and competitive programming",
+          "Built web + mobile projects alongside contests"
+        ]
+      }
+    ]
+  },
+  "achievements": [
+    "UIU IUPC 2025 — 8th (120+ teams)",
+    "ICPC Asia Dhaka Regional 2024 — 30th (300+ teams)",
+    "ICPC Asia Dhaka Regional 2025 — 38th (313 teams)",
+    "Meta Hacker Cup 2025 — rank 1663 (5k+ participants)",
+    "Meta Hacker Cup 2023 — Round 3; rank 1357 (6k+ participants)"
+  ],
+  "certifications": [
+    {
+      "name": "Meta Hacker Cup 2025 — Certificate",
+      "issuer": "Meta / Facebook Coding Competitions",
+      "issued": "Nov 2025",
+      "credentialId": "395099599401064",
+      "image": "/certs/meta-hackercup-2025.jpg",
+      "link": "https://web.facebook.com/codingcompetitions/hacker-cup/2025/certificate/395099599401064",
+      "bullets": ["Official competition certificate", "Global competitive programming contest track record"]
+    },
+    {
+      "name": "Meta Hacker Cup 2023 — Certificate",
+      "issuer": "Meta / Facebook Coding Competitions",
+      "issued": "Mar 2023",
+      "credentialId": "395099599401064",
+      "image": "/certs/meta-hackercup-2023.jpg",
+      "link": "https://web.facebook.com/codingcompetitions/hacker-cup/2023/certificate/395099599401064",
+      "bullets": ["Reached Round 3", "Strong ranking among thousands of participants"]
+    },
+    {
+      "name": "Ostad — Full Stack Web Development (MERN)",
+      "issuer": "Ostad",
+      "issued": "Dec 2024",
+      "credentialId": "C19955",
+      "image": "/certs/mern-1.jpg",
+      "link": "https://github.com/Sefayet-Alam/Achivemenets_-_Certificates-/blob/main/Khandoker%20Sefayet%20Alam-mernstack%206-A19956.pdf",
+      "bullets": ["MERN fundamentals + project-based learning", "Practical web development skills validation"]
+    },
+    {
+      "name": "Udemy — Competitive Programming and Coding Interviews",
+      "issuer": "Udemy",
+      "issued": "Feb 2024",
+      "credentialId": "UC-42d63a33-3932-499f-8615-89e2eb52ae12",
+      "image": "/certs/udemy-1.jpg",
+      "link": "https://www.udemy.com/certificate/UC-42d63a33-3932-499f-8615-89e2eb52ae12/",
+      "bullets": ["Interview-style CP practice", "Algorithms + problem solving improvement"]
+    }
+  ]
 }

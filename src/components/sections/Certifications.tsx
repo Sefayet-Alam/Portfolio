@@ -17,7 +17,7 @@ export function Certifications({ certifications }: { certifications: Cert[] }) {
       <div className="mb-6">
         <h2 className="text-2xl font-semibold tracking-tight">Certificates & Licenses</h2>
         <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-          Credentials that validate skills, tools, and achievements.
+          
         </p>
       </div>
 
