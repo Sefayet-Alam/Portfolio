@@ -212,14 +212,14 @@
       "name": "Conflicts-Within-The-Journey-for-Identity",
       "video": "https://www.youtube.com/watch?v=peIEIWZZVPY",
       "stack": [
-        "Godot"
+        "Godot","GDscript"
       ],
       "bullets": [
         "2D platformer built for BUET Game Jam 2023 (theme: “You are your own enemy”)",
         "Playable build available via Google Drive download (extract and play)",
         "Created by team Phantoms_Unmasked; secured 16th place out of 70+ teams"
       ],
-      "repo": "https://github.com/Sefayet-Alam/My_First_Complete_Game",
+      "repo": "https://github.com/abrar-nazib/conflicts-within-the-journey-for-identity",
       "live": "https://drive.google.com/file/d/11jWS7crnwSl_V-sdg8dew23k6V74G9Tb/view?usp=sharing"
     },
     {
