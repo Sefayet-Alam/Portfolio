@@ -24,24 +24,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Optional: ensure there's always a base background even if a page forgets to set it */
+/* Base background */
 body {
   background: white;
 }
 .dark body {
   background: black;
-}
-
-/* Hide default cursor so our custom cursor shows */
-html,
-body {
-  cursor: none;
-}
-
-/* --- Background Noise Utility --- */
-.noise {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
-  background-repeat: repeat;
 }
 
 /* --- Intro Loader --- */
@@ -51,8 +39,8 @@ body {
   z-index: 99999;
   display: grid;
   place-items: center;
-  background: radial-gradient(800px circle at 50% 45%, rgba(99,102,241,0.14), transparent 62%),
-    rgba(0,0,0,0.92);
+  background: radial-gradient(800px circle at 50% 45%, rgba(99, 102, 241, 0.14), transparent 62%),
+    rgba(0, 0, 0, 0.92);
   backdrop-filter: blur(10px);
   transition: opacity 350ms ease, transform 350ms ease;
   opacity: 1;
@@ -67,18 +55,18 @@ body {
   position: relative;
   width: min(520px, calc(100vw - 48px));
   border-radius: 28px;
-  border: 1px solid rgba(255,255,255,0.10);
-  background: rgba(10,10,10,0.65);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(10, 10, 10, 0.65);
   padding: 34px 28px;
   text-align: center;
-  box-shadow: 0 30px 120px rgba(0,0,0,0.55);
+  box-shadow: 0 30px 120px rgba(0, 0, 0, 0.55);
 }
 
 .intro-glow {
   position: absolute;
   inset: -1px;
   border-radius: 28px;
-  background: radial-gradient(380px circle at 50% 10%, rgba(99,102,241,0.28), transparent 60%);
+  background: radial-gradient(380px circle at 50% 10%, rgba(99, 102, 241, 0.28), transparent 60%);
   pointer-events: none;
   filter: blur(8px);
 }
@@ -87,14 +75,14 @@ body {
   font-size: 44px;
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: rgba(255,255,255,0.95);
+  color: rgba(255, 255, 255, 0.95);
   animation: introPop 220ms ease-out;
 }
 
 .intro-sub {
   margin-top: 10px;
   font-size: 14px;
-  color: rgba(255,255,255,0.65);
+  color: rgba(255, 255, 255, 0.65);
 }
 
 @keyframes introPop {
@@ -102,108 +90,73 @@ body {
   to   { transform: translateY(0) scale(1); opacity: 1; }
 }
 
-
 /* ------------------------------
-   Animated background primitives
+   Smoother “old style” background
+   (animated, but performance-safe)
 -------------------------------- */
 
-/* Noise utility (same as before) */
+/* Static noise: tiny opacity, no animation */
 .noise {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
   background-repeat: repeat;
 }
 
-/* Aurora: animated multi-stop gradients that slide + rotate subtly */
-.aurora {
+/* Aurora: animate background-position only (cheap) */
+.aurora-smooth {
   background:
     radial-gradient(1200px 700px at 10% 20%, rgba(99,102,241,0.22), transparent 60%),
     radial-gradient(1000px 650px at 90% 25%, rgba(168,85,247,0.18), transparent 62%),
     radial-gradient(1100px 720px at 60% 90%, rgba(34,197,94,0.12), transparent 62%),
     radial-gradient(900px 600px at 30% 75%, rgba(56,189,248,0.14), transparent 60%);
-  filter: blur(10px) saturate(120%);
-  transform: translate3d(0,0,0);
-  animation: auroraShift 14s ease-in-out infinite alternate;
+  background-size: 140% 140%;
+  background-position: 0% 0%;
+  animation: auroraShiftSmooth 14s ease-in-out infinite alternate;
+  will-change: background-position;
 }
 
-/* In light mode, keep it quieter */
-:root .aurora {
-  filter: blur(14px) saturate(105%);
+@keyframes auroraShiftSmooth {
+  0%   { background-position: 0% 0%; }
+  100% { background-position: 100% 55%; }
 }
 
-/* Drift blobs: very subtle moving shapes */
-.blob {
+/* Blobs: transform animation only (avoid animated blur/filter) */
+.blob-smooth {
   background:
-    radial-gradient(closest-side at 30% 40%, rgba(99,102,241,0.22), transparent 68%),
-    radial-gradient(closest-side at 70% 60%, rgba(168,85,247,0.18), transparent 70%),
-    radial-gradient(closest-side at 55% 35%, rgba(56,189,248,0.14), transparent 72%);
-  filter: blur(18px);
+    radial-gradient(closest-side at 30% 40%, rgba(99,102,241,0.20), transparent 70%),
+    radial-gradient(closest-side at 70% 60%, rgba(168,85,247,0.16), transparent 72%),
+    radial-gradient(closest-side at 55% 35%, rgba(56,189,248,0.12), transparent 74%);
   transform: translate3d(0,0,0);
+  will-change: transform;
 }
 
-.blob-a { animation: blobA 18s ease-in-out infinite; }
-.blob-b { animation: blobB 22s ease-in-out infinite; }
-.blob-c { animation: blobC 26s ease-in-out infinite; }
+.blob-a { animation: blobFloatA 18s ease-in-out infinite; }
+.blob-b { animation: blobFloatB 22s ease-in-out infinite; }
 
-/* Shimmer: slow moving highlight band */
-.shimmer {
-  background: linear-gradient(
-    120deg,
-    transparent 20%,
-    rgba(255,255,255,0.10) 35%,
-    transparent 50%
-  );
-  transform: translateX(-30%);
-  animation: shimmerMove 10s ease-in-out infinite;
-}
-
-/* Dark mode shimmer should be dimmer + cooler */
-.dark .shimmer {
-  background: linear-gradient(
-    120deg,
-    transparent 18%,
-    rgba(99,102,241,0.10) 34%,
-    transparent 52%
-  );
-}
-
-/* Animations */
-@keyframes auroraShift {
-  0%   { transform: translate(-2%, -2%) scale(1.02) rotate(-1deg); }
-  50%  { transform: translate(2%, 1%)  scale(1.03) rotate(1deg); }
-  100% { transform: translate(-1%, 2%) scale(1.02) rotate(-0.5deg); }
-}
-
-@keyframes blobA {
+@keyframes blobFloatA {
   0%   { transform: translate(-2%, -1%) scale(1.02); }
   50%  { transform: translate(2%, 2%)   scale(1.05); }
   100% { transform: translate(-1%, 1%)  scale(1.02); }
 }
 
-@keyframes blobB {
+@keyframes blobFloatB {
   0%   { transform: translate(2%, 1%)   scale(1.01); }
   50%  { transform: translate(-2%, -1%) scale(1.06); }
   100% { transform: translate(1%, -2%)  scale(1.02); }
 }
 
-@keyframes blobC {
-  0%   { transform: translate(0%, 2%)   scale(1.02); }
-  50%  { transform: translate(2%, -2%)  scale(1.04); }
-  100% { transform: translate(-2%, 0%)  scale(1.02); }
+/* Vignette (static) */
+.vignette-smooth {
+  background: radial-gradient(circle at center, transparent 45%, rgba(0, 0, 0, 0.10) 100%);
+}
+.dark .vignette-smooth {
+  background: radial-gradient(circle at center, transparent 38%, rgba(0, 0, 0, 0.70) 100%);
 }
 
-@keyframes shimmerMove {
-  0%   { transform: translateX(-35%); }
-  50%  { transform: translateX(35%); }
-  100% { transform: translateX(-35%); }
-}
-
-/* Respect reduced-motion */
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  .aurora,
+  .aurora-smooth,
   .blob-a,
-  .blob-b,
-  .blob-c,
-  .shimmer {
+  .blob-b {
     animation: none !important;
   }
 }
