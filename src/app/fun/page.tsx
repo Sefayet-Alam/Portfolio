@@ -34,7 +34,7 @@ export default function FunPage() {
       {/* Instruction bar */}
       <div className="pointer-events-none absolute left-1/2 top-4 z-40 -translate-x-1/2">
         <div className="select-none rounded-full border border-zinc-300 bg-white/85 px-4 py-2 text-xs text-zinc-800 shadow-sm backdrop-blur">
-          Explore neighborhoods • Move: WASD/Arrow • Interact: E (near knights/kids)
+          Explore neighborhoods • Move: WASD/Arrow • Toggle Off browser's setting's "Use hardware acceleration"
         </div>
 
       </div>
