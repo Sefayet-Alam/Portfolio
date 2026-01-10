@@ -134,21 +134,47 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
 
   const cam = { x: 0, y: 0 };
 
+  // --- Input (robust across Windows layouts + prevents caret/scroll stealing keys) ---
   const keys = new Set<string>();
+
+  const isMoveOrActionCode = (code: string) =>
+    code === "KeyW" ||
+    code === "KeyA" ||
+    code === "KeyS" ||
+    code === "KeyD" ||
+    code === "ArrowUp" ||
+    code === "ArrowDown" ||
+    code === "ArrowLeft" ||
+    code === "ArrowRight" ||
+    code === "Space" ||
+    code === "KeyE";
+
   const onKeyDown = (e: KeyboardEvent) => {
-    keys.add(e.key.toLowerCase());
+    // Prevent default browser behavior (scrolling / caret navigation) for game keys
+    if (isMoveOrActionCode(e.code)) e.preventDefault();
+
+    keys.add(e.code);
     if (e.repeat) return;
 
-    if (e.key.toLowerCase() === "e") {
+    if (e.code === "KeyE") {
       if (isPaused()) return;
       const hit = findNearestInteractable({ x: player.x, y: player.y });
       if (!hit) return;
       hit.kind === "stop" ? onOpenStop(hit.id) : onOpenNpc(hit.id);
     }
   };
-  const onKeyUp = (e: KeyboardEvent) => keys.delete(e.key.toLowerCase());
-  window.addEventListener("keydown", onKeyDown);
-  window.addEventListener("keyup", onKeyUp);
+
+  const onKeyUp = (e: KeyboardEvent) => {
+    if (isMoveOrActionCode(e.code)) e.preventDefault();
+    keys.delete(e.code);
+  };
+
+  // If the tab loses focus, clear pressed keys so movement doesn't get stuck.
+  const onBlur = () => keys.clear();
+
+  window.addEventListener("keydown", onKeyDown, { passive: false });
+  window.addEventListener("keyup", onKeyUp, { passive: false });
+  window.addEventListener("blur", onBlur);
 
   let viewW = 0;
   let viewH = 0;
@@ -802,10 +828,10 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
       ensureGrassPattern();
 
       if (!isPaused()) {
-        const up = keys.has("w") || keys.has("arrowup");
-        const down = keys.has("s") || keys.has("arrowdown");
-        const left = keys.has("a") || keys.has("arrowleft");
-        const right = keys.has("d") || keys.has("arrowright");
+        const up = keys.has("KeyW") || keys.has("ArrowUp");
+        const down = keys.has("KeyS") || keys.has("ArrowDown");
+        const left = keys.has("KeyA") || keys.has("ArrowLeft");
+        const right = keys.has("KeyD") || keys.has("ArrowRight");
 
         let dx = 0;
         let dy = 0;
@@ -954,8 +980,9 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
 
   return () => {
     cancelAnimationFrame(raf);
-    window.removeEventListener("keydown", onKeyDown);
-    window.removeEventListener("keyup", onKeyUp);
+    window.removeEventListener("keydown", onKeyDown as any);
+    window.removeEventListener("keyup", onKeyUp as any);
+    window.removeEventListener("blur", onBlur);
     if (ro) ro.disconnect();
     else window.removeEventListener("resize", onWinResize);
   };
