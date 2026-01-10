@@ -26,3 +26,4 @@ export function contextBlock(chunks: { title: string; text: string }[]) {
     .join("\n\n");
   return `KB CONTEXT (use as source of truth):\n\n${joined}`;
 }
+
