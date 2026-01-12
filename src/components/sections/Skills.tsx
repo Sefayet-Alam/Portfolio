@@ -1,3 +1,4 @@
+// components/sections/skill.tsx
 import {
   SiReact,
   SiExpress,
@@ -28,36 +29,47 @@ type SkillsProps = {
 
 const iconMap: Record<string, React.ReactNode> = {
   // Languages
-  "JavaScript": <SiJavascript size={16} />,
-  "Python": <SiPython size={16} />,
-  "C/C++": <SiCplusplus size={16} />,
-  "Java": <FaJava size={16} />,
-  "Dart": <SiDart size={16} />,
+  JavaScript: <SiJavascript size={18} />,
+  Python: <SiPython size={18} />,
+  "C/C++": <SiCplusplus size={18} />,
+  Java: <FaJava size={18} />,
+  Dart: <SiDart size={18} />,
 
   // Frameworks
-  "React": <SiReact size={16} />,
-  "Express.js": <SiExpress size={16} />,
-  "Django": <SiDjango size={16} />,
-  "DRF": <SiDjango size={16} />,
-  "Flutter": <SiFlutter size={16} />,
-  "LangChain": <Sparkles size={16} />, // safe, always exists
+  React: <SiReact size={18} />,
+  "Express.js": <SiExpress size={18} />,
+  Django: <SiDjango size={18} />,
+  DRF: <SiDjango size={18} />,
+  Flutter: <SiFlutter size={18} />,
+  LangChain: <Sparkles size={18} />,
 
   // Databases
-  "MongoDB": <SiMongodb size={16} />,
-  "Firebase (Auth/Firestore)": <SiFirebase size={16} />,
-  "MySQL (basic)": <SiMysql size={16} />,
+  MongoDB: <SiMongodb size={18} />,
+  "Firebase (Auth/Firestore)": <SiFirebase size={18} />,
+  "MySQL (basic)": <SiMysql size={18} />,
 
   // Tools
-  "Git/GitHub": <SiGithub size={16} />,
-  "Postman": <SiPostman size={16} />,
+  "Git/GitHub": <SiGithub size={18} />,
+  Postman: <SiPostman size={18} />,
 };
 
-function Chip({ label }: { label: string }) {
+function SkillChip({ label }: { label: string }) {
   const icon = iconMap[label];
 
   return (
-    <span className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white/70 px-3 py-1 text-xs text-zinc-700 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/50 dark:text-zinc-200">
-      {icon ? <span className="text-zinc-700 dark:text-zinc-200">{icon}</span> : null}
+    <span
+      className="
+        inline-flex items-center gap-2
+        rounded-full border border-zinc-200 bg-white/70
+        px-3 py-1.5
+        text-sm leading-snug text-zinc-700 backdrop-blur
+        dark:border-zinc-800 dark:bg-zinc-950/50 dark:text-zinc-200
+        md:px-4 md:py-2 md:text-base
+      "
+    >
+      {icon ? (
+        <span className="text-zinc-700 dark:text-zinc-200">{icon}</span>
+      ) : null}
       <span>{label}</span>
     </span>
   );
@@ -66,10 +78,13 @@ function Chip({ label }: { label: string }) {
 function Block({ title, items }: { title: string; items: string[] }) {
   return (
     <div className="rounded-2xl border border-zinc-200 bg-white/55 p-5 shadow-[0_1px_0_rgba(0,0,0,0.03)] backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/45">
-      <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{title}</p>
-      <div className="mt-4 flex flex-wrap gap-2">
+      <p className="text-base font-semibold text-zinc-900 dark:text-zinc-50 md:text-lg">
+        {title}
+      </p>
+
+      <div className="mt-4 flex flex-wrap gap-2.5 md:gap-3">
         {items.map((x) => (
-          <Chip key={x} label={x} />
+          <SkillChip key={x} label={x} />
         ))}
       </div>
     </div>
@@ -79,7 +94,9 @@ function Block({ title, items }: { title: string; items: string[] }) {
 export function Skills({ skills }: SkillsProps) {
   return (
     <section id="skills" className="py-14">
-      <h2 className="text-lg font-semibold tracking-tight md:text-xl">Skills</h2>
+      <h2 className="text-xl font-semibold tracking-tight md:text-2xl">
+        Skills
+      </h2>
 
       <div className="mt-6 grid gap-4 md:grid-cols-2">
         <Block title="Strengths" items={skills.strengths} />

@@ -4,7 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import { BackgroundFx } from "@/components/ui/BackgroundFx";
 import { CursorFx } from "@/components/ui/CursorFx";
-import { ChatWidget } from "@/components/ui/ChatWidget";
+import { ChatWidgetGate } from "@/components/ui/ChatWidgetGate";
 
 export const metadata: Metadata = {
   title: "Sefayet-Alam",
@@ -26,7 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           <BackgroundFx />
           <CursorFx />
-          <ChatWidget />
+          <ChatWidgetGate />
           {children}
         </ThemeProvider>
       </body>

@@ -53,10 +53,26 @@ function dist2(a: Vec2, b: Vec2) {
   const dy = a.y - b.y;
   return dx * dx + dy * dy;
 }
-function rectsOverlap(ax: number, ay: number, aw: number, ah: number, bx: number, by: number, bw: number, bh: number) {
+function rectsOverlap(
+  ax: number,
+  ay: number,
+  aw: number,
+  ah: number,
+  bx: number,
+  by: number,
+  bw: number,
+  bh: number
+) {
   return ax < bx + bw && ax + aw > bx && ay < by + bh && ay + ah > by;
 }
-function roundRectPath(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
+function roundRectPath(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+  r: number
+) {
   const rr = Math.max(0, Math.min(r, Math.min(w, h) / 2));
   ctx.beginPath();
   ctx.moveTo(x + rr, y);
@@ -76,12 +92,45 @@ function mulberry32(seed: number) {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 }
-function inView(wx: number, wy: number, ww: number, wh: number, vx: number, vy: number, vw: number, vh: number, pad = 180) {
-  return wx < vx + vw + pad && wx + ww > vx - pad && wy < vy + vh + pad && wy + wh > vy - pad;
+function inView(
+  wx: number,
+  wy: number,
+  ww: number,
+  wh: number,
+  vx: number,
+  vy: number,
+  vw: number,
+  vh: number,
+  pad = 180
+) {
+  return (
+    wx < vx + vw + pad &&
+    wx + ww > vx - pad &&
+    wy < vy + vh + pad &&
+    wy + wh > vy - pad
+  );
 }
 
+// ===============================
+// NEW: Decorations / Wildlife
+// ===============================
 type DecorTree = { x: number; y: number; s: number; tint: number };
 type DecorPond = { x: number; y: number; rx: number; ry: number; rot: number };
+type DecorWell = { x: number; y: number; r: number; roof: number };
+type DecorFlowerPatch = { x: number; y: number; r: number; k: number };
+type DecorBird = { x: number; y: number; s: number; phase: number; kind: "bird" | "butterfly" };
+type DecorAnimal = {
+  x: number;
+  y: number;
+  s: number;
+  phase: number;
+  kind: "deer" | "peacock";
+  vx: number;
+  vy: number;
+  homeX: number;
+  homeY: number;
+  decisionT: number;
+};
 
 type RuntimeNpc = {
   id: string;
@@ -100,11 +149,20 @@ type RuntimeNpc = {
   speed: number;
 };
 
+function hashStr(s: string) {
+  let h = 2166136261;
+  for (let i = 0; i < s.length; i++) {
+    h ^= s.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+
 export async function initVillage(args: InitVillageArgs): Promise<() => void> {
   const { canvas, world, isPaused, onOpenNpc, onOpenStop } = args;
 
   const ctxMaybe = canvas.getContext("2d") as CanvasRenderingContext2D | null;
-  if (!ctxMaybe) return () => {};
+  if (!ctxMaybe) return () => { };
   const ctx: CanvasRenderingContext2D = ctxMaybe;
 
   const W = Math.max(800, world?.size?.w ?? 3600);
@@ -165,9 +223,8 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
   };
 
   const onKeyUp = (e: KeyboardEvent) => {
-  keys.delete(e.code);
+    keys.delete(e.code);
   };
-
 
   // If the tab loses focus, clear pressed keys so movement doesn't get stuck.
   const onBlur = () => keys.clear();
@@ -232,6 +289,9 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
     return v <= 1;
   }
 
+  // NEW: also block wells (circle collision)
+  const wells: DecorWell[] = [];
+
   function collidesCircle(nextX: number, nextY: number, radius: number) {
     if (nextX < radius || nextY < radius || nextX > W - radius || nextY > H - radius) return true;
 
@@ -246,6 +306,12 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
 
     for (const p of ponds) {
       if (pointInRotatedEllipse(nextX, nextY, p, radius * 0.85)) return true;
+    }
+
+    // NEW: wells as solid circles
+    for (const w of wells) {
+      const d = Math.hypot(nextX - w.x, nextY - w.y);
+      if (d < w.r + radius * 0.92) return true;
     }
 
     return false;
@@ -264,8 +330,8 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
       kind === "kid"
         ? 40 + rand() * 35
         : kind === "cat"
-        ? 55 + rand() * 40
-        : 65 + rand() * 50;
+          ? 55 + rand() * 40
+          : 65 + rand() * 50;
 
     return {
       id: n.id,
@@ -388,7 +454,88 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
     trees.push({ x, y, s, tint: (rand() * 3) | 0 });
   }
 
+  // ===============================
+  // NEW: place wells / flowers / birds / animals (no new huts)
+  // ===============================
+  const flowers: DecorFlowerPatch[] = [];
+  const birds: DecorBird[] = [];
+  const animals: DecorAnimal[] = [];
+
+  function isFeatureSpotOK(x: number, y: number, pad: number) {
+    for (const p of ponds) {
+      if (pointInRotatedEllipse(x, y, p, pad)) return false;
+    }
+    for (const st of stops) {
+      const r = st.house;
+      if (rectsOverlap(x - pad, y - pad, pad * 2, pad * 2, r.x - 12, r.y - 12, r.w + 24, r.h + 24)) return false;
+    }
+    for (const w of wells) {
+      if (Math.hypot(x - w.x, y - w.y) < w.r + pad) return false;
+    }
+    return true;
+  }
+
+  // Wells (solid)
+  let wTry = 0;
+  while (wells.length < 7 && wTry < 400) {
+    wTry++;
+    const x = 220 + rand() * (W - 440);
+    const y = 220 + rand() * (H - 440);
+    const r = 18 + rand() * 10;
+    if (!isFeatureSpotOK(x, y, 90)) continue;
+    wells.push({ x, y, r, roof: 26 + rand() * 12 });
+  }
+
+  // Flower patches (visual only)
+  let fTry = 0;
+  while (flowers.length < 95 && fTry < 1200) {
+    fTry++;
+    const x = 120 + rand() * (W - 240);
+    const y = 120 + rand() * (H - 240);
+    if (!isFeatureSpotOK(x, y, 40)) continue;
+    flowers.push({ x, y, r: 14 + rand() * 22, k: (rand() * 1000) | 0 });
+  }
+
+  // Birds + butterflies (visual only)
+  for (let i = 0; i < 42; i++) {
+    const x = 120 + rand() * (W - 240);
+    const y = 120 + rand() * (H - 240);
+    birds.push({
+      x,
+      y,
+      s: 0.8 + rand() * 1.15,
+      phase: rand() * Math.PI * 2,
+      kind: rand() < 0.78 ? "bird" : "butterfly"
+    });
+  }
+
+  // Deer / peacocks (slow wandering, visual only)
+  const animalCount = 7;
+  for (let i = 0; i < animalCount; i++) {
+    const kind: DecorAnimal["kind"] = i < 4 ? "deer" : "peacock";
+    let ax = 260 + rand() * (W - 520);
+    let ay = 260 + rand() * (H - 520);
+    let guard = 0;
+    while (!isFeatureSpotOK(ax, ay, 120) && guard++ < 120) {
+      ax = 260 + rand() * (W - 520);
+      ay = 260 + rand() * (H - 520);
+    }
+    animals.push({
+      x: ax,
+      y: ay,
+      s: 0.85 + rand() * 1.15,
+      phase: rand() * Math.PI * 2,
+      kind,
+      vx: (rand() - 0.5),
+      vy: (rand() - 0.5),
+      homeX: ax,
+      homeY: ay,
+      decisionT: 0.4 + rand() * 1.6
+    });
+  }
+
   // ---- Beautiful hut (door + windows + better grounding) ----
+  // (kept your original hut; only added a few tasteful details: chimney + tiny fence + roof highlight)
   function drawHut(stop: FunStop) {
     const h = stop.house;
     const p = worldToScreen(h.x, h.y);
@@ -426,6 +573,24 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
     ctx.lineTo(roofX + roofW * 0.88, roofY + roofH * 0.98);
     ctx.quadraticCurveTo(roofX + roofW * 0.5, roofY + roofH * 1.10, roofX + roofW * 0.12, roofY + roofH * 0.98);
     ctx.closePath();
+    ctx.fill();
+
+    // roof highlight
+    ctx.globalAlpha = 0.12;
+    ctx.strokeStyle = "rgba(255,255,255,1)";
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(roofX + roofW * 0.16, roofY + roofH * 0.70);
+    ctx.quadraticCurveTo(roofX + roofW * 0.5, roofY + roofH * 0.42, roofX + roofW * 0.84, roofY + roofH * 0.70);
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+
+    // chimney
+    ctx.fillStyle = "rgba(101,70,35,0.55)";
+    roundRectPath(ctx, roofX + roofW * 0.72, roofY + roofH * 0.32, 16, 34, 6);
+    ctx.fill();
+    ctx.fillStyle = "rgba(15,23,42,0.08)";
+    roundRectPath(ctx, roofX + roofW * 0.72, roofY + roofH * 0.30, 16, 8, 4);
     ctx.fill();
 
     // roof underside shadow
@@ -531,6 +696,24 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
       ctx.stroke();
     }
 
+    // tiny fence (front)
+    ctx.globalAlpha = 0.65;
+    ctx.strokeStyle = "rgba(101,70,35,0.8)";
+    ctx.lineWidth = 2;
+    const fy = wallY + wallH + 6;
+    ctx.beginPath();
+    ctx.moveTo(wallX + 14, fy);
+    ctx.lineTo(wallX + wallW - 14, fy);
+    ctx.stroke();
+    for (let i = 0; i < 6; i++) {
+      const xx = wallX + 18 + (i * (wallW - 36)) / 5;
+      ctx.beginPath();
+      ctx.moveTo(xx, fy - 2);
+      ctx.lineTo(xx, fy + 10);
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+
     ctx.restore();
   }
 
@@ -575,8 +758,8 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
       t.tint === 0
         ? "rgba(34, 197, 94, 0.95)"
         : t.tint === 1
-        ? "rgba(22, 163, 74, 0.95)"
-        : "rgba(16, 185, 129, 0.92)";
+          ? "rgba(22, 163, 74, 0.95)"
+          : "rgba(16, 185, 129, 0.92)";
 
     ctx.fillStyle = canopy;
     const blobs = [
@@ -622,63 +805,379 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
     ctx.restore();
   }
 
-  function drawNpc(n: RuntimeNpc) {
-    const p = worldToScreen(n.x, n.y);
+  // ===============================
+  // NEW: draw well / flowers / birds / animals
+  // ===============================
+  function drawWell(w: DecorWell) {
+    const p = worldToScreen(w.x, w.y);
+    drawShadowEllipse(w.x, w.y + 16, w.r * 1.25, w.r * 0.45, 0.12);
 
-    if (n.kind === "kid") {
-      drawShadowEllipse(n.x, n.y + 13, 12, 5, 0.12);
-      ctx.save();
-      ctx.fillStyle = "rgba(253, 224, 180, 1)";
+    ctx.save();
+    // stone ring
+    const g = ctx.createLinearGradient(p.x - w.r, p.y - w.r, p.x + w.r, p.y + w.r);
+    g.addColorStop(0, "rgba(226,232,240,0.95)");
+    g.addColorStop(1, "rgba(148,163,184,0.95)");
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.ellipse(p.x, p.y + 6, w.r, w.r * 0.65, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // inner hole
+    ctx.fillStyle = "rgba(15,23,42,0.35)";
+    ctx.beginPath();
+    ctx.ellipse(p.x, p.y + 6, w.r * 0.62, w.r * 0.40, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // water shine
+    ctx.fillStyle = "rgba(147,197,253,0.18)";
+    ctx.beginPath();
+    ctx.ellipse(p.x - w.r * 0.18, p.y + 3, w.r * 0.28, w.r * 0.18, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // posts + roof
+    ctx.strokeStyle = "rgba(101,70,35,0.85)";
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(p.x - w.r * 0.55, p.y - 14);
+    ctx.lineTo(p.x - w.r * 0.55, p.y - 14 - w.roof);
+    ctx.moveTo(p.x + w.r * 0.55, p.y - 14);
+    ctx.lineTo(p.x + w.r * 0.55, p.y - 14 - w.roof);
+    ctx.stroke();
+
+    ctx.fillStyle = "rgba(204,160,96,0.95)";
+    ctx.beginPath();
+    ctx.moveTo(p.x - w.r * 0.75, p.y - 14 - w.roof + 8);
+    ctx.quadraticCurveTo(p.x, p.y - 14 - w.roof - 18, p.x + w.r * 0.75, p.y - 14 - w.roof + 8);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.restore();
+  }
+
+  function drawFlowerPatch(fp: DecorFlowerPatch, tNow: number) {
+    const p = worldToScreen(fp.x, fp.y);
+    ctx.save();
+    const sway = Math.sin(tNow * 1.2 + fp.k) * 0.6;
+
+    ctx.globalAlpha = 0.85;
+    for (let i = 0; i < 9; i++) {
+      const a = (i / 9) * Math.PI * 2;
+      const rr = fp.r * (0.25 + (i % 3) * 0.08);
+      const x = p.x + Math.cos(a) * (fp.r * 0.55) + sway;
+      const y = p.y + Math.sin(a) * (fp.r * 0.35);
+      ctx.fillStyle =
+        i % 3 === 0 ? "rgba(251, 113, 133, 0.85)" : i % 3 === 1 ? "rgba(250, 204, 21, 0.82)" : "rgba(34, 197, 94, 0.85)";
       ctx.beginPath();
-      ctx.arc(p.x, p.y - 2, 9, 0, Math.PI * 2);
+      ctx.ellipse(x, y, rr, rr * 0.75, a, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    ctx.globalAlpha = 1;
+    ctx.restore();
+  }
+
+  function drawBird(b: DecorBird, tNow: number) {
+    const p = worldToScreen(b.x, b.y);
+    ctx.save();
+
+    const flap = Math.sin(tNow * (b.kind === "bird" ? 6 : 8) + b.phase);
+    const lift = (b.kind === "bird" ? 2.0 : 3.0) * flap;
+    const s = b.s;
+
+    // tiny shadow
+    ctx.globalAlpha = 0.12;
+    ctx.fillStyle = "rgba(15,23,42,1)";
+    ctx.beginPath();
+    ctx.ellipse(p.x, p.y + 14, 6 * s, 2.3 * s, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+
+    if (b.kind === "bird") {
+      // body
+      ctx.fillStyle = "rgba(30,41,59,0.85)";
+      roundRectPath(ctx, p.x - 5 * s, p.y + lift, 10 * s, 6 * s, 3 * s);
       ctx.fill();
 
-      ctx.fillStyle = "rgba(51, 65, 85, 1)";
-      roundRectPath(ctx, p.x - 8, p.y + 7, 16, 14, 6);
+      // wings
+      ctx.strokeStyle = "rgba(30,41,59,0.85)";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(p.x - 4 * s, p.y + 2 + lift);
+      ctx.quadraticCurveTo(p.x - 10 * s, p.y - 3 - flap * 2, p.x - 14 * s, p.y + 2 + lift);
+      ctx.moveTo(p.x + 4 * s, p.y + 2 + lift);
+      ctx.quadraticCurveTo(p.x + 10 * s, p.y - 3 - flap * 2, p.x + 14 * s, p.y + 2 + lift);
+      ctx.stroke();
+
+      // beak
+      ctx.fillStyle = "rgba(251,191,36,0.9)";
+      ctx.beginPath();
+      ctx.moveTo(p.x + 6 * s, p.y + 3 + lift);
+      ctx.lineTo(p.x + 10 * s, p.y + 2 + lift);
+      ctx.lineTo(p.x + 6 * s, p.y + 5 + lift);
+      ctx.closePath();
       ctx.fill();
+    } else {
+      // butterfly
+      ctx.globalAlpha = 0.9;
+      ctx.fillStyle = "rgba(168,85,247,0.65)";
+      ctx.beginPath();
+      ctx.ellipse(p.x - 5 * s, p.y + lift, 6 * s, (5 + flap * 2) * s, 0, 0, Math.PI * 2);
+      ctx.ellipse(p.x + 5 * s, p.y + lift, 6 * s, (5 + flap * 2) * s, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = "rgba(30,41,59,0.75)";
+      roundRectPath(ctx, p.x - 1 * s, p.y + lift - 4 * s, 2 * s, 8 * s, 2 * s);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+
+    ctx.restore();
+  }
+
+  function drawAnimal(a: DecorAnimal, tNow: number) {
+    const p = worldToScreen(a.x, a.y);
+    const s = a.s;
+    const bob = Math.sin(tNow * 2.2 + a.phase) * 0.8;
+
+    if (a.kind === "deer") {
+      drawShadowEllipse(a.x, a.y + 14, 16 * s, 6 * s, 0.12);
+      ctx.save();
+
+      // body
+      ctx.fillStyle = "rgba(120,74,40,0.95)";
+      roundRectPath(ctx, p.x - 14 * s, p.y + bob, 28 * s, 14 * s, 8 * s);
+      ctx.fill();
+
+      // legs
+      ctx.strokeStyle = "rgba(74,42,18,0.9)";
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(p.x - 8 * s, p.y + 12 * s + bob);
+      ctx.lineTo(p.x - 10 * s, p.y + 22 * s + bob);
+      ctx.moveTo(p.x + 8 * s, p.y + 12 * s + bob);
+      ctx.lineTo(p.x + 10 * s, p.y + 22 * s + bob);
+      ctx.stroke();
+
+      // head
+      ctx.fillStyle = "rgba(253,224,180,0.95)";
+      ctx.beginPath();
+      ctx.ellipse(p.x + 18 * s, p.y + 3 * s + bob, 9 * s, 7 * s, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // ears
+      ctx.fillStyle = "rgba(253,224,180,0.9)";
+      ctx.beginPath();
+      ctx.ellipse(p.x + 20 * s, p.y - 4 * s + bob, 3 * s, 5 * s, 0.5, 0, Math.PI * 2);
+      ctx.ellipse(p.x + 14 * s, p.y - 4 * s + bob, 3 * s, 5 * s, -0.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      // antlers
+      ctx.strokeStyle = "rgba(101,70,35,0.85)";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(p.x + 16 * s, p.y - 6 * s + bob);
+      ctx.lineTo(p.x + 10 * s, p.y - 16 * s + bob);
+      ctx.lineTo(p.x + 12 * s, p.y - 20 * s + bob);
+      ctx.moveTo(p.x + 20 * s, p.y - 6 * s + bob);
+      ctx.lineTo(p.x + 26 * s, p.y - 16 * s + bob);
+      ctx.lineTo(p.x + 24 * s, p.y - 20 * s + bob);
+      ctx.stroke();
+
       ctx.restore();
       return;
     }
 
-    // cat / dog (map icon)
+    // peacock
+    drawShadowEllipse(a.x, a.y + 14, 16 * s, 6 * s, 0.12);
+    ctx.save();
+
+    // tail fan
+    ctx.globalAlpha = 0.75;
+    ctx.fillStyle = "rgba(16,185,129,0.65)";
+    ctx.beginPath();
+    ctx.ellipse(p.x - 10 * s, p.y - 2 * s + bob, 22 * s, 18 * s, -0.4, 0, Math.PI * 2);
+    ctx.fill();
+
+    // eye spots
+    ctx.globalAlpha = 0.7;
+    for (let i = 0; i < 7; i++) {
+      const ang = -0.7 + (i / 6) * 1.2;
+      const ex = p.x - 18 * s + Math.cos(ang) * 12 * s;
+      const ey = p.y - 8 * s + bob + Math.sin(ang) * 10 * s;
+      ctx.fillStyle = "rgba(59,130,246,0.55)";
+      ctx.beginPath();
+      ctx.arc(ex, ey, 3.6 * s, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = "rgba(250,204,21,0.55)";
+      ctx.beginPath();
+      ctx.arc(ex, ey, 1.6 * s, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+
+    // body
+    ctx.fillStyle = "rgba(30,64,175,0.9)";
+    roundRectPath(ctx, p.x - 10 * s, p.y + bob, 20 * s, 12 * s, 7 * s);
+    ctx.fill();
+
+    // neck + head
+    ctx.fillStyle = "rgba(16,185,129,0.9)";
+    roundRectPath(ctx, p.x + 6 * s, p.y - 10 * s + bob, 6 * s, 16 * s, 4 * s);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(p.x + 10 * s, p.y - 12 * s + bob, 5 * s, 0, Math.PI * 2);
+    ctx.fill();
+
+    // beak
+    ctx.fillStyle = "rgba(251,191,36,0.9)";
+    ctx.beginPath();
+    ctx.moveTo(p.x + 15 * s, p.y - 12 * s + bob);
+    ctx.lineTo(p.x + 22 * s, p.y - 14 * s + bob);
+    ctx.lineTo(p.x + 15 * s, p.y - 10 * s + bob);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.restore();
+  }
+
+  function drawNpc(n: RuntimeNpc, tNow: number) {
+    const p = worldToScreen(n.x, n.y);
+    const h = hashStr(n.id + n.name);
+    const bob = Math.sin(tNow * 2.1 + (h % 1000)) * 0.8;
+
+    if (n.kind === "kid") {
+      drawShadowEllipse(n.x, n.y + 13, 12, 5, 0.12);
+      ctx.save();
+
+      // skin
+      ctx.fillStyle = "rgba(253, 224, 180, 1)";
+      ctx.beginPath();
+      ctx.arc(p.x, p.y - 2 + bob, 9, 0, Math.PI * 2);
+      ctx.fill();
+
+      // hair (varied)
+      const hairTone = h % 3 === 0 ? "rgba(15,23,42,0.92)" : h % 3 === 1 ? "rgba(51,65,85,0.92)" : "rgba(30,41,59,0.90)";
+      ctx.fillStyle = hairTone;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y - 6 + bob, 9.2, Math.PI, Math.PI * 2);
+      ctx.closePath();
+      ctx.fill();
+
+      // bangs / pony / side
+      ctx.globalAlpha = 0.9;
+      if ((h & 1) === 0) {
+        ctx.beginPath();
+        ctx.ellipse(p.x - 4, p.y - 8 + bob, 4.2, 3.4, 0.2, 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        ctx.beginPath();
+        ctx.ellipse(p.x + 4, p.y - 9 + bob, 4.6, 3.2, -0.2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+
+      // eyes
+      ctx.fillStyle = "rgba(15,23,42,0.85)";
+      ctx.beginPath();
+      ctx.arc(p.x - 3, p.y - 2 + bob, 1.3, 0, Math.PI * 2);
+      ctx.arc(p.x + 3, p.y - 2 + bob, 1.3, 0, Math.PI * 2);
+      ctx.fill();
+
+      // smile
+      ctx.strokeStyle = "rgba(15,23,42,0.35)";
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y + 1.5 + bob, 3.6, 0.1 * Math.PI, 0.9 * Math.PI);
+      ctx.stroke();
+
+      // outfit color (varied)
+      const shirt =
+        h % 4 === 0
+          ? "rgba(30,64,175,0.92)"
+          : h % 4 === 1
+            ? "rgba(15,118,110,0.92)"
+            : h % 4 === 2
+              ? "rgba(99,102,241,0.90)"
+              : "rgba(51,65,85,0.92)";
+
+      ctx.fillStyle = shirt;
+      roundRectPath(ctx, p.x - 9, p.y + 7 + bob, 18, 14, 7);
+      ctx.fill();
+
+      // belt / stripe
+      ctx.globalAlpha = 0.25;
+      ctx.fillStyle = "rgba(255,255,255,1)";
+      roundRectPath(ctx, p.x - 8, p.y + 12 + bob, 16, 3, 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+
+      // tiny hands
+      ctx.fillStyle = "rgba(253,224,180,0.9)";
+      ctx.beginPath();
+      ctx.arc(p.x - 10, p.y + 13 + bob, 2.2, 0, Math.PI * 2);
+      ctx.arc(p.x + 10, p.y + 13 + bob, 2.2, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.restore();
+      return;
+    }
+
+    // cat / dog (map icon) — upgraded a bit
     drawShadowEllipse(n.x, n.y + 10, 12, 5, 0.12);
     ctx.save();
 
     const body = n.kind === "cat" ? "rgba(100,116,139,1)" : "rgba(120,74,40,1)";
     const face = n.kind === "cat" ? "rgba(148,163,184,1)" : "rgba(253,224,180,1)";
 
+    // body
     ctx.fillStyle = body;
-    roundRectPath(ctx, p.x - 10, p.y + 2, 20, 10, 6);
+    roundRectPath(ctx, p.x - 10, p.y + 2 + bob * 0.4, 20, 10, 6);
     ctx.fill();
 
-    ctx.fillStyle = face;
-    ctx.beginPath();
-    ctx.arc(p.x + 12, p.y + 4, 6, 0, Math.PI * 2);
-    ctx.fill();
-
-    if (n.kind === "cat") {
-      ctx.fillStyle = face;
-      ctx.beginPath();
-      ctx.moveTo(p.x + 9, p.y - 2);
-      ctx.lineTo(p.x + 11, p.y + 2);
-      ctx.lineTo(p.x + 7, p.y + 2);
-      ctx.closePath();
-      ctx.fill();
-
-      ctx.beginPath();
-      ctx.moveTo(p.x + 15, p.y - 2);
-      ctx.lineTo(p.x + 17, p.y + 2);
-      ctx.lineTo(p.x + 13, p.y + 2);
-      ctx.closePath();
-      ctx.fill();
-    }
-
+    // tail
     ctx.strokeStyle = body;
     ctx.lineWidth = 3;
     ctx.beginPath();
-    ctx.moveTo(p.x - 10, p.y + 8);
-    ctx.quadraticCurveTo(p.x - 18, p.y + 2, p.x - 12, p.y - 2);
+    ctx.moveTo(p.x - 10, p.y + 8 + bob * 0.4);
+    ctx.quadraticCurveTo(p.x - 18, p.y + 2 + bob * 0.4, p.x - 12, p.y - 2 + bob * 0.4);
     ctx.stroke();
+
+    // head
+    ctx.fillStyle = face;
+    ctx.beginPath();
+    ctx.arc(p.x + 12, p.y + 4 + bob * 0.4, 6, 0, Math.PI * 2);
+    ctx.fill();
+
+    // ears for cat, floppy ears for dog
+    ctx.fillStyle = face;
+    if (n.kind === "cat") {
+      ctx.beginPath();
+      ctx.moveTo(p.x + 9, p.y - 2 + bob * 0.4);
+      ctx.lineTo(p.x + 11, p.y + 2 + bob * 0.4);
+      ctx.lineTo(p.x + 7, p.y + 2 + bob * 0.4);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(p.x + 15, p.y - 2 + bob * 0.4);
+      ctx.lineTo(p.x + 17, p.y + 2 + bob * 0.4);
+      ctx.lineTo(p.x + 13, p.y + 2 + bob * 0.4);
+      ctx.closePath();
+      ctx.fill();
+    } else {
+      ctx.globalAlpha = 0.9;
+      ctx.beginPath();
+      ctx.ellipse(p.x + 9, p.y + 1 + bob * 0.4, 3, 5, 0.4, 0, Math.PI * 2);
+      ctx.ellipse(p.x + 16, p.y + 1 + bob * 0.4, 3, 5, -0.4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+
+    // eyes
+    ctx.fillStyle = "rgba(15,23,42,0.75)";
+    ctx.beginPath();
+    ctx.arc(p.x + 10.5, p.y + 3 + bob * 0.4, 0.9, 0, Math.PI * 2);
+    ctx.arc(p.x + 13.5, p.y + 3 + bob * 0.4, 0.9, 0, Math.PI * 2);
+    ctx.fill();
 
     ctx.restore();
   }
@@ -823,6 +1322,8 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
     const dt = Math.min(0.05, (now - last) / 1000);
     last = now;
 
+    const tNow = now / 1000;
+
     try {
       if (!viewW || !viewH) return;
       ensureGrassPattern();
@@ -895,6 +1396,49 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
           n.x = clamp(n.x, n.radius, W - n.radius);
           n.y = clamp(n.y, n.radius, H - n.radius);
         }
+
+        // NEW: animals wander + lightly avoid player
+        for (const a of animals) {
+          a.decisionT -= dt;
+          if (a.decisionT <= 0) {
+            const ang = rand() * Math.PI * 2;
+            a.vx = Math.cos(ang);
+            a.vy = Math.sin(ang);
+            a.decisionT = 0.9 + rand() * 2.2;
+          }
+
+          const pdx = a.x - player.x;
+          const pdy = a.y - player.y;
+          const pd = Math.hypot(pdx, pdy);
+          if (pd < 160) {
+            // flee a bit
+            const fx = (pdx / (pd || 1)) * 0.9;
+            const fy = (pdy / (pd || 1)) * 0.9;
+            a.vx = a.vx * 0.25 + fx * 0.75;
+            a.vy = a.vy * 0.25 + fy * 0.75;
+          }
+
+          // gentle home pull
+          const hx = a.homeX - a.x;
+          const hy = a.homeY - a.y;
+          a.vx += hx * 0.0008;
+          a.vy += hy * 0.0008;
+
+          const vlen = Math.hypot(a.vx, a.vy) || 1;
+          const vx = a.vx / vlen;
+          const vy = a.vy / vlen;
+          const sp = a.kind === "deer" ? 22 : 18;
+
+          const ax = a.x + vx * sp * dt;
+          const ay = a.y + vy * sp * dt;
+
+          // avoid solids a bit (animals are non-solid, but keep them from clipping too much)
+          if (!collidesCircle(ax, a.y, 10)) a.x = ax;
+          if (!collidesCircle(a.x, ay, 10)) a.y = ay;
+
+          a.x = clamp(a.x, 18, W - 18);
+          a.y = clamp(a.y, 18, H - 18);
+        }
       }
 
       updateCamera();
@@ -921,11 +1465,24 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
       type DrawItem = { y: number; draw: () => void };
       const q: DrawItem[] = [];
 
+      // flowers (low)
+      for (const fp of flowers) {
+        if (!inView(fp.x - fp.r - 20, fp.y - fp.r - 20, fp.r * 2 + 40, fp.r * 2 + 40, vx, vy, viewW, viewH)) continue;
+        q.push({ y: fp.y + 2, draw: () => drawFlowerPatch(fp, tNow) });
+      }
+
       for (const t of trees) {
         if (!inView(t.x - 70, t.y - 90, 140, 160, vx, vy, viewW, viewH)) continue;
         q.push({ y: t.y, draw: () => drawTree(t) });
       }
 
+      // wells
+      for (const w of wells) {
+        if (!inView(w.x - 80, w.y - 120, 160, 220, vx, vy, viewW, viewH)) continue;
+        q.push({ y: w.y + 20, draw: () => drawWell(w) });
+      }
+
+      // huts + knights
       for (const s of stops) {
         const h = s.house;
         if (!inView(h.x - 30, h.y - 120, h.w + 60, h.h + 240, vx, vy, viewW, viewH)) continue;
@@ -933,31 +1490,72 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
         q.push({ y: s.knight.y, draw: () => drawKnight(s.knight) });
       }
 
-      for (const n of npcs) {
-        if (!inView(n.x - 40, n.y - 40, 80, 80, vx, vy, viewW, viewH)) continue;
-        q.push({ y: n.y, draw: () => drawNpc(n) });
+      // animals
+      for (const a of animals) {
+        if (!inView(a.x - 60, a.y - 80, 120, 160, vx, vy, viewW, viewH)) continue;
+        q.push({ y: a.y + 10, draw: () => drawAnimal(a, tNow) });
       }
 
-      // player
+      // NPCs
+      for (const n of npcs) {
+        if (!inView(n.x - 40, n.y - 40, 80, 80, vx, vy, viewW, viewH)) continue;
+        q.push({ y: n.y, draw: () => drawNpc(n, tNow) });
+      }
+
+      // birds / butterflies (draw high so they feel "above" the world a bit)
+      for (const b of birds) {
+        if (!inView(b.x - 60, b.y - 80, 120, 160, vx, vy, viewW, viewH)) continue;
+        // fly layer: y sort slightly above ground objects
+        q.push({ y: b.y - 120, draw: () => drawBird(b, tNow) });
+      }
+
+      // player (kept original, upgraded details but same mechanics)
       q.push({
         y: player.y,
         draw: () => {
           const p = worldToScreen(player.x, player.y);
           drawShadowEllipse(player.x, player.y + 16, 14, 6, 0.12);
 
+          // body
+          ctx.save();
           ctx.fillStyle = "rgba(30, 41, 59, 1)";
           roundRectPath(ctx, p.x - 10, p.y + 2, 20, 18, 8);
           ctx.fill();
 
+          // belt highlight
+          ctx.globalAlpha = 0.18;
+          ctx.fillStyle = "rgba(255,255,255,1)";
+          roundRectPath(ctx, p.x - 9, p.y + 10, 18, 3, 2);
+          ctx.fill();
+          ctx.globalAlpha = 1;
+
+          // head
           ctx.fillStyle = "rgba(253, 224, 180, 1)";
           ctx.beginPath();
           ctx.arc(p.x, p.y - 6, 9, 0, Math.PI * 2);
           ctx.fill();
 
+          // hair
+          ctx.fillStyle = "rgba(15, 23, 42, 0.90)";
+          ctx.beginPath();
+          ctx.arc(p.x - 1, p.y - 10.5, 8.5, Math.PI * 1.05, Math.PI * 1.95);
+          ctx.fill();
+
+          // eyes (directional)
           ctx.fillStyle = "rgba(15,23,42,0.85)";
           ctx.beginPath();
-          ctx.arc(p.x + player.faceX * 3, p.y - 7, 1.8, 0, Math.PI * 2);
+          ctx.arc(p.x + player.faceX * 2.8 - 2.2, p.y - 7, 1.3, 0, Math.PI * 2);
+          ctx.arc(p.x + player.faceX * 2.8 + 2.2, p.y - 7, 1.3, 0, Math.PI * 2);
           ctx.fill();
+
+          // tiny mouth
+          ctx.strokeStyle = "rgba(15,23,42,0.35)";
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y - 3.3, 3.2, 0.15 * Math.PI, 0.85 * Math.PI);
+          ctx.stroke();
+
+          ctx.restore();
         }
       });
 
