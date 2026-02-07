@@ -84,6 +84,16 @@
         "links": []
       },
       {
+        "logo": "/logos/buet_cse_fest_2026.png",
+        "title": "BUET IUPC 2026 — 32rd",
+        "org": "110+ teams • Team: Black_Falcons",
+        "date": "2026",
+        "bullets": [
+          "Strong placement among top teams"
+        ],
+        "links": []
+      },
+      {
         "logo": "/logos/icpc.png",
         "title": "ICPC Asia Dhaka Regional 2024 — 30th",
         "org": "300+ teams • Team: RUET_a_bit_slower",
