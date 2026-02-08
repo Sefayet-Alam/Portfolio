@@ -74,7 +74,7 @@ export function Hero({ profile }: HeroProps) {
 
             {/* Strongest facts from CV */}
             <div className="mt-5 flex flex-wrap gap-2">
-              <Chip>Codeforces Expert (max 1734)</Chip>
+              <Chip>Codeforces Expert (max 1814)</Chip>
               <Chip>3500+ problems solved</Chip>
               <Chip>UIU IUPC 2025 — 8th / 120+ teams</Chip>
               <Chip>CodeChef 5★ (max 2019)</Chip>
