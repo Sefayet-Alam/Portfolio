@@ -270,3 +270,15 @@ infrastructure only where it satisfies this handoff.
 - Neither research item may be described as accepted or published until the
   source data changes.
 - Keep recruiter-facing KB entries aligned with the visible portfolio.
+
+## Final Execution Record
+
+The redesign, AI/ML content pass, research/certificate updates, greeting
+sequence, and Memory Atlas game are complete. The authoritative completion and
+verification record is:
+
+`docs/handoffs/2026-07-27-progress-tracker.md`
+
+GitHub `main` was updated with force-with-lease to commit
+`0f5b05ea4fb6e45f19b9e6a0e94d9aa642aefcdd`. The local development server was
+stopped after verification.
