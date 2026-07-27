@@ -8,6 +8,9 @@ export function ThemeToggle() {
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
+  // The resolved theme is only known on the client. Rendering a neutral
+  // placeholder until mount is what prevents a hydration mismatch here.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => setMounted(true), []);
 
   // Avoid hydration mismatch: render a placeholder until mounted

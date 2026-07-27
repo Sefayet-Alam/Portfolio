@@ -1,5 +1,7 @@
 "use client";
 
+import type { VillagePalette } from "@/components/fun/palette";
+
 export type FunStop = {
   id: string;
   title: string;
@@ -38,6 +40,13 @@ export type FunWorld = {
 type InitVillageArgs = {
   canvas: HTMLCanvasElement;
   world: FunWorld;
+  /**
+   * Day/dusk grading. The scene is always drawn in its day colors; when
+   * `palette.isDark` is true a night grade is composited over the finished
+   * frame. Grading beats recoloring ~85 individual literals: it cannot
+   * break a single draw call, and it preserves character/skin tones.
+   */
+  palette: VillagePalette;
   isPaused: () => boolean;
   onOpenStop: (stopId: string) => void;
   onOpenNpc: (npcId: string) => void;
@@ -159,7 +168,7 @@ function hashStr(s: string) {
 }
 
 export async function initVillage(args: InitVillageArgs): Promise<() => void> {
-  const { canvas, world, isPaused, onOpenNpc, onOpenStop } = args;
+  const { canvas, world, palette, isPaused, onOpenNpc, onOpenStop } = args;
 
   const ctxMaybe = canvas.getContext("2d") as CanvasRenderingContext2D | null;
   if (!ctxMaybe) return () => { };
@@ -218,7 +227,8 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
       if (isPaused()) return;
       const hit = findNearestInteractable({ x: player.x, y: player.y });
       if (!hit) return;
-      hit.kind === "stop" ? onOpenStop(hit.id) : onOpenNpc(hit.id);
+      if (hit.kind === "stop") onOpenStop(hit.id);
+      else onOpenNpc(hit.id);
     }
   };
 
@@ -1313,6 +1323,52 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
     }
   }
 
+  /**
+   * Dusk grade. Multiply pushes the whole frame cool and dark; the second
+   * pass deepens shadows without fully desaturating. Applied to the world
+   * only — HUD text is drawn afterwards so it stays at full contrast.
+   */
+  function drawNightGrade() {
+    if (!palette.isDark) return;
+    ctx.save();
+    ctx.globalCompositeOperation = "multiply";
+    ctx.fillStyle = "rgba(78, 96, 148, 1)";
+    ctx.fillRect(0, 0, viewW, viewH);
+    ctx.globalCompositeOperation = "source-over";
+    ctx.fillStyle = "rgba(8, 12, 30, 0.32)";
+    ctx.fillRect(0, 0, viewW, viewH);
+    ctx.restore();
+  }
+
+  /** Warm additive glow from each hut's windows, drawn over the dusk grade. */
+  function drawWindowGlow() {
+    if (!palette.isDark) return;
+    ctx.save();
+    ctx.globalCompositeOperation = "lighter";
+
+    for (const s of stops) {
+      const h = s.house;
+      const p = worldToScreen(h.x, h.y);
+      const cx = p.x + h.w * 0.5;
+      const cy = p.y + h.h * 0.45;
+      const r = Math.max(h.w, h.h) * 1.05;
+
+      // cheap cull — skip huts well outside the viewport
+      if (cx < -r || cx > viewW + r || cy < -r || cy > viewH + r) continue;
+
+      const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+      g.addColorStop(0, "rgba(255, 168, 64, 0.26)");
+      g.addColorStop(0.5, "rgba(255, 150, 50, 0.10)");
+      g.addColorStop(1, "rgba(255, 150, 50, 0)");
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    ctx.restore();
+  }
+
   // ---- Loop ----
   let raf = 0;
   let last = performance.now();
@@ -1561,6 +1617,11 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
 
       q.sort((a, b) => a.y - b.y);
       for (const it of q) it.draw();
+
+      // Grade the finished world before any UI is drawn, so HUD text and
+      // signs keep full contrast in both themes.
+      drawNightGrade();
+      drawWindowGlow();
 
       // ✅ big neighborhood signs on top (world-anchored)
       drawNeighborhoodSigns();

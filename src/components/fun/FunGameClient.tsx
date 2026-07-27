@@ -6,7 +6,7 @@ const FunGame = dynamic(() => import("@/components/fun/FunGame"), {
   ssr: false,
   loading: () => (
     <div className="grid h-[100svh] w-full place-items-center">
-      <div className="rounded-2xl border border-zinc-200 bg-white/70 px-5 py-3 text-sm text-zinc-700 shadow-sm backdrop-blur">
+      <div className="border border-rule bg-raised px-5 py-3 font-mono text-xs uppercase tracking-[0.16em] text-muted">
         Loading village…
       </div>
     </div>

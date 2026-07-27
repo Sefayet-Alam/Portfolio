@@ -28,6 +28,10 @@ export function IntroLoader() {
     if (seen === "1") return;
 
     sessionStorage.setItem("introSeen", "1");
+    // sessionStorage is unavailable during SSR, so this gate can only be
+    // evaluated on the client. Reading it in a state initializer instead
+    // would desync server and client markup and break hydration.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setShow(true);
 
     const prevOverflow = document.body.style.overflow;

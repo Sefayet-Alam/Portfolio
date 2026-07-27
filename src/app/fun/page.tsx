@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import FunGameClient from "@components/fun/FunGameClient";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 export default function FunPage() {
   const rootRef = useRef<HTMLElement | null>(null);
@@ -15,28 +16,34 @@ export default function FunPage() {
 
   return (
     <main
-      ref={rootRef as any}
+      ref={rootRef}
       tabIndex={-1}
-      className="relative h-[100svh] w-full overflow-hidden bg-white outline-none"
+      className="relative h-[100svh] w-full overflow-hidden bg-surface outline-none"
       onMouseDown={() => rootRef.current?.focus()}
       onTouchStart={() => rootRef.current?.focus()}
     >
-      {/* Sticky Back Home (no header) */}
-      <div className="pointer-events-none absolute left-4 top-4 z-50">
+      {/* Back home — top left */}
+      <div className="pointer-events-none absolute left-5 top-5 z-50">
         <Link
           href="/"
-          className="pointer-events-auto inline-flex items-center gap-2 rounded-full border border-zinc-300 bg-white/90 px-4 py-2 text-sm font-medium text-zinc-900 shadow-sm backdrop-blur hover:bg-white"
+          className="pointer-events-auto inline-flex items-center gap-2 border border-rule bg-surface/90 px-4 py-2 font-mono text-xs uppercase tracking-[0.14em] text-ink backdrop-blur-sm transition-colors hover:bg-accent hover:text-accent-ink"
         >
           ← Back Home
         </Link>
       </div>
 
-      {/* Instruction bar */}
-      <div className="pointer-events-none absolute left-1/2 top-4 z-40 -translate-x-1/2">
-        <div className="select-none rounded-full border border-zinc-300 bg-white/85 px-4 py-2 text-xs text-zinc-800 shadow-sm backdrop-blur">
-          Explore neighborhoods • Move: WASD/Arrow • Toggle Off browser's setting's "Use hardware acceleration"
+      {/* Theme toggle — top right. Switches the village between day and dusk. */}
+      <div className="pointer-events-none absolute right-5 top-5 z-50">
+        <div className="pointer-events-auto bg-surface/90 backdrop-blur-sm">
+          <ThemeToggle />
         </div>
+      </div>
 
+      {/* Instruction bar — top center */}
+      <div className="pointer-events-none absolute left-1/2 top-5 z-40 hidden -translate-x-1/2 sm:block">
+        <div className="select-none border border-rule bg-surface/85 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-muted backdrop-blur-sm">
+          Move WASD / Arrows · Press E to enter · Esc to close
+        </div>
       </div>
 
       <FunGameClient />

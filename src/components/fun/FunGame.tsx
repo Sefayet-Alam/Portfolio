@@ -1,8 +1,15 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useTheme } from "next-themes";
 import world from "@/content/fun.world.json";
-import { initVillage, type FunNpc, type FunStop } from "@/components/fun/village";
+import {
+  initVillage,
+  type FunNpc,
+  type FunStop,
+  type FunWorld,
+} from "@/components/fun/village";
+import { getVillagePalette } from "@/components/fun/palette";
 import { FunStoryOverlay } from "@/components/fun/FunStoryOverlay";
 import { FunNpcOverlay } from "@/components/fun/FunNpcOverlay";
 
@@ -12,8 +19,15 @@ export default function FunGame() {
   const [openStop, setOpenStop] = useState<FunStop | null>(null);
   const [openNpc, setOpenNpc] = useState<FunNpc | null>(null);
 
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme !== "light";
+
+  // Writing a ref during render is a React correctness violation — the
+  // compiler can reorder or skip it. Keep it in an effect instead.
   const pausedRef = useRef(false);
-  pausedRef.current = !!openStop || !!openNpc;
+  useEffect(() => {
+    pausedRef.current = !!openStop || !!openNpc;
+  }, [openStop, openNpc]);
 
   const stopById = useMemo(() => {
     const map = new Map<string, FunStop>();
@@ -36,7 +50,8 @@ export default function FunGame() {
     (async () => {
       cleanup = await initVillage({
         canvas: canvasRef.current!,
-        world: world as any,
+        world: world as unknown as FunWorld,
+        palette: getVillagePalette(isDark),
         isPaused: () => pausedRef.current,
         onOpenStop: (stopId) => setOpenStop(stopById.get(stopId) ?? null),
         onOpenNpc: (npcId) => setOpenNpc(npcById.get(npcId) ?? null),
@@ -44,9 +59,9 @@ export default function FunGame() {
     })();
 
     return () => cleanup?.();
-  }, [npcById, stopById]);
+  }, [npcById, stopById, isDark]);
 
-  // ✅ NEW: keep keyboard focus on the canvas (Windows needs this)
+  // keep keyboard focus on the canvas (Windows needs this)
   useEffect(() => {
     const c = canvasRef.current;
     if (!c) return;
@@ -55,13 +70,18 @@ export default function FunGame() {
     (document.activeElement as HTMLElement | null)?.blur();
     c.focus();
 
-    const refocus = () => c.focus();
+    const refocus = (e: PointerEvent) => {
+      // Don't steal focus from overlay controls or the theme toggle.
+      const target = e.target as HTMLElement | null;
+      if (target?.closest("button, a, input, textarea, select")) return;
+      c.focus();
+    };
     window.addEventListener("pointerdown", refocus);
 
     return () => window.removeEventListener("pointerdown", refocus);
   }, []);
 
-  // ✅ OPTIONAL: stop arrow/space from scrolling the page
+  // stop arrow/space from scrolling the page
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       const block = new Set([
@@ -75,7 +95,7 @@ export default function FunGame() {
     };
 
     window.addEventListener("keydown", onKeyDown, { passive: false });
-    return () => window.removeEventListener("keydown", onKeyDown as any);
+    return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
   return (

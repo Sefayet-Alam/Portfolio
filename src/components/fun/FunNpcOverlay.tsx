@@ -29,44 +29,53 @@ export function FunNpcOverlay({ npc, onClose }: FunNpcOverlayProps) {
 
   return (
     <div className="fixed inset-0 z-[70] flex items-end justify-center p-4 md:items-center">
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" onClick={onClose} />
+      <div
+        className="absolute inset-0 bg-black/50 backdrop-blur-[2px]"
+        onClick={onClose}
+      />
 
-      <div className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-2xl">
-        <div className="flex items-center gap-3 border-b border-zinc-200 px-5 py-4">
-          <div className="relative h-12 w-12 overflow-hidden rounded-full border border-zinc-200 bg-zinc-50">
+      <div className="relative w-full max-w-lg overflow-hidden border border-rule bg-raised shadow-2xl">
+        <div className="flex items-center gap-3 border-b border-rule px-5 py-4">
+          <div className="relative h-12 w-12 shrink-0 overflow-hidden border border-rule bg-surface">
             {npc.avatar ? (
-              <Image src={npc.avatar} alt={npc.name} fill className="object-cover" />
+              <Image
+                src={npc.avatar}
+                alt={npc.name}
+                fill
+                sizes="48px"
+                className="object-cover"
+              />
             ) : (
-              <div className="flex h-full w-full items-center justify-center text-sm text-zinc-600">
+              <div className="flex h-full w-full items-center justify-center text-sm">
                 {emoji}
               </div>
             )}
           </div>
 
           <div className="min-w-0">
-            <p className="text-xs text-zinc-500">
+            <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted">
               {label} <span className="ml-1">{emoji}</span>
             </p>
-            <p className="truncate font-semibold text-zinc-900">{npc.name}</p>
+            <p className="truncate font-medium text-ink">{npc.name}</p>
           </div>
 
           <button
             onClick={onClose}
             aria-label="Close"
-            className="ml-auto inline-flex h-9 w-9 items-center justify-center rounded-full border border-zinc-200 text-zinc-700 hover:bg-zinc-50"
+            className="ml-auto inline-flex h-9 w-9 shrink-0 items-center justify-center border border-rule text-ink transition-colors hover:bg-accent hover:text-accent-ink"
           >
             ✕
           </button>
         </div>
 
-        <div className="px-5 py-4">
-          <div className="rounded-2xl bg-zinc-100 px-4 py-3 text-sm leading-relaxed text-zinc-900">
+        <div className="px-5 py-5">
+          <div className="border-l-2 border-accent bg-surface px-4 py-3 text-sm leading-relaxed text-ink">
             {npc.message}
           </div>
         </div>
 
-        <div className="border-t border-zinc-200 px-5 py-3 text-xs text-zinc-500">
-          Press <b>E</b> near villagers/animals to interact. Press <b>Esc</b> to close.
+        <div className="border-t border-rule px-5 py-3 font-mono text-[10px] uppercase tracking-[0.14em] text-muted">
+          Press E near villagers to interact · Esc to close
         </div>
       </div>
     </div>
