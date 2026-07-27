@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { ArrowLeft, Gamepad2 } from "lucide-react";
 import { useEffect, useRef } from "react";
 import FunGameClient from "@components/fun/FunGameClient";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
@@ -22,27 +23,26 @@ export default function FunPage() {
       onMouseDown={() => rootRef.current?.focus()}
       onTouchStart={() => rootRef.current?.focus()}
     >
-      {/* Back home — top left */}
       <div className="pointer-events-none absolute left-5 top-5 z-50">
         <Link
           href="/"
-          className="pointer-events-auto inline-flex items-center gap-2 border border-rule bg-surface/90 px-4 py-2 font-mono text-xs uppercase tracking-[0.14em] text-ink backdrop-blur-sm transition-colors hover:bg-accent hover:text-accent-ink"
+          className="fun-hud-panel pointer-events-auto inline-flex min-h-11 items-center gap-2 px-4 font-mono text-[10px] uppercase tracking-[0.14em] text-ink transition-[transform,color,border-color] duration-200 hover:-translate-y-0.5 hover:border-rule-strong hover:text-signal"
         >
-          ← Back Home
+          <ArrowLeft size={14} />
+          Portfolio
         </Link>
       </div>
 
-      {/* Theme toggle — top right. Switches the village between day and dusk. */}
       <div className="pointer-events-none absolute right-5 top-5 z-50">
-        <div className="pointer-events-auto bg-surface/90 backdrop-blur-sm">
+        <div className="pointer-events-auto rounded-xl bg-surface/75 backdrop-blur-md">
           <ThemeToggle />
         </div>
       </div>
 
-      {/* Instruction bar — top center */}
       <div className="pointer-events-none absolute left-1/2 top-5 z-40 hidden -translate-x-1/2 sm:block">
-        <div className="select-none border border-rule bg-surface/85 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-muted backdrop-blur-sm">
-          Move WASD / Arrows · Press E to enter · Esc to close
+        <div className="fun-hud-panel flex select-none items-center gap-2 px-4 py-3 font-mono text-[9px] uppercase tracking-[0.14em] text-muted">
+          <Gamepad2 size={13} className="text-signal" />
+          Move WASD · Jump Space · Sprint Shift · Interact E
         </div>
       </div>
 

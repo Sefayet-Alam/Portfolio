@@ -126,12 +126,12 @@
         },
         {
           "id": "nb3-projects",
-          "title": "Side Quests",
-          "subtitle": "Codebook • SellSense • Blog Agency",
+          "title": "Building AgriSense",
+          "subtitle": "Agentic AI for field decisions",
           "body": [
-            "Codebook App — Flutter snippet manager with Firebase sync, AI assistant (Groq), and PDF export.",
-            "SellSense — LangChain prototype to summarize buyer–seller chats into structured records.",
-            "Blog-Agency-App — MERN dashboard with role-aware CRUD and RESTful API backed by MongoDB."
+            "Led Team UNKNOWNS in building AgriSense, an explainable crop-planning platform for Bangladesh.",
+            "The system combines LangGraph specialists, deterministic farm-profile gates, live weather, agricultural references, financial projections, and PostgreSQL/pgvector memory.",
+            "The project became a top-20 finalist out of 700 teams at the 12th IUT ICT Fest Agentic AI Hackathon."
           ],
           "images": [
             "/fun/stories/nb3/projects-1.jpg",
@@ -143,9 +143,13 @@
         },
         {
           "id": "nb3-empty",
-          "title": "(Empty House)",
-          "subtitle": "Will be added later",
-          "body": ["This house is intentionally empty.", "Future story drop will live here."],
+          "title": "The NLP Research Lab",
+          "subtitle": "Two manuscripts in motion",
+          "body": [
+            "My undergraduate thesis studies sarcasm detection with natural language processing. The manuscript has been submitted to IEEE Access.",
+            "A second NLP research project is also underway with a Q1 journal target.",
+            "Neither project is presented as accepted or published; this chapter will evolve with verified research milestones."
+          ],
           "images": ["/fun/stories/nb3/me-1.jpg"],
           "house": { "x": 1370, "y": 1360, "w": 260, "h": 180 },
           "knight": { "x": 1505, "y": 1600 }

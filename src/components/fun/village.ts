@@ -37,6 +37,23 @@ export type FunWorld = {
   npcs: FunNpc[];
 };
 
+export type FunGameStatus = {
+  chapterId: string;
+  chapterName: string;
+  visitedStories: number;
+  totalStories: number;
+  collectedSignals: number;
+  totalSignals: number;
+  nearbyLabel: string | null;
+  isJumping: boolean;
+  completed: boolean;
+};
+
+export type FunInputDetail = {
+  code: string;
+  pressed: boolean;
+};
+
 type InitVillageArgs = {
   canvas: HTMLCanvasElement;
   world: FunWorld;
@@ -50,6 +67,7 @@ type InitVillageArgs = {
   isPaused: () => boolean;
   onOpenStop: (stopId: string) => void;
   onOpenNpc: (npcId: string) => void;
+  onStatus?: (status: FunGameStatus) => void;
 };
 
 type Vec2 = { x: number; y: number };
@@ -158,6 +176,15 @@ type RuntimeNpc = {
   speed: number;
 };
 
+type MemorySignal = {
+  id: string;
+  chapterId: string;
+  x: number;
+  y: number;
+  collected: boolean;
+  phase: number;
+};
+
 function hashStr(s: string) {
   let h = 2166136261;
   for (let i = 0; i < s.length; i++) {
@@ -168,7 +195,15 @@ function hashStr(s: string) {
 }
 
 export async function initVillage(args: InitVillageArgs): Promise<() => void> {
-  const { canvas, world, palette, isPaused, onOpenNpc, onOpenStop } = args;
+  const {
+    canvas,
+    world,
+    palette,
+    isPaused,
+    onOpenNpc,
+    onOpenStop,
+    onStatus,
+  } = args;
 
   const ctxMaybe = canvas.getContext("2d") as CanvasRenderingContext2D | null;
   if (!ctxMaybe) return () => { };
@@ -189,6 +224,9 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
   };
 
   const rand = mulberry32((world.seed ?? 1337) >>> 0);
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
 
   const spawn = world?.playerSpawn ?? { x: 320, y: 380 };
   const player = {
@@ -196,7 +234,10 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
     y: clamp(spawn.y, 16, H - 16),
     r: 14,
     faceX: 1,
-    faceY: 0
+    faceY: 0,
+    z: 0,
+    vz: 0,
+    landingPulse: 0,
   };
 
   const cam = { x: 0, y: 0 };
@@ -216,24 +257,47 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
     code === "Space" ||
     code === "KeyE";
 
-  const onKeyDown = (e: KeyboardEvent) => {
-    // Prevent default browser behavior (scrolling / caret navigation) for game keys
-    if (isMoveOrActionCode(e.code)) e.preventDefault();
+  const triggerAction = (code: string) => {
+    if (code === "Space") {
+      if (isPaused() || player.z > 0.01) return;
+      player.vz = 560;
+      player.z = 0.1;
+      return;
+    }
 
-    keys.add(e.code);
-    if (e.repeat) return;
-
-    if (e.code === "KeyE") {
+    if (code === "KeyE") {
       if (isPaused()) return;
       const hit = findNearestInteractable({ x: player.x, y: player.y });
       if (!hit) return;
-      if (hit.kind === "stop") onOpenStop(hit.id);
-      else onOpenNpc(hit.id);
+      if (hit.kind === "stop") {
+        visitedStories.add(hit.id);
+        emitStatus(hit);
+        onOpenStop(hit.id);
+      } else {
+        onOpenNpc(hit.id);
+      }
     }
+  };
+
+  const pressCode = (code: string, repeat = false) => {
+    keys.add(code);
+    if (!repeat) triggerAction(code);
+  };
+
+  const onKeyDown = (e: KeyboardEvent) => {
+    if (isMoveOrActionCode(e.code)) e.preventDefault();
+    pressCode(e.code, e.repeat);
   };
 
   const onKeyUp = (e: KeyboardEvent) => {
     keys.delete(e.code);
+  };
+
+  const onVirtualInput = (event: Event) => {
+    const detail = (event as CustomEvent<FunInputDetail>).detail;
+    if (!detail?.code) return;
+    if (detail.pressed) pressCode(detail.code);
+    else keys.delete(detail.code);
   };
 
   // If the tab loses focus, clear pressed keys so movement doesn't get stuck.
@@ -242,6 +306,7 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
   window.addEventListener("keydown", onKeyDown, { passive: false });
   window.addEventListener("keyup", onKeyUp, { passive: false });
   window.addEventListener("blur", onBlur);
+  window.addEventListener("fun-game-input", onVirtualInput);
 
   let viewW = 0;
   let viewH = 0;
@@ -328,6 +393,38 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
   }
 
   function collidesPlayer(nextX: number, nextY: number) {
+    if (player.z > 38) {
+      const radius = player.r;
+      if (
+        nextX < radius ||
+        nextY < radius ||
+        nextX > W - radius ||
+        nextY > H - radius
+      ) {
+        return true;
+      }
+
+      const px = nextX - radius;
+      const py = nextY - radius;
+      for (const rect of solidRects) {
+        if (
+          rectsOverlap(
+            px,
+            py,
+            radius * 2,
+            radius * 2,
+            rect.x,
+            rect.y,
+            rect.w,
+            rect.h,
+          )
+        ) {
+          return true;
+        }
+      }
+      return false;
+    }
+
     return collidesCircle(nextX, nextY, player.r);
   }
 
@@ -376,6 +473,78 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
       if (d <= r2 && (!best || d < best.d2)) best = { kind: "npc", id: n.id, d2: d };
     }
     return best;
+  }
+
+  const visitedStories = new Set<string>();
+  const memorySignals: MemorySignal[] = neighborhoods.map(
+    (neighborhood, index) => ({
+      id: `signal-${neighborhood.id}`,
+      chapterId: neighborhood.id,
+      x:
+        neighborhood.bounds.x +
+        neighborhood.bounds.w * (index % 2 === 0 ? 0.78 : 0.24),
+      y:
+        neighborhood.bounds.y +
+        neighborhood.bounds.h * (index < 2 ? 0.79 : 0.76),
+      collected: false,
+      phase: index * 1.7,
+    }),
+  );
+
+  function chapterAt(point: Vec2) {
+    const match = neighborhoods.find(
+      (neighborhood) =>
+        point.x >= neighborhood.bounds.x &&
+        point.x <= neighborhood.bounds.x + neighborhood.bounds.w &&
+        point.y >= neighborhood.bounds.y &&
+        point.y <= neighborhood.bounds.y + neighborhood.bounds.h,
+    );
+    return match ?? neighborhoods[0];
+  }
+
+  function chapterTitle(chapter: FunNeighborhood | undefined) {
+    if (!chapter) return "Memory Atlas";
+    return (
+      NB_SIGNS[chapter.id]?.title
+        .toLowerCase()
+        .replace(/\b\w/g, (letter) => letter.toUpperCase()) ?? chapter.name
+    );
+  }
+
+  function nearbyLabel(hit: Hit | null) {
+    if (!hit) return null;
+    if (hit.kind === "stop") {
+      const stop = stops.find((item) => item.id === hit.id);
+      return stop ? `Story nearby · ${stop.title}` : "Story beacon nearby";
+    }
+    const npc = npcs.find((item) => item.id === hit.id);
+    return npc ? `Talk to ${npc.name}` : "Someone is nearby";
+  }
+
+  let lastStatus = "";
+  function emitStatus(hit: Hit | null = null) {
+    if (!onStatus) return;
+    const chapter = chapterAt(player);
+    const collectedSignals = memorySignals.filter(
+      (signal) => signal.collected,
+    ).length;
+    const status: FunGameStatus = {
+      chapterId: chapter?.id ?? "atlas",
+      chapterName: chapterTitle(chapter),
+      visitedStories: visitedStories.size,
+      totalStories: stops.length,
+      collectedSignals,
+      totalSignals: memorySignals.length,
+      nearbyLabel: nearbyLabel(hit),
+      isJumping: player.z > 0.01,
+      completed:
+        memorySignals.length > 0 &&
+        collectedSignals === memorySignals.length,
+    };
+    const serialized = JSON.stringify(status);
+    if (serialized === lastStatus) return;
+    lastStatus = serialized;
+    onStatus(status);
   }
 
   function worldToScreen(wx: number, wy: number) {
@@ -1192,6 +1361,46 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
     ctx.restore();
   }
 
+  function drawMemorySignal(signal: MemorySignal, time: number) {
+    if (signal.collected) return;
+    const point = worldToScreen(signal.x, signal.y);
+    const bob = reduceMotion ? 0 : Math.sin(time * 2.2 + signal.phase) * 7;
+    const y = point.y - 30 + bob;
+
+    ctx.save();
+    const glow = ctx.createRadialGradient(point.x, y, 2, point.x, y, 34);
+    glow.addColorStop(0, "rgba(85, 217, 232, 0.44)");
+    glow.addColorStop(0.45, "rgba(124, 137, 255, 0.18)");
+    glow.addColorStop(1, "rgba(85, 217, 232, 0)");
+    ctx.fillStyle = glow;
+    ctx.beginPath();
+    ctx.arc(point.x, y, 34, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.translate(point.x, y);
+    if (!reduceMotion) ctx.rotate(time * 0.55 + signal.phase);
+    ctx.fillStyle = "rgba(124, 137, 255, 0.88)";
+    ctx.strokeStyle = "rgba(225, 244, 255, 0.95)";
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(0, -12);
+    ctx.lineTo(9, 0);
+    ctx.lineTo(0, 12);
+    ctx.lineTo(-9, 0);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.save();
+    ctx.globalAlpha = 0.16;
+    ctx.fillStyle = "rgba(85, 217, 232, 1)";
+    ctx.beginPath();
+    ctx.ellipse(point.x, point.y + 4, 18, 6, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
   function drawHint(hit: Hit | null) {
     if (!hit) return;
 
@@ -1332,10 +1541,10 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
     if (!palette.isDark) return;
     ctx.save();
     ctx.globalCompositeOperation = "multiply";
-    ctx.fillStyle = "rgba(78, 96, 148, 1)";
+    ctx.fillStyle = "rgba(132, 145, 188, 0.82)";
     ctx.fillRect(0, 0, viewW, viewH);
     ctx.globalCompositeOperation = "source-over";
-    ctx.fillStyle = "rgba(8, 12, 30, 0.32)";
+    ctx.fillStyle = "rgba(8, 12, 30, 0.2)";
     ctx.fillRect(0, 0, viewW, viewH);
     ctx.restore();
   }
@@ -1385,6 +1594,17 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
       ensureGrassPattern();
 
       if (!isPaused()) {
+        if (player.z > 0 || player.vz > 0) {
+          player.vz -= 1350 * dt;
+          player.z += player.vz * dt;
+          if (player.z <= 0) {
+            player.z = 0;
+            player.vz = 0;
+            player.landingPulse = 1;
+          }
+        }
+        player.landingPulse = Math.max(0, player.landingPulse - dt * 3.6);
+
         const up = keys.has("KeyW") || keys.has("ArrowUp");
         const down = keys.has("KeyS") || keys.has("ArrowDown");
         const left = keys.has("KeyA") || keys.has("ArrowLeft");
@@ -1406,8 +1626,9 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
           player.faceY = dy === 0 ? player.faceY : dy;
         }
 
-        // SPEED: change multiplier here if you want (currently 1.5x)
-        const speed = 230 * 1.5;
+        const sprinting =
+          keys.has("ShiftLeft") || keys.has("ShiftRight");
+        const speed = 280 * (sprinting ? 1.42 : 1);
 
         const nx = player.x + dx * speed * dt;
         const ny = player.y + dy * speed * dt;
@@ -1417,6 +1638,15 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
 
         player.x = clamp(player.x, player.r, W - player.r);
         player.y = clamp(player.y, player.r, H - player.r);
+
+        for (const signal of memorySignals) {
+          if (
+            !signal.collected &&
+            dist2(player, signal) < 38 * 38
+          ) {
+            signal.collected = true;
+          }
+        }
 
         // NPC wandering
         for (const n of npcs) {
@@ -1558,6 +1788,28 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
         q.push({ y: n.y, draw: () => drawNpc(n, tNow) });
       }
 
+      for (const signal of memorySignals) {
+        if (
+          signal.collected ||
+          !inView(
+            signal.x - 50,
+            signal.y - 80,
+            100,
+            130,
+            vx,
+            vy,
+            viewW,
+            viewH,
+          )
+        ) {
+          continue;
+        }
+        q.push({
+          y: signal.y,
+          draw: () => drawMemorySignal(signal, tNow),
+        });
+      }
+
       // birds / butterflies (draw high so they feel "above" the world a bit)
       for (const b of birds) {
         if (!inView(b.x - 60, b.y - 80, 120, 160, vx, vy, viewW, viewH)) continue;
@@ -1570,10 +1822,36 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
         y: player.y,
         draw: () => {
           const p = worldToScreen(player.x, player.y);
-          drawShadowEllipse(player.x, player.y + 16, 14, 6, 0.12);
+          const heightRatio = Math.min(1, player.z / 150);
+          drawShadowEllipse(
+            player.x,
+            player.y + 16,
+            14 * (1 - heightRatio * 0.32),
+            6 * (1 - heightRatio * 0.24),
+            0.14 * (1 - heightRatio * 0.55),
+          );
+
+          if (player.landingPulse > 0) {
+            ctx.save();
+            ctx.strokeStyle = `rgba(85, 217, 232, ${player.landingPulse * 0.5})`;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.ellipse(
+              p.x,
+              p.y + 16,
+              14 + (1 - player.landingPulse) * 26,
+              6 + (1 - player.landingPulse) * 10,
+              0,
+              0,
+              Math.PI * 2,
+            );
+            ctx.stroke();
+            ctx.restore();
+          }
 
           // body
           ctx.save();
+          ctx.translate(0, -player.z);
           ctx.fillStyle = "rgba(30, 41, 59, 1)";
           roundRectPath(ctx, p.x - 10, p.y + 2, 20, 18, 8);
           ctx.fill();
@@ -1628,6 +1906,7 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
 
       const hit = !isPaused() ? findNearestInteractable({ x: player.x, y: player.y }) : null;
       drawHint(hit);
+      emitStatus(hit);
 
       drawVignette();
     } catch {
@@ -1636,12 +1915,14 @@ export async function initVillage(args: InitVillageArgs): Promise<() => void> {
   }
 
   raf = requestAnimationFrame(tick);
+  emitStatus();
 
   return () => {
     cancelAnimationFrame(raf);
     window.removeEventListener("keydown", onKeyDown);
     window.removeEventListener("keyup", onKeyUp);
     window.removeEventListener("blur", onBlur);
+    window.removeEventListener("fun-game-input", onVirtualInput);
     if (ro) ro.disconnect();
     else window.removeEventListener("resize", onWinResize);
   };

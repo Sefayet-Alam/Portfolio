@@ -151,7 +151,7 @@ All animation is wrapped in `gsap.matchMedia()`:
 
 | # | Section | Motion |
 |---|---|---|
-| 1 | Hero | Three parallax planes; oversized mono name; CP stats as odometer counters (1814, 3500+, 8th/120+). Image hover-swap preserved inside a tilting frame. |
+| 1 | Hero | Three parallax planes; oversized mono name; CP stats as odometer counters (1770, 3500+, 8th/120+). Image hover-swap preserved inside a tilting frame. |
 | 2 | Experience | Sticky stacking cards with scale + rotate offsets. Work/Studies tabs preserved; tab switch triggers `ScrollTrigger.refresh()`. |
 | 3 | Skills | Velocity-reactive marquee rows, one per category, reversing on scroll-up. Icon map preserved. |
 | 4 | Projects | Pinned horizontal rail; cards rotate through 3D crossing centre. YouTube embeds and Live/Repo buttons preserved. **Iframe `pointer-events` restored at rest** — known rail hazard. |

@@ -1,21 +1,22 @@
 import {
-  SiReact,
-  SiExpress,
-  SiDjango,
-  SiFlutter,
-  SiMongodb,
-  SiFirebase,
-  SiMysql,
-  SiPostman,
-  SiGithub,
-  SiJavascript,
-  SiPython,
   SiCplusplus,
   SiDart,
+  SiDjango,
+  SiExpress,
+  SiFirebase,
+  SiFlutter,
+  SiGithub,
+  SiJavascript,
+  SiMongodb,
+  SiMysql,
+  SiPostman,
+  SiPython,
+  SiReact,
 } from "react-icons/si";
 import { FaJava } from "react-icons/fa";
-import { Sparkles } from "lucide-react";
-import { Marquee } from "@/components/motion/Marquee";
+import { Boxes, Database, Languages, Sparkles, Wrench } from "lucide-react";
+import { Reveal } from "@/components/motion/Reveal";
+import { Surface } from "@/components/ui/Surface";
 
 type SkillsProps = {
   skills: {
@@ -27,80 +28,137 @@ type SkillsProps = {
   };
 };
 
-// Keyed to exact label strings in portfolio.seed.json — do not rename.
 const iconMap: Record<string, React.ReactNode> = {
-  // Languages
-  JavaScript: <SiJavascript size={18} />,
-  Python: <SiPython size={18} />,
-  "C/C++": <SiCplusplus size={18} />,
-  Java: <FaJava size={18} />,
-  Dart: <SiDart size={18} />,
-
-  // Frameworks
-  React: <SiReact size={18} />,
-  "Express.js": <SiExpress size={18} />,
-  Django: <SiDjango size={18} />,
-  DRF: <SiDjango size={18} />,
-  Flutter: <SiFlutter size={18} />,
-  LangChain: <Sparkles size={18} />,
-
-  // Databases
-  MongoDB: <SiMongodb size={18} />,
-  "Firebase (Auth/Firestore)": <SiFirebase size={18} />,
-  "MySQL (basic)": <SiMysql size={18} />,
-
-  // Tools
-  "Git/GitHub": <SiGithub size={18} />,
-  Postman: <SiPostman size={18} />,
+  JavaScript: <SiJavascript size={17} />,
+  Python: <SiPython size={17} />,
+  "C/C++": <SiCplusplus size={17} />,
+  Java: <FaJava size={17} />,
+  Dart: <SiDart size={17} />,
+  React: <SiReact size={17} />,
+  "Express.js": <SiExpress size={17} />,
+  Django: <SiDjango size={17} />,
+  DRF: <SiDjango size={17} />,
+  Flutter: <SiFlutter size={17} />,
+  LangChain: <Sparkles size={17} />,
+  MongoDB: <SiMongodb size={17} />,
+  "Firebase (Auth/Firestore)": <SiFirebase size={17} />,
+  "MySQL (basic)": <SiMysql size={17} />,
+  "Git/GitHub": <SiGithub size={17} />,
+  Postman: <SiPostman size={17} />,
 };
 
 function SkillChip({ label }: { label: string }) {
   const icon = iconMap[label];
 
   return (
-    <span className="inline-flex shrink-0 items-center gap-2 border border-rule bg-raised px-4 py-2 font-mono text-sm text-ink">
-      {icon ? <span className="text-accent">{icon}</span> : null}
+    <li className="group inline-flex min-h-10 items-center gap-2 rounded-xl border border-rule bg-surface/70 px-3 py-2 text-sm text-ink transition-[transform,border-color,background-color,box-shadow] duration-200 hover:-translate-y-1 hover:border-rule-strong hover:bg-accent-soft hover:shadow-[0_10px_24px_var(--accent-soft)] focus-within:-translate-y-1">
+      {icon ? (
+        <span className="text-accent transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:scale-110">
+          {icon}
+        </span>
+      ) : (
+        <span className="h-1.5 w-1.5 rounded-full bg-signal" />
+      )}
       <span>{label}</span>
-    </span>
+    </li>
   );
 }
 
-function Row({
+function CapabilityGroup({
   title,
+  description,
   items,
-  reverse,
+  icon,
+  className,
 }: {
   title: string;
+  description: string;
   items: string[];
-  reverse?: boolean;
+  icon: React.ReactNode;
+  className: string;
 }) {
   return (
-    <div className="border-t border-rule py-6">
-      <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
-        {title}
-      </p>
-      <Marquee reverse={reverse} speed={36}>
-        {items.map((x) => (
-          <SkillChip key={x} label={x} />
+    <Surface as="article" interactive className={`p-6 md:p-7 ${className}`}>
+      <div className="flex items-start justify-between gap-5">
+        <div>
+          <h3 className="text-xl font-semibold tracking-[-0.035em] text-ink">
+            {title}
+          </h3>
+          <p className="mt-1.5 text-sm leading-6 text-muted">{description}</p>
+        </div>
+        <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-rule bg-accent-soft text-accent">
+          {icon}
+        </span>
+      </div>
+      <ul className="mt-5 flex flex-wrap gap-2.5">
+        {items.map((item) => (
+          <SkillChip key={item} label={item} />
         ))}
-      </Marquee>
-    </div>
+      </ul>
+    </Surface>
   );
 }
 
 export function Skills({ skills }: SkillsProps) {
+  const total = Object.values(skills).reduce(
+    (count, items) => count + items.length,
+    0,
+  );
+
   return (
     <section id="skills" className="py-20 md:py-28">
-      <h2 className="border-b border-rule pb-5 font-mono text-sm uppercase tracking-[0.22em] text-ink">
-        <span className="text-accent">02</span> — Skills
-      </h2>
+      <div className="grid gap-7 md:grid-cols-[0.85fr_1.15fr] md:items-end">
+        <div>
+          <p className="section-kicker">02 / Capability matrix</p>
+          <Reveal as="h2" className="section-title mt-4">
+            The whole toolkit, at a glance.
+          </Reveal>
+        </div>
+        <Reveal
+          as="p"
+          className="max-w-xl text-base leading-7 text-muted md:justify-self-end"
+        >
+          No rotating wheel and no waiting for a ticker. All {total} capabilities
+          stay visible, grouped by how I use them to move from problem to product.
+        </Reveal>
+      </div>
 
-      <div className="mt-4">
-        <Row title="Strengths" items={skills.strengths} />
-        <Row title="Languages" items={skills.languages} reverse />
-        <Row title="Frameworks" items={skills.frameworks} />
-        <Row title="Databases" items={skills.databases} reverse />
-        <Row title="Tools" items={skills.tools} />
+      <div className="mt-10 grid gap-4 lg:grid-cols-12">
+        <CapabilityGroup
+          title="Core strengths"
+          description="The habits behind the implementation."
+          items={skills.strengths}
+          icon={<Sparkles size={18} />}
+          className="lg:col-span-5"
+        />
+        <CapabilityGroup
+          title="Languages"
+          description="From systems thinking to product scripting."
+          items={skills.languages}
+          icon={<Languages size={18} />}
+          className="lg:col-span-7"
+        />
+        <CapabilityGroup
+          title="Frameworks"
+          description="Web, mobile, APIs, and AI orchestration."
+          items={skills.frameworks}
+          icon={<Boxes size={18} />}
+          className="lg:col-span-7"
+        />
+        <CapabilityGroup
+          title="Data layer"
+          description="Pragmatic persistence for production apps."
+          items={skills.databases}
+          icon={<Database size={18} />}
+          className="lg:col-span-5"
+        />
+        <CapabilityGroup
+          title="Workflow"
+          description="Tools that keep delivery inspectable and repeatable."
+          items={skills.tools}
+          icon={<Wrench size={18} />}
+          className="lg:col-span-12"
+        />
       </div>
     </section>
   );

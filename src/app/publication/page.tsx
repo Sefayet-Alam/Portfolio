@@ -9,7 +9,10 @@ export default function PublicationsPage() {
       <Header resumeHref={portfolio.profile.links.resume} />
 
       <div className="mx-auto max-w-6xl px-6">
-        <Publications publications={portfolio.highlights.publications} />
+        <Publications
+          publications={portfolio.highlights.publications}
+          scholarUrl={portfolio.profile.links.scholar}
+        />
       </div>
 
       <Footer
@@ -18,6 +21,7 @@ export default function PublicationsPage() {
         github={portfolio.profile.links.github}
         linkedin={portfolio.profile.links.linkedin}
         codeforces={portfolio.profile.links.codeforces}
+        scholar={portfolio.profile.links.scholar}
       />
     </main>
   );

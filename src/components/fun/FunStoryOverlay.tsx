@@ -43,18 +43,23 @@ export function FunStoryOverlay({ stop, onClose }: FunStoryOverlayProps) {
   const era = useMemo(() => eraFromStopId(stop.id), [stop.id]);
 
   return (
-    <div className="fixed inset-0 z-[80] flex items-end justify-center p-4 md:items-center">
+    <div
+      className="fixed inset-0 z-[80] flex items-end justify-center p-4 md:items-center"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={`story-${stop.id}`}
+    >
       <div
         className="absolute inset-0 bg-black/55 backdrop-blur-[2px]"
         onClick={onClose}
       />
 
-      <div className="relative flex h-[85svh] w-full max-w-3xl flex-col overflow-hidden border border-rule bg-raised shadow-2xl">
+      <div className="relative flex h-[85svh] w-full max-w-3xl flex-col overflow-hidden rounded-[28px] border border-rule bg-raised-soft shadow-2xl backdrop-blur-xl">
         {/* Header */}
         <div className="flex items-start gap-4 border-b border-rule px-6 py-5">
           <div className="min-w-0 flex-1">
             <div className="mb-3 flex flex-wrap items-center gap-3">
-              <span className="border border-accent px-3 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-accent">
+              <span className="rounded-lg border border-accent/45 bg-accent-soft px-3 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-accent">
                 {era}
               </span>
               <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted">
@@ -62,7 +67,10 @@ export function FunStoryOverlay({ stop, onClose }: FunStoryOverlayProps) {
               </span>
             </div>
 
-            <h2 className="font-mono text-2xl font-medium tracking-tight text-ink md:text-3xl">
+            <h2
+              id={`story-${stop.id}`}
+              className="text-2xl font-semibold tracking-[-0.04em] text-ink md:text-3xl"
+            >
               {stop.title}
             </h2>
             {stop.subtitle ? (
@@ -75,7 +83,7 @@ export function FunStoryOverlay({ stop, onClose }: FunStoryOverlayProps) {
           <button
             onClick={onClose}
             aria-label="Close"
-            className="inline-flex h-10 w-10 shrink-0 items-center justify-center border border-rule text-ink transition-colors hover:bg-accent hover:text-accent-ink"
+            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-rule text-ink transition-[transform,color,background-color] duration-200 hover:-translate-y-0.5 hover:bg-accent hover:text-accent-ink"
           >
             ✕
           </button>
@@ -86,7 +94,7 @@ export function FunStoryOverlay({ stop, onClose }: FunStoryOverlayProps) {
           {/* Images */}
           {images.length > 0 ? (
             <div className="mb-8">
-              <div className="relative mb-3 aspect-[16/9] w-full overflow-hidden border border-rule bg-surface">
+              <div className="relative mb-3 aspect-[16/9] w-full overflow-hidden rounded-[20px] border border-rule bg-surface">
                 <Image
                   src={hero}
                   alt={stop.title}
@@ -102,7 +110,7 @@ export function FunStoryOverlay({ stop, onClose }: FunStoryOverlayProps) {
                     <button
                       key={src + idx}
                       onClick={() => setActive(idx)}
-                      className={`relative h-16 w-24 shrink-0 overflow-hidden border-2 bg-surface transition-colors ${
+                      className={`relative h-16 w-24 shrink-0 overflow-hidden rounded-xl border-2 bg-surface transition-[transform,border-color] duration-200 hover:-translate-y-0.5 ${
                         idx === safeActive ? "border-accent" : "border-rule"
                       }`}
                       aria-label={`Open image ${idx + 1}`}
@@ -120,7 +128,7 @@ export function FunStoryOverlay({ stop, onClose }: FunStoryOverlayProps) {
               ) : null}
             </div>
           ) : (
-            <div className="mb-8 border border-dashed border-rule p-6 text-sm text-muted">
+            <div className="mb-8 rounded-2xl border border-dashed border-rule p-6 text-sm text-muted">
               No images for this story yet.
             </div>
           )}
@@ -142,8 +150,8 @@ export function FunStoryOverlay({ stop, onClose }: FunStoryOverlayProps) {
           </div>
 
           {/* Footer note */}
-          <div className="mt-10 border-l-2 border-accent bg-surface px-4 py-3 font-mono text-[11px] uppercase tracking-[0.12em] text-muted">
-            Explore other houses — each one is a chapter
+          <div className="mt-10 rounded-2xl border border-rule bg-surface px-4 py-3 font-mono text-[10px] uppercase tracking-[0.12em] text-muted shadow-[inset_3px_0_0_var(--accent)]">
+            Story synchronized · continue toward the next signal fragment
           </div>
         </div>
       </div>

@@ -14,13 +14,19 @@ const useIsomorphicLayoutEffect =
  * this, ScrollTriggers survive navigation and corrupt scroll positions.
  */
 export function useGsapContext(
-  fn: (ctx: gsap.Context) => void,
+  fn: (ctx: gsap.Context) => void | (() => void),
   deps: unknown[],
   scopeRef: RefObject<HTMLElement | null>,
 ) {
   useIsomorphicLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-    const ctx = gsap.context((self) => fn(self), scopeRef.current ?? undefined);
-    return () => ctx.revert();
+    let cleanup: void | (() => void);
+    const ctx = gsap.context((self) => {
+      cleanup = fn(self);
+    }, scopeRef.current ?? undefined);
+    return () => {
+      cleanup?.();
+      ctx.revert();
+    };
   }, deps);
 }

@@ -1,11 +1,18 @@
-"use client";
-
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import {
+  ArrowUpRight,
+  BookMarked,
+  BrainCircuit,
+  FlaskConical,
+  GraduationCap,
+  Trophy,
+} from "lucide-react";
 import { Reveal } from "@/components/motion/Reveal";
+import { Surface } from "@/components/ui/Surface";
+import { TimelineEntry, TimelineRail } from "@/components/ui/Timeline";
 
 type EntryLink = {
-  label?: string; // optional display name
+  label?: string;
   url: string;
 };
 
@@ -15,9 +22,7 @@ type Item = {
   org: string;
   date: string;
   bullets: string[];
-  // OLD (kept for backward compatibility, optional)
   link?: string;
-  // NEW
   links?: EntryLink[];
 };
 
@@ -26,9 +31,9 @@ type Props = {
     achievements: Item[];
     publications: Item[];
   };
+  scholarUrl: string;
 };
 
-// Domain -> nice name mapping
 const DOMAIN_LABELS: Record<string, string> = {
   "codeforces.com": "Codeforces",
   "codechef.com": "CodeChef",
@@ -43,160 +48,239 @@ const DOMAIN_LABELS: Record<string, string> = {
   "web.facebook.com": "Facebook",
 };
 
-function prettyLabelFromUrl(url: string) {
+function prettyLabel(url: string) {
   try {
-    const u = new URL(url);
-    const host = u.hostname.toLowerCase().replace(/^www\./, "");
+    const host = new URL(url).hostname.toLowerCase().replace(/^www\./, "");
     return DOMAIN_LABELS[host] ?? host;
   } catch {
-    return "Link";
+    return "Evidence";
   }
 }
 
-function LinkChips({
-  links,
-  legacyLink,
-}: {
-  links?: EntryLink[];
-  legacyLink?: string;
-}) {
-  const merged: EntryLink[] = [
-    ...(legacyLink ? [{ label: "Link", url: legacyLink }] : []),
-    ...(links ?? []),
-  ].filter((x) => x?.url);
+function ProofLinks({ item }: { item: Item }) {
+  const links = [
+    ...(item.link ? [{ label: "Evidence", url: item.link }] : []),
+    ...(item.links ?? []),
+  ].filter((link) => link.url);
 
-  if (!merged.length) return null;
+  if (!links.length) return null;
 
   return (
-    <div className="mt-3 flex flex-wrap gap-2">
-      {merged.map((l) => {
-        const label =
-          l.label && l.label.trim().length > 0
-            ? l.label.trim()
-            : prettyLabelFromUrl(l.url);
-
-        return (
-          <a
-            key={`${label}-${l.url}`}
-            href={l.url}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-1 border border-rule px-3 py-1 font-mono text-[11px] uppercase tracking-wider text-ink transition-colors hover:bg-accent hover:text-accent-ink"
-            title={l.url}
-          >
-            {label}
-            <span aria-hidden="true" className="opacity-60">
-              ↗
-            </span>
-          </a>
-        );
-      })}
-    </div>
-  );
-}
-
-function Tabs({
-  value,
-  onChange,
-}: {
-  value: "achievements" | "publications";
-  onChange: (v: "achievements" | "publications") => void;
-}) {
-  return (
-    <div className="flex gap-1">
-      {(["achievements", "publications"] as const).map((t) => (
-        <button
-          key={t}
-          type="button"
-          onClick={() => onChange(t)}
-          className={[
-            "px-4 py-2 font-mono text-xs uppercase tracking-wider transition-colors",
-            value === t
-              ? "bg-accent text-accent-ink"
-              : "border border-rule text-muted hover:text-ink",
-          ].join(" ")}
+    <div className="mt-4 flex flex-wrap gap-2">
+      {links.map((link) => (
+        <a
+          key={`${link.label}-${link.url}`}
+          href={link.url}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-rule bg-surface/60 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.11em] text-muted transition-[transform,color,border-color,background-color] duration-200 hover:-translate-y-0.5 hover:border-rule-strong hover:bg-accent-soft hover:text-ink"
         >
-          {t}
-        </button>
+          {link.label?.trim() || prettyLabel(link.url)}
+          <ArrowUpRight size={11} />
+        </a>
       ))}
     </div>
   );
 }
 
-function Timeline({ items }: { items: Item[] }) {
+function yearFor(item: Item) {
+  if (/ongoing/i.test(item.date)) return "Ongoing";
+  return item.date.match(/20\d{2}/)?.[0] ?? item.date;
+}
+
+function AchievementCard({ item }: { item: Item }) {
   return (
-    <div className="relative mt-10">
-      {/* spine */}
-      <div className="absolute left-6 top-0 hidden h-full w-px bg-rule sm:block" />
-
-      <div className="space-y-12">
-        {items.map((it) => (
-          <Reveal key={`${it.title}-${it.date}`} className="relative sm:pl-20">
-            <div className="absolute left-0 top-0 hidden sm:block">
-              <div className="flex h-12 w-12 items-center justify-center overflow-hidden border border-rule bg-raised">
-                {it.logo ? (
-                  <Image
-                    src={it.logo}
-                    alt=""
-                    width={48}
-                    height={48}
-                    className="h-12 w-12 object-cover"
-                  />
-                ) : null}
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-1">
-              <p className="text-base font-medium tracking-tight text-ink">
-                {it.title}
-              </p>
-
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                <p className="text-sm text-muted">{it.org}</p>
-                <span className="font-mono text-xs uppercase tracking-[0.14em] text-accent">
-                  {it.date}
-                </span>
-              </div>
-
-              {/* multiple links as chips (also supports legacy it.link) */}
-              <LinkChips links={it.links} legacyLink={it.link} />
-            </div>
-
-            <ul className="mt-4 space-y-2 text-sm leading-relaxed text-muted">
-              {(it.bullets || []).slice(0, 5).map((b) => (
-                <li key={b} className="flex gap-3">
-                  <span className="mt-2 h-px w-4 flex-none bg-accent" />
-                  <span>{b}</span>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        ))}
+    <Surface as="article" interactive className="h-full p-5">
+      <div className="flex items-start gap-3">
+        <div className="relative grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-xl border border-rule bg-accent-soft text-accent">
+          {item.logo ? (
+            <Image
+              src={item.logo}
+              alt=""
+              fill
+              sizes="40px"
+              className="object-cover"
+            />
+          ) : (
+            <Trophy size={16} />
+          )}
+        </div>
+        <div>
+          <h4 className="font-semibold leading-snug tracking-[-0.025em] text-ink">
+            {item.title}
+          </h4>
+          <p className="mt-1 text-xs leading-5 text-muted">{item.org}</p>
+        </div>
       </div>
-    </div>
+      {item.bullets?.length ? (
+        <p className="mt-4 text-sm leading-6 text-muted">{item.bullets[0]}</p>
+      ) : null}
+      <ProofLinks item={item} />
+    </Surface>
   );
 }
 
-export function Achievements({ highlights }: Props) {
-  const [tab, setTab] = useState<"achievements" | "publications">(
-    "achievements",
+function ResearchCard({ item, index }: { item: Item; index: number }) {
+  const Icon = index === 0 ? BookMarked : FlaskConical;
+
+  return (
+    <Surface as="article" interactive className="relative overflow-hidden p-2.5">
+      <div className="group/media relative h-44 overflow-hidden rounded-[16px] border border-rule bg-[#090b12]">
+        <Image
+          src="https://upload.wikimedia.org/wikipedia/commons/8/87/2016_02_mini_embedding.png"
+          alt=""
+          fill
+          sizes="(max-width: 1024px) 100vw, 50vw"
+          className={`object-cover opacity-70 mix-blend-screen transition-transform duration-300 group-hover/media:scale-[1.035] ${
+            index === 0 ? "object-[50%_42%]" : "object-[58%_62%]"
+          }`}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#090b12] via-[#090b12]/25 to-transparent" />
+        <div className="absolute inset-x-4 bottom-3 flex items-end justify-between gap-3 text-white">
+          <div>
+            <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-white/60">
+              Representation space
+            </p>
+            <p className="mt-1 text-sm font-medium">
+              Language mapped as relationships
+            </p>
+          </div>
+          <span className="rounded-lg border border-white/15 bg-white/10 px-2 py-1 font-mono text-[8px] uppercase tracking-[0.12em] text-white/70 backdrop-blur">
+            Word2vec · t-SNE
+          </span>
+        </div>
+      </div>
+
+      <div className="relative p-5">
+        <div className="flex items-start justify-between gap-4">
+          <span className="grid h-11 w-11 place-items-center rounded-2xl border border-rule bg-signal-soft text-signal">
+            <Icon size={19} />
+          </span>
+          <span className="rounded-xl border border-rule bg-raised px-3 py-2 font-mono text-[9px] uppercase tracking-[0.14em] text-signal">
+            {index === 0 ? "Submitted" : "In progress"}
+          </span>
+        </div>
+
+        <p className="section-kicker mt-7">
+          {index === 0 ? "Thesis research" : "Journal research"}
+        </p>
+        <h3 className="mt-2 text-xl font-semibold tracking-[-0.035em] text-ink">
+          {item.title}
+        </h3>
+        <p className="mt-2 text-sm text-muted">
+          {item.org} · {item.date}
+        </p>
+
+        <ul className="mt-5 space-y-2.5 text-sm leading-6 text-muted">
+          {item.bullets.map((bullet) => (
+            <li key={bullet} className="flex gap-3">
+              <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-signal" />
+              <span>{bullet}</span>
+            </li>
+          ))}
+        </ul>
+        <ProofLinks item={item} />
+        <a
+          href="https://commons.wikimedia.org/wiki/File:2016_02_mini_embedding.png"
+          target="_blank"
+          rel="noreferrer"
+          className="mt-5 inline-flex items-center gap-1.5 font-mono text-[8px] uppercase tracking-[0.12em] text-muted transition-colors hover:text-ink"
+        >
+          Visual: Ewulczyn (WMF), CC BY-SA 4.0
+          <ArrowUpRight size={10} />
+        </a>
+      </div>
+    </Surface>
   );
-  const items = useMemo(
-    () =>
-      tab === "achievements" ? highlights.achievements : highlights.publications,
-    [highlights, tab],
+}
+
+export function Achievements({ highlights, scholarUrl }: Props) {
+  const yearOrder = ["Ongoing", "2026", "2025", "2024", "2023", "2022", "2021"];
+  const groups = new Map<string, Item[]>();
+
+  for (const item of highlights.achievements) {
+    const year = yearFor(item);
+    groups.set(year, [...(groups.get(year) ?? []), item]);
+  }
+
+  const orderedGroups = [...groups.entries()].sort(
+    ([a], [b]) => yearOrder.indexOf(a) - yearOrder.indexOf(b),
   );
 
   return (
     <section id="highlights" className="py-20 md:py-28">
-      <div className="flex flex-wrap items-end justify-between gap-4 border-b border-rule pb-5">
-        <h2 className="font-mono text-sm uppercase tracking-[0.22em] text-ink">
-          <span className="text-accent">04</span> — Highlights
-        </h2>
-        <Tabs value={tab} onChange={setTab} />
+      <div className="grid gap-7 md:grid-cols-[1fr_0.8fr] md:items-end">
+        <div>
+          <p className="section-kicker">04 / Proof of work</p>
+          <Reveal as="h2" className="section-title mt-4">
+            Research and results, with receipts.
+          </Reveal>
+        </div>
+        <Reveal
+          as="p"
+          className="max-w-lg text-base leading-7 text-muted md:justify-self-end"
+        >
+          Competitive results, research, and verified profiles arranged as a
+          chronology—no tabs hiding the evidence.
+        </Reveal>
       </div>
 
-      <Timeline items={items} />
+      {highlights.publications.length ? (
+        <div className="mt-10">
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <span className="grid h-9 w-9 place-items-center rounded-xl border border-rule bg-accent-soft text-accent">
+                <BrainCircuit size={16} />
+              </span>
+              <p className="section-kicker">Active AI / NLP research</p>
+            </div>
+            <a
+              href={scholarUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-rule bg-raised-soft px-3 font-mono text-[9px] uppercase tracking-[0.13em] text-muted transition-[transform,color,border-color,background-color] duration-200 hover:-translate-y-0.5 hover:border-rule-strong hover:bg-accent-soft hover:text-ink"
+            >
+              <GraduationCap size={14} />
+              Google Scholar
+              <ArrowUpRight size={11} />
+            </a>
+          </div>
+          <div className="grid gap-4 lg:grid-cols-2">
+            {highlights.publications.map((item, index) => (
+              <ResearchCard
+                key={`${item.title}-${item.date}`}
+                item={item}
+                index={index}
+              />
+            ))}
+          </div>
+        </div>
+      ) : null}
+
+      <TimelineRail className="mt-8">
+        {orderedGroups.map(([year, items]) => (
+          <TimelineEntry key={year} active={year === "Ongoing"}>
+            <div className="grid gap-4 lg:grid-cols-[110px_1fr]">
+              <div className="pt-5">
+                <p className="font-mono text-sm font-semibold tracking-[-0.02em] text-signal">
+                  {year}
+                </p>
+                <p className="mt-1 font-mono text-[9px] uppercase tracking-[0.14em] text-muted">
+                  {items.length} milestone{items.length === 1 ? "" : "s"}
+                </p>
+              </div>
+              <div className="grid gap-4 md:grid-cols-2">
+                {items.map((item) => (
+                  <AchievementCard
+                    key={`${item.title}-${item.date}`}
+                    item={item}
+                  />
+                ))}
+              </div>
+            </div>
+          </TimelineEntry>
+        ))}
+      </TimelineRail>
     </section>
   );
 }

@@ -1143,7 +1143,7 @@ export function Hero({ profile }: HeroProps) {
           </Reveal>
 
           <div className="mt-10 grid grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-3">
-            <Stat value={1814} label="Codeforces max" />
+            <Stat value={1770} label="Codeforces max" />
             <Stat value={3500} suffix="+" label="Problems solved" />
             <Stat value={2019} label="CodeChef max" />
           </div>

@@ -90,7 +90,7 @@ export function ChatWidget() {
           type="button"
           aria-label="Open AI chat"
           onClick={() => setOpen(true)}
-          className="inline-flex h-14 w-14 items-center justify-center border border-rule bg-accent text-accent-ink shadow-lg transition-opacity hover:opacity-90"
+          className="inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-accent text-accent-ink shadow-[0_18px_45px_var(--accent-soft)] transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-[0_24px_55px_var(--accent-soft)]"
         >
           <MessageCircle className="h-6 w-6" />
         </button>
@@ -98,7 +98,7 @@ export function ChatWidget() {
 
       {/* Panel */}
       {open && (
-        <div className="w-[calc(100vw-40px)] max-w-[390px] overflow-hidden border border-rule bg-raised shadow-2xl">
+        <div className="w-[calc(100vw-40px)] max-w-[390px] overflow-hidden rounded-[22px] border border-rule bg-raised shadow-[var(--shadow-lift)]">
           {/* Header */}
           <div className="flex items-center justify-between border-b border-rule px-4 py-3">
             <div className="min-w-0">
@@ -114,7 +114,7 @@ export function ChatWidget() {
               type="button"
               aria-label="Close"
               onClick={() => setOpen(false)}
-              className="inline-flex h-9 w-9 items-center justify-center border border-rule text-ink transition-colors hover:bg-accent hover:text-accent-ink"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-rule bg-surface text-ink transition-[transform,color,background-color] duration-200 hover:-translate-y-0.5 hover:bg-accent-soft hover:text-accent"
             >
               <X className="h-4 w-4" />
             </button>
@@ -131,7 +131,7 @@ export function ChatWidget() {
                   key={s}
                   type="button"
                   onClick={() => send(s)}
-                  className="border border-rule px-3 py-1 text-left font-mono text-[11px] text-muted transition-colors hover:bg-accent hover:text-accent-ink"
+                  className="rounded-lg border border-rule bg-surface/60 px-3 py-1.5 text-left font-mono text-[10px] text-muted transition-[transform,color,border-color,background-color] duration-200 hover:-translate-y-0.5 hover:border-rule-strong hover:bg-accent-soft hover:text-ink"
                 >
                   {s}
                 </button>
@@ -142,10 +142,10 @@ export function ChatWidget() {
               <div
                 key={i}
                 className={[
-                  "max-w-[92%] whitespace-pre-wrap break-words px-3 py-2 text-sm leading-relaxed",
+                  "max-w-[92%] whitespace-pre-wrap break-words rounded-2xl px-3 py-2 text-sm leading-relaxed",
                   m.role === "user"
                     ? "ml-auto bg-accent text-accent-ink"
-                    : "mr-auto border border-rule text-ink",
+                    : "mr-auto border border-rule bg-surface/55 text-ink",
                 ].join(" ")}
               >
                 {m.content}
@@ -153,7 +153,7 @@ export function ChatWidget() {
             ))}
 
             {busy && (
-              <div className="mr-auto w-fit border border-rule px-3 py-2 font-mono text-xs uppercase tracking-wider text-muted">
+              <div className="mr-auto w-fit rounded-xl border border-rule bg-surface/55 px-3 py-2 font-mono text-xs uppercase tracking-wider text-muted">
                 Typing…
               </div>
             )}
@@ -171,12 +171,12 @@ export function ChatWidget() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask about skills, projects, salary…"
-              className="h-10 flex-1 border border-rule bg-surface px-3 text-sm text-ink outline-none placeholder:text-muted focus:border-accent"
+              className="h-11 flex-1 rounded-xl border border-rule bg-surface px-3 text-sm text-ink outline-none transition-colors placeholder:text-muted focus:border-accent"
             />
             <button
               type="submit"
               disabled={busy || !input.trim()}
-              className="inline-flex h-10 w-10 items-center justify-center border border-rule text-ink transition-colors hover:bg-accent hover:text-accent-ink disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-ink"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-rule bg-accent text-accent-ink transition-[transform,opacity] duration-200 hover:-translate-y-0.5 disabled:opacity-40 disabled:hover:translate-y-0"
             >
               <Send className="h-4 w-4" />
             </button>

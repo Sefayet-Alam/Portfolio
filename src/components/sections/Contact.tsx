@@ -1,3 +1,7 @@
+import { ArrowUpRight, Mail } from "lucide-react";
+import { ActionLink } from "@/components/ui/ActionButton";
+import { Surface } from "@/components/ui/Surface";
+
 type ContactProps = {
   email: string;
   links: {
@@ -11,40 +15,22 @@ type ContactProps = {
 export function Contact({ email, links }: ContactProps) {
   return (
     <section id="contact" className="py-20 md:py-28">
-      <h2 className="border-b border-rule pb-5 font-mono text-sm uppercase tracking-[0.22em] text-ink">
-        Contact
-      </h2>
-
-      <div className="mt-10 border border-rule bg-raised p-6">
-        <p className="text-sm text-muted">
-          Email:{" "}
-          <a
-            className="text-ink underline-offset-4 hover:underline"
-            href={`mailto:${email}`}
-          >
-            {email}
-          </a>
-        </p>
-
-        <div className="mt-5 flex flex-wrap gap-2">
-          {[
-            { href: links.resume, label: "Résumé" },
-            { href: links.github, label: "GitHub" },
-            { href: links.linkedin, label: "LinkedIn" },
-            { href: links.codeforces, label: "Codeforces" },
-          ].map((l) => (
-            <a
-              key={l.label}
-              href={l.href}
-              target="_blank"
-              rel="noreferrer"
-              className="border border-rule px-4 py-2 font-mono text-xs uppercase tracking-wider text-ink transition-colors hover:bg-accent hover:text-accent-ink"
-            >
-              {l.label}
-            </a>
-          ))}
+      <Surface className="overflow-hidden p-7 md:p-10">
+        <p className="section-kicker">Open channel</p>
+        <h2 className="mt-4 max-w-[13ch] text-4xl font-semibold tracking-[-0.055em] text-ink md:text-6xl">
+          Let&apos;s turn a hard problem into a clear product.
+        </h2>
+        <div className="mt-7 flex flex-wrap gap-3">
+          <ActionLink href={`mailto:${email}`} variant="primary">
+            <Mail size={15} />
+            Start a conversation
+          </ActionLink>
+          <ActionLink href={links.resume} external variant="secondary">
+            Résumé
+            <ArrowUpRight size={14} />
+          </ActionLink>
         </div>
-      </div>
+      </Surface>
     </section>
   );
 }

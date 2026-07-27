@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { ArrowUpRight, Menu, Sparkles, X } from "lucide-react";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { actionClassName } from "@/components/ui/ActionButton";
 import { scrollToId } from "@/lib/motion/lenis";
 
 type HeaderProps = {
@@ -12,11 +13,11 @@ type HeaderProps = {
 
 const nav = [
   { id: "about", label: "About" },
-  { id: "experience", label: "Experience" },
+  { id: "experience", label: "Journey" },
   { id: "skills", label: "Skills" },
-  { id: "projects", label: "Projects" },
-  { id: "highlights", label: "Highlights" },
-  { id: "certifications", label: "Certificates" },
+  { id: "projects", label: "Work" },
+  { id: "highlights", label: "Proof" },
+  { id: "certifications", label: "Credentials" },
 ];
 
 export function Header({ resumeHref }: HeaderProps) {
@@ -28,9 +29,8 @@ export function Header({ resumeHref }: HeaderProps) {
     return () => window.removeEventListener("hashchange", onHash);
   }, []);
 
-  // Lenis does not honor native hash navigation, so intercept and delegate.
-  const go = (id: string) => (e: React.MouseEvent) => {
-    e.preventDefault();
+  const go = (id: string) => (event: React.MouseEvent) => {
+    event.preventDefault();
     setOpen(false);
     scrollToId(id);
   };
@@ -38,123 +38,130 @@ export function Header({ resumeHref }: HeaderProps) {
   const openChat = () => window.dispatchEvent(new CustomEvent("open-chat"));
 
   return (
-    <header className="sticky top-0 z-50 border-b border-rule bg-surface/85 backdrop-blur-sm">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <a
-          href="#about"
-          onClick={go("about")}
-          className="font-mono text-sm font-medium uppercase tracking-[0.18em] text-ink"
-        >
-          Sefayet
-        </a>
+    <header className="sticky top-0 z-50 px-3 pt-3 sm:px-6">
+      <div className="mx-auto max-w-6xl overflow-hidden rounded-[20px] border border-rule bg-raised-soft shadow-[0_18px_55px_rgba(0,0,0,0.08)] backdrop-blur-xl">
+        <div className="flex min-h-16 items-center justify-between gap-6 px-4 sm:px-5">
+          <a
+            href="#about"
+            onClick={go("about")}
+            className="group flex shrink-0 items-center gap-3"
+          >
+            <span className="relative grid h-9 w-9 place-items-center rounded-xl border border-rule-strong bg-accent-soft font-mono text-xs font-semibold text-accent">
+              SA
+              <span className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full border-2 border-raised bg-signal" />
+            </span>
+            <span className="hidden text-sm font-semibold tracking-[-0.02em] text-ink sm:block">
+              Sefayet Alam
+            </span>
+          </a>
 
-        <nav className="hidden items-center gap-7 lg:flex">
-          {nav.map((item, i) => (
-            <a
-              key={item.id}
-              href={`#${item.id}`}
-              onClick={go(item.id)}
-              className="font-mono text-xs uppercase tracking-[0.14em] text-muted transition-colors hover:text-ink"
-            >
-              <span className="text-accent">{String(i + 1).padStart(2, "0")}</span>{" "}
-              {item.label}
-            </a>
-          ))}
-        </nav>
+          <nav className="hidden items-center gap-1 xl:flex" aria-label="Primary">
+            {nav.map((item) => (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                onClick={go(item.id)}
+                className="rounded-lg px-3 py-2 font-mono text-[11px] uppercase tracking-[0.11em] text-muted transition-[color,background-color,transform] duration-200 hover:-translate-y-0.5 hover:bg-accent-soft hover:text-ink"
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
 
-        <div className="flex items-center gap-2">
-          <div className="hidden items-center gap-2 lg:flex">
-            <ThemeToggle />
+          <div className="flex items-center gap-2">
+            <div className="hidden items-center gap-2 xl:flex">
+              <ThemeToggle />
 
-            <button
-              type="button"
-              onClick={openChat}
-              className="border border-rule px-4 py-2 font-mono text-xs uppercase tracking-wider text-ink transition-colors hover:bg-accent hover:text-accent-ink"
-            >
-              Ask AI
-            </button>
+              <button
+                type="button"
+                onClick={openChat}
+                className={actionClassName("quiet", "px-3")}
+              >
+                <Sparkles size={14} />
+                Ask AI
+              </button>
 
-            <Link
-              href="/fun"
-              className="bg-accent px-4 py-2 font-mono text-xs font-medium uppercase tracking-wider text-accent-ink transition-opacity hover:opacity-90"
-            >
-              Fun Site
-            </Link>
-
-            <a
-              href={resumeHref}
-              target="_blank"
-              rel="noreferrer"
-              className="border border-rule px-4 py-2 font-mono text-xs uppercase tracking-wider text-ink transition-colors hover:bg-accent hover:text-accent-ink"
-            >
-              Résumé
-            </a>
-          </div>
-
-          <div className="flex items-center gap-2 lg:hidden">
-            <ThemeToggle />
-
-            <button
-              type="button"
-              onClick={openChat}
-              className="border border-rule px-3 py-2 font-mono text-xs uppercase tracking-wider text-ink transition-colors hover:bg-accent hover:text-accent-ink"
-            >
-              Ask AI
-            </button>
-
-            <button
-              type="button"
-              aria-label={open ? "Close menu" : "Open menu"}
-              onClick={() => setOpen((v) => !v)}
-              className="inline-flex h-10 w-10 items-center justify-center border border-rule text-ink transition-colors hover:bg-accent hover:text-accent-ink"
-            >
-              {open ? <X size={18} /> : <Menu size={18} />}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {open && (
-        <div className="border-t border-rule bg-surface px-6 pb-6 lg:hidden">
-          <div className="mx-auto max-w-6xl pt-4">
-            <div className="grid">
-              {nav.map((item, i) => (
-                <a
-                  key={item.id}
-                  href={`#${item.id}`}
-                  onClick={go(item.id)}
-                  className="border-b border-rule py-4 font-mono text-sm uppercase tracking-wider text-ink"
-                >
-                  <span className="text-accent">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>{" "}
-                  {item.label}
-                </a>
-              ))}
-            </div>
-
-            <div className="mt-6 grid grid-cols-2 gap-3">
               <Link
                 href="/fun"
-                onClick={() => setOpen(false)}
-                className="bg-accent px-4 py-3 text-center font-mono text-xs font-medium uppercase tracking-wider text-accent-ink"
+                className={actionClassName("secondary", "px-3")}
               >
-                Fun Site
+                Fun site
               </Link>
 
               <a
                 href={resumeHref}
                 target="_blank"
                 rel="noreferrer"
-                onClick={() => setOpen(false)}
-                className="border border-rule px-4 py-3 text-center font-mono text-xs uppercase tracking-wider text-ink"
+                className={actionClassName("primary", "px-3")}
               >
                 Résumé
+                <ArrowUpRight size={14} />
               </a>
+            </div>
+
+            <div className="flex items-center gap-2 xl:hidden">
+              <ThemeToggle />
+
+              <button
+                type="button"
+                onClick={openChat}
+                className={actionClassName("quiet", "px-3")}
+              >
+                <Sparkles size={14} />
+                <span className="hidden sm:inline">Ask AI</span>
+              </button>
+
+              <button
+                type="button"
+                aria-label={open ? "Close menu" : "Open menu"}
+                aria-expanded={open}
+                onClick={() => setOpen((value) => !value)}
+                className="grid h-11 w-11 place-items-center rounded-xl border border-rule bg-raised text-ink transition-[transform,background-color] duration-200 hover:-translate-y-0.5 hover:bg-accent-soft"
+              >
+                {open ? <X size={18} /> : <Menu size={18} />}
+              </button>
             </div>
           </div>
         </div>
-      )}
+
+        {open && (
+          <div className="border-t border-rule px-4 pb-5 xl:hidden">
+            <nav className="grid py-2" aria-label="Mobile">
+              {nav.map((item) => (
+                <a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  onClick={go(item.id)}
+                  className="flex items-center justify-between border-b border-rule py-3 text-sm font-medium text-ink"
+                >
+                  {item.label}
+                  <span className="font-mono text-xs text-signal">↘</span>
+                </a>
+              ))}
+            </nav>
+
+            <div className="mt-3 grid grid-cols-2 gap-3">
+              <Link
+                href="/fun"
+                onClick={() => setOpen(false)}
+                className={actionClassName("secondary")}
+              >
+                Fun site
+              </Link>
+              <a
+                href={resumeHref}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => setOpen(false)}
+                className={actionClassName("primary")}
+              >
+                Résumé
+                <ArrowUpRight size={14} />
+              </a>
+            </div>
+          </div>
+        )}
+      </div>
     </header>
   );
 }

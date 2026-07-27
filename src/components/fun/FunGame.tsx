@@ -5,6 +5,7 @@ import { useTheme } from "next-themes";
 import world from "@/content/fun.world.json";
 import {
   initVillage,
+  type FunGameStatus,
   type FunNpc,
   type FunStop,
   type FunWorld,
@@ -12,22 +13,48 @@ import {
 import { getVillagePalette } from "@/components/fun/palette";
 import { FunStoryOverlay } from "@/components/fun/FunStoryOverlay";
 import { FunNpcOverlay } from "@/components/fun/FunNpcOverlay";
+import { FunControls } from "@/components/fun/FunControls";
+import { FunHud } from "@/components/fun/FunHud";
+
+const INITIAL_STATUS: FunGameStatus = {
+  chapterId: "nb1",
+  chapterName: "Roots",
+  visitedStories: 0,
+  totalStories: 0,
+  collectedSignals: 0,
+  totalSignals: 4,
+  nearbyLabel: null,
+  isJumping: false,
+  completed: false,
+};
 
 export default function FunGame() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   const [openStop, setOpenStop] = useState<FunStop | null>(null);
   const [openNpc, setOpenNpc] = useState<FunNpc | null>(null);
+  const [started, setStarted] = useState(
+    () =>
+      typeof window !== "undefined" &&
+      window.sessionStorage.getItem("memoryAtlasStarted") === "1",
+  );
+  const [status, setStatus] = useState<FunGameStatus>(INITIAL_STATUS);
 
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme !== "light";
+
+  const startGame = () => {
+    window.sessionStorage.setItem("memoryAtlasStarted", "1");
+    setStarted(true);
+    window.requestAnimationFrame(() => canvasRef.current?.focus());
+  };
 
   // Writing a ref during render is a React correctness violation — the
   // compiler can reorder or skip it. Keep it in an effect instead.
   const pausedRef = useRef(false);
   useEffect(() => {
-    pausedRef.current = !!openStop || !!openNpc;
-  }, [openStop, openNpc]);
+    pausedRef.current = !started || !!openStop || !!openNpc;
+  }, [openStop, openNpc, started]);
 
   const stopById = useMemo(() => {
     const map = new Map<string, FunStop>();
@@ -55,6 +82,7 @@ export default function FunGame() {
         isPaused: () => pausedRef.current,
         onOpenStop: (stopId) => setOpenStop(stopById.get(stopId) ?? null),
         onOpenNpc: (npcId) => setOpenNpc(npcById.get(npcId) ?? null),
+        onStatus: setStatus,
       });
     })();
 
@@ -104,7 +132,15 @@ export default function FunGame() {
         ref={canvasRef}
         tabIndex={0}
         className="h-full w-full touch-none outline-none"
+        aria-label="Memory Atlas interactive village. Use WASD or arrow keys to move, Space to jump, Shift to sprint, and E to interact."
       />
+
+      <FunHud
+        status={status}
+        onboarding={!started}
+        onStart={startGame}
+      />
+      {started && !openStop && !openNpc ? <FunControls /> : null}
 
       {openStop && (
         <FunStoryOverlay stop={openStop} onClose={() => setOpenStop(null)} />

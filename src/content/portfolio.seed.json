@@ -1,8 +1,8 @@
 {
   "profile": {
     "name": "Khandoker Sefayet Alam",
-    "title": " Competitive Programmer • Full-Stack Developer (MERN) ",
-    "tagline": "2x ICPC Dhaka Regional Participant • B.Sc in CSE • AI integration (LangChain) • Flutter",
+    "title": "AI/ML Engineer • NLP Researcher • Full-Stack Developer",
+    "tagline": "2 ongoing NLP research projects • 2× ICPC Dhaka Regionalist • B.Sc. in CSE",
     "location": "🇧🇩 Rajshahi, Bangladesh",
     "email": "sefayetalam14@gmail.com",
     "images": {
@@ -13,6 +13,7 @@
       "github": "https://github.com/Sefayet-Alam",
       "linkedin": "https://www.linkedin.com/in/sefayet-alam-8333b4242",
       "codeforces": "https://codeforces.com/profile/The_Ruthless",
+      "scholar": "https://scholar.google.com/citations?user=xpsciakAAAAJ&hl=en",
       "resume": "/resume.pdf"
     },
     "phone": "+8801919030974"
@@ -25,7 +26,7 @@
         "org": "Online Judges",
         "date": "Ongoing",
         "bullets": [
-          "Codeforces: Expert (max rating 1814)- The_Ruthless",
+          "Codeforces: Expert (max rating 1770) — The_Ruthless",
           "CodeChef: 5★ (Max 2019) — ghost_014",
           "AtCoder: Cyan (Max 1271) — Ruthless__",
           "Leetcode: Knight"
@@ -92,6 +93,21 @@
           "Strong placement among top teams"
         ],
         "links": []
+      },
+      {
+        "logo": "https://iutictfest26.tech/assets/main_sp.png",
+        "title": "12th IUT ICT Fest Agentic AI Hackathon — Top 20 Finalist",
+        "org": "700 teams • Team: UNKNOWNS",
+        "date": "2026",
+        "bullets": [
+          "Selected as one of the top 20 finalist teams for the 24-hour onsite Agentic AI challenge"
+        ],
+        "links": [
+          {
+            "label": "Official event",
+            "url": "https://iutictfest26.tech/hackathon"
+          }
+        ]
       },
       {
         "logo": "/logos/icpc.png",
@@ -190,17 +206,47 @@
     "publications": [
       {
         "logo": "/logos/IEEE.png",
-        "title": "Sarcasm detection with NLP",
-        "org": "Journal/Conference",
-        "date": "July 2026 (expected)",
+        "title": "NLP Thesis — Sarcasm Detection",
+        "org": "Manuscript submitted to IEEE Access",
+        "date": "Under review · 2026",
         "bullets": [
-          "Will add  paper title, venue, and link later"
+          "Undergraduate thesis focused on sarcasm detection using natural language processing",
+          "Submitted to IEEE Access; targeting a Q2 journal outcome",
+          "Submission is under review—not presented as accepted or published"
+        ],
+        "links": []
+      },
+      {
+        "title": "Ongoing NLP Journal Research",
+        "org": "Research manuscript in progress",
+        "date": "Ongoing · 2026",
+        "bullets": [
+          "Second active natural language processing research project",
+          "Manuscript is being developed with a Q1 journal target",
+          "Title and venue will be added when ready for public disclosure"
         ],
         "links": []
       }
     ]
   },
   "projects": [
+    {
+      "name": "UNKNOWNS AgriSense",
+      "image": "https://raw.githubusercontent.com/Sefayet-Alam/UNKNOWNS_AgriSense/main/frontend/public/images/paddy-reflection-bangladesh.jpg",
+      "stack": [
+        "LangGraph",
+        "FastAPI",
+        "Next.js",
+        "PostgreSQL + pgvector"
+      ],
+      "bullets": [
+        "Led a multi-agent crop-planning system grounded in farm profiles, BARC data, and live weather",
+        "Built explainable crop ranking, seasonal plans, financial projections, and what-if simulations",
+        "Persists farmer context and semantic memory while deterministic gates prevent incomplete recommendations"
+      ],
+      "repo": "https://github.com/Sefayet-Alam/UNKNOWNS_AgriSense",
+      "live": "https://agrisense.cortextech.dev/"
+    },
     {
       "name": "Blog-Agency-App",
       "video": "https://youtu.be/7j0oCr-DjgY",
@@ -333,6 +379,7 @@
     ]
   },
   "achievements": [
+    "12th IUT ICT Fest 2026 Agentic AI Hackathon — Top 20 finalist (700 teams)",
     "UIU IUPC 2025 — 8th (120+ teams)",
     "ICPC Asia Dhaka Regional 2024 — 30th (300+ teams)",
     "ICPC Asia Dhaka Regional 2025 — 38th (313 teams)",
@@ -340,6 +387,26 @@
     "Meta Hacker Cup 2023 — Round 3; rank 1357 (6k+ participants)"
   ],
   "certifications": [
+    {
+      "name": "Ostad — Applied NLP & LLM",
+      "issuer": "Ostad",
+      "issued": "Completed",
+      "link": "https://github.com/Sefayet-Alam/Achivemenets_-_Certificates-/blob/main/Khandoker%20Sefayet%20Alam-Applied_%20NLP_LLM%20.pdf",
+      "bullets": [
+        "Applied natural language processing and large language model workflows",
+        "Credential PDF available for direct verification"
+      ]
+    },
+    {
+      "name": "Ostad — Deep Learning",
+      "issuer": "Ostad",
+      "issued": "Completed",
+      "link": "https://github.com/Sefayet-Alam/Achivemenets_-_Certificates-/blob/main/Sefayet_Alam_DL_Ostad.pdf",
+      "bullets": [
+        "Deep learning foundations and practical model development",
+        "Credential PDF available for direct verification"
+      ]
+    },
     {
       "name": "Meta Hacker Cup 2025 — Certificate",
       "issuer": "Meta / Facebook Coding Competitions",

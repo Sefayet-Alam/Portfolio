@@ -106,8 +106,8 @@ const DAY: VillagePalette = {
 const NIGHT: VillagePalette = {
   isDark: true,
 
-  grassTop: "#2c4a3a",
-  grassBottom: "#1d3328",
+  grassTop: "#365d48",
+  grassBottom: "#274434",
   grassTuft: "rgba(140, 210, 165, 0.09)",
   grassStroke: "rgba(150, 220, 175, 0.05)",
 
@@ -117,8 +117,8 @@ const NIGHT: VillagePalette = {
 
   roofTop: "#6b3a2c",
   roofBottom: "#3d1f1a",
-  wallTop: "#59503f",
-  wallBottom: "#3b352c",
+  wallTop: "#766d5b",
+  wallBottom: "#554c3f",
   wallStroke: "rgba(20, 14, 8, 0.5)",
   strip: "rgba(30, 22, 12, 0.55)",
   wood: "rgba(52, 38, 22, 0.9)",
@@ -131,9 +131,9 @@ const NIGHT: VillagePalette = {
   windowLit: "rgba(255, 179, 71, 0.75)",
 
   trunk: "rgba(46, 33, 19, 1)",
-  canopy: "rgba(26, 58, 42, 1)",
+  canopy: "rgba(34, 82, 59, 1)",
 
-  water: "rgba(70, 110, 158, 0.5)",
+  water: "rgba(68, 111, 186, 0.62)",
   waterEdge: "rgba(40, 80, 110, 0.3)",
   stone: "rgba(92, 100, 114, 1)",
   stoneDark: "rgba(38, 44, 54, 1)",

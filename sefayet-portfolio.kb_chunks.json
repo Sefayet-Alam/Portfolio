@@ -4,7 +4,7 @@
   },
   "key": "profile_core",
   "title": "Profile",
-  "text": "• Name: Khandoker Sefayet Alam\n• Location: Rajshahi, Bangladesh\n• Roles: Full-Stack Developer (MERN), Flutter Developer, Competitive Programmer\n• Snapshot: Codeforces Expert (max 1734), 3500+ problems solved\n• Interests: Clean UI, reliable APIs, real products, LLM tooling (LangChain)\n• Fast proof: Strong contest results + multiple shipped projects",
+  "text": "• Name: Khandoker Sefayet Alam\n• Location: Rajshahi, Bangladesh\n• Roles: AI/ML Engineer, NLP Researcher, Full-Stack Developer\n• Snapshot: 2 active NLP research projects; Codeforces Expert (max 1770); 3500+ problems solved\n• Interests: Grounded agentic systems, natural language processing, reliable APIs, and deployable AI products\n• Fast proof: AgriSense multi-agent platform, ongoing NLP research, strong contest results, and shipped full-stack projects",
   "tags": [
     "profile",
     "summary",
@@ -38,12 +38,14 @@
   },
   "key": "links",
   "title": "Links",
-  "text": "• GitHub: https://github.com/Sefayet-Alam\n• LinkedIn: https://www.linkedin.com/in/sefayet-alam-8333b4242\n• Codeforces: https://codeforces.com/profile/The_Ruthless\n• Resume (site): /resume.pdf",
+  "text": "• GitHub: https://github.com/Sefayet-Alam\n• LinkedIn: https://www.linkedin.com/in/sefayet-alam-8333b4242\n• Codeforces: https://codeforces.com/profile/The_Ruthless\n• Google Scholar: https://scholar.google.com/citations?user=xpsciakAAAAJ&hl=en\n• Resume (site): /resume.pdf",
   "tags": [
     "links",
     "github",
     "linkedin",
     "codeforces",
+    "scholar",
+    "research",
     "resume"
   ],
   "source": "manual_kb_import",
@@ -74,7 +76,7 @@
   },
   "key": "quick_6_bullets",
   "title": "6-Bullet Summary",
-  "text": "• Full-Stack (MERN) + Flutter developer\n• Competitive Programmer: Codeforces Expert (max 1734), 3500+ problems solved\n• Strong contest performance (IUPC/ICPC regional placements)\n• Built production-style dashboards/APIs with MongoDB + Express\n• Experience with LangChain-style summarization + LLM workflows\n• Strong fundamentals: DSA, debugging, clean architecture, fast iteration",
+  "text": "• AI/ML engineer and NLP researcher with 2 active research projects\n• Led AgriSense, a grounded LangGraph crop-planning platform\n• Competitive Programmer: Codeforces Expert (max 1770), 3500+ problems solved\n• Strong contest performance (IUPC/ICPC regional placements)\n• Builds deployable full-stack AI systems and reliable APIs\n• Strong fundamentals: DSA, debugging, clean architecture, fast iteration",
   "tags": [
     "summary",
     "recruiter",
@@ -107,7 +109,7 @@
   },
   "key": "competitive_profiles",
   "title": "Competitive Programming Profiles",
-  "text": "• Codeforces: Expert (max 1734) — The_Ruthless\n• CodeChef: 5★ (max 2019) — ghost_014\n• AtCoder: Cyan (max 1271) — Ruthless__\n• LeetCode: Knight",
+  "text": "• Codeforces: Expert (max 1770) — The_Ruthless\n• CodeChef: 5★ (max 2019) — ghost_014\n• AtCoder: Cyan (max 1271) — Ruthless__\n• LeetCode: Knight",
   "tags": [
     "competitive",
     "codeforces",
@@ -153,6 +155,29 @@
   "source": "manual_kb_import",
   "updatedAt": {
     "$date": "2026-01-09T00:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "69613cf837fba6eab1aaaf99"
+  },
+  "key": "project_agrisense",
+  "title": "Featured Project: UNKNOWNS AgriSense",
+  "text": "Role: Team Lead, Team UNKNOWNS (RUET)\nStack: LangGraph, FastAPI, Next.js, PostgreSQL, pgvector, Docker\n• Multi-agent crop-planning system for Bangladesh, with deterministic farm-profile gates before recommendation, planning, and finance flows\n• Grounds crop ranking in farmer inputs, BARC CZIS data, public agricultural references, and live Open-Meteo forecasts\n• Produces explainable recommendations, seasonal calendars, financial projections, fertilizer/irrigation schedules, alerts, and what-if simulations\n• Persists farm profiles, chat summaries, and semantic long-term memory in PostgreSQL/pgvector\nRepo: https://github.com/Sefayet-Alam/UNKNOWNS_AgriSense\nLive: https://agrisense.cortextech.dev/",
+  "tags": [
+    "project",
+    "featured",
+    "ai",
+    "ml",
+    "langgraph",
+    "fastapi",
+    "nextjs",
+    "pgvector",
+    "agriculture"
+  ],
+  "source": "manual_kb_import",
+  "updatedAt": {
+    "$date": "2026-07-27T00:00:00.000Z"
   }
 },
 {
@@ -248,7 +273,7 @@
   },
   "key": "highlights_achievements",
   "title": "Highlights: Achievements",
-  "text": "• UIU IUPC 2025 — 8th (120+ teams) — Team: 1000000007\n• IUT IUPC 2024 — 20th (100+ teams) — Team: RUET_Onirban\n• BUET IUPC 2024 — 23rd (120+ teams) — Team: RUET_a_bit_slower\n• ICPC Asia Dhaka Regional 2024 — 30th (300+ teams) — Team: RUET_a_bit_slower\n• ICPC Asia Dhaka Regional 2025 — 38th (313 teams) — Team: Insoluble_Heralds\n• SRBD Code Contest 2025 — 62nd (~1.4k+ participants) — Onsite qualifier\n• Meta Hacker Cup 2025 — Rank 1663 (5k+ participants) — received official T-shirt\n• Code Samurai 2024 — Onsite round; 14th preliminary — Team: RUET_UNKNOWNS\n• BUET Game Fest 2023 — 16th / 40+ teams — 2D game using Godot\n• Codespark 2022 — 1st Runner-up (Intra RUET team)\n• Codesmash 2021 — 2nd Runner-up (Intra RUET individual)",
+  "text": "• 12th IUT ICT Fest 2026 Agentic AI Hackathon — Team UNKNOWNS selected as a top 20 finalist out of 700 teams\n• UIU IUPC 2025 — 8th (120+ teams) — Team: 1000000007\n• IUT IUPC 2024 — 20th (100+ teams) — Team: RUET_Onirban\n• BUET IUPC 2024 — 23rd (120+ teams) — Team: RUET_a_bit_slower\n• ICPC Asia Dhaka Regional 2024 — 30th (300+ teams) — Team: RUET_a_bit_slower\n• ICPC Asia Dhaka Regional 2025 — 38th (313 teams) — Team: Insoluble_Heralds\n• SRBD Code Contest 2025 — 62nd (~1.4k+ participants) — Onsite qualifier\n• Meta Hacker Cup 2025 — Rank 1663 (5k+ participants) — received official T-shirt\n• Code Samurai 2024 — Onsite round; 14th preliminary — Team: RUET_UNKNOWNS\n• BUET Game Fest 2023 — 16th / 40+ teams — 2D game using Godot\n• Codespark 2022 — 1st Runner-up (Intra RUET team)\n• Codesmash 2021 — 2nd Runner-up (Intra RUET individual)",
   "tags": [
     "achievements",
     "highlights",
@@ -265,13 +290,38 @@
   },
   "key": "publications",
   "title": "Publications",
-  "text": "• No confirmed publications are stored yet.\n• If recruiter needs publication info, ask them to contact Sefayet via phone/email.",
+  "text": "Research status (neither item is claimed as accepted or published):\n• NLP thesis on sarcasm detection — manuscript submitted to IEEE Access and under review; targeting a Q2 journal outcome\n• Second NLP journal research project — manuscript in progress with a Q1 journal target; title and venue are not yet public\n• For unpublished details, ask Sefayet via phone/email.",
   "tags": [
-    "publications"
+    "research",
+    "publications",
+    "nlp",
+    "ai",
+    "ml"
   ],
   "source": "manual_kb_import",
   "updatedAt": {
     "$date": "2026-01-09T00:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "69613cf837fba6eab1aaaf98"
+  },
+  "key": "certifications_ai_ml",
+  "title": "AI/ML Certifications",
+  "text": "• Ostad — Applied NLP & LLM: completed; credential https://github.com/Sefayet-Alam/Achivemenets_-_Certificates-/blob/main/Khandoker%20Sefayet%20Alam-Applied_%20NLP_LLM%20.pdf\n• Ostad — Deep Learning: completed; credential https://github.com/Sefayet-Alam/Achivemenets_-_Certificates-/blob/main/Sefayet_Alam_DL_Ostad.pdf",
+  "tags": [
+    "certifications",
+    "credentials",
+    "ai",
+    "ml",
+    "nlp",
+    "llm",
+    "deep-learning"
+  ],
+  "source": "manual_kb_import",
+  "updatedAt": {
+    "$date": "2026-07-27T00:00:00.000Z"
   }
 },
 {
@@ -350,7 +400,7 @@
   },
   "key": "faq_who_is_he",
   "title": "FAQ: Who is Khandoker Sefayet Alam?",
-  "text": "6-bullet summary:\n- Full-Stack Developer (MERN) and Flutter Developer\n- Competitive Programmer (Codeforces Expert, max 1734)\n- Solved 3500+ programming problems\n- Strong fundamentals: DSA, debugging, clean architecture\n- Built multiple real projects (dashboards, APIs, mobile apps, LLM tooling)\n- Based in Rajshahi, Bangladesh\nIf recruiter needs anything specific not listed, contact: +8801919030974 / sefayetalam14@gmail.com",
+  "text": "6-bullet summary:\n- AI/ML Engineer, NLP Researcher, and Full-Stack Developer\n- Competitive Programmer (Codeforces Expert, max 1770)\n- Solved 3500+ programming problems\n- Strong fundamentals: DSA, debugging, clean architecture\n- Built multiple deployable AI, web, and mobile products\n- Based in Rajshahi, Bangladesh\nIf recruiter needs anything specific not listed, contact: +8801919030974 / sefayetalam14@gmail.com",
   "tags": [
     "faq",
     "summary",
@@ -366,15 +416,17 @@
     "$oid": "6961416737fba6eab1aaaf88"
   },
   "key": "faq_links",
-  "title": "FAQ: Links (GitHub, LinkedIn, Codeforces, Resume)",
-  "text": "Links:\n- GitHub: https://github.com/Sefayet-Alam\n- LinkedIn: https://www.linkedin.com/in/sefayet-alam-8333b4242\n- Codeforces: https://codeforces.com/profile/The_Ruthless\n- Resume: /resume.pdf\nIf any link is broken, contact: +8801919030974 / sefayetalam14@gmail.com",
+  "title": "FAQ: Links (GitHub, LinkedIn, Codeforces, Scholar, Resume)",
+  "text": "Links:\n- GitHub: https://github.com/Sefayet-Alam\n- LinkedIn: https://www.linkedin.com/in/sefayet-alam-8333b4242\n- Codeforces: https://codeforces.com/profile/The_Ruthless\n- Google Scholar: https://scholar.google.com/citations?user=xpsciakAAAAJ&hl=en\n- Resume: /resume.pdf\nIf any link is broken, contact: +8801919030974 / sefayetalam14@gmail.com",
   "tags": [
     "faq",
     "links",
     "resume",
     "github",
     "linkedin",
-    "codeforces"
+    "codeforces",
+    "scholar",
+    "research"
   ],
   "source": "manual_kb_import",
   "updatedAt": {
@@ -439,7 +491,7 @@
   },
   "key": "faq_competitive_profiles",
   "title": "FAQ: Competitive Programming Profiles",
-  "text": "Profiles:\n- Codeforces: Expert (max 1734) — The_Ruthless\n- CodeChef: 5-star (max 2019) — ghost_014\n- AtCoder: Cyan (max 1271) — Ruthless__\n- LeetCode: Knight\nIf recruiter needs profile links again, contact: +8801919030974 / sefayetalam14@gmail.com",
+  "text": "Profiles:\n- Codeforces: Expert (max 1770) — The_Ruthless\n- CodeChef: 5-star (max 2019) — ghost_014\n- AtCoder: Cyan (max 1271) — Ruthless__\n- LeetCode: Knight\nIf recruiter needs profile links again, contact: +8801919030974 / sefayetalam14@gmail.com",
   "tags": [
     "faq",
     "competitive",
@@ -528,7 +580,7 @@
   },
   "key": "faq_achievements",
   "title": "FAQ: Achievements (Highlights)",
-  "text": "Highlights:\n- UIU IUPC 2025: 8th / 120+ teams (Team: 1000000007)\n- IUT IUPC 2024: 20th / 100+ teams (Team: RUET_Onirban)\n- BUET IUPC 2024: 23rd / 120+ teams (Team: RUET_a_bit_slower)\n- ICPC Asia Dhaka Regional 2024: 30th / 300+ teams (Team: RUET_a_bit_slower)\n- ICPC Asia Dhaka Regional 2025: 38th / 313 teams (Team: Insoluble_Heralds)\n- SRBD Code Contest 2025: 62nd (~1.4k+ participants) (Onsite qualifier)\n- Meta Hacker Cup 2025: Rank 1663 / 5k+ (received official T-shirt)\n- Meta Hacker Cup 2023: Reached Round 3; Rank 1357 / 6k+\n- Code Samurai 2024: Onsite round; 14th preliminary (Team: RUET_UNKNOWNS)\n- BUET Game Fest 2023: 16th / 40+ teams (built 2D game using Godot)\nIf recruiter needs proof links for any item, contact: +8801919030974 / sefayetalam14@gmail.com",
+  "text": "Highlights:\n- 12th IUT ICT Fest 2026 Agentic AI Hackathon: Team UNKNOWNS was a top 20 finalist out of 700 teams\n- UIU IUPC 2025: 8th / 120+ teams (Team: 1000000007)\n- IUT IUPC 2024: 20th / 100+ teams (Team: RUET_Onirban)\n- BUET IUPC 2024: 23rd / 120+ teams (Team: RUET_a_bit_slower)\n- ICPC Asia Dhaka Regional 2024: 30th / 300+ teams (Team: RUET_a_bit_slower)\n- ICPC Asia Dhaka Regional 2025: 38th / 313 teams (Team: Insoluble_Heralds)\n- SRBD Code Contest 2025: 62nd (~1.4k+ participants) (Onsite qualifier)\n- Meta Hacker Cup 2025: Rank 1663 / 5k+ (received official T-shirt)\n- Meta Hacker Cup 2023: Reached Round 3; Rank 1357 / 6k+\n- Code Samurai 2024: Onsite round; 14th preliminary (Team: RUET_UNKNOWNS)\n- BUET Game Fest 2023: 16th / 40+ teams (built 2D game using Godot)\nIf recruiter needs proof links for any item, contact: +8801919030974 / sefayetalam14@gmail.com",
   "tags": [
     "faq",
     "achievements",
@@ -545,10 +597,12 @@
   },
   "key": "faq_publications",
   "title": "FAQ: Publications",
-  "text": "Publications:\n- No confirmed publications are stored in KB right now.\nIf recruiter needs publication details, contact: +8801919030974 / sefayetalam14@gmail.com",
+  "text": "Research status:\n- NLP thesis on sarcasm detection: submitted to IEEE Access, under review, targeting a Q2 journal outcome.\n- Second NLP research manuscript: ongoing, targeting a Q1 journal; title and venue are not public yet.\n- Neither is claimed as accepted or published.\nFor unpublished details, contact: +8801919030974 / sefayetalam14@gmail.com",
   "tags": [
     "faq",
-    "publications"
+    "research",
+    "publications",
+    "nlp"
   ],
   "source": "manual_kb_import",
   "updatedAt": {

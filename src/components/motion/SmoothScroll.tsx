@@ -2,7 +2,8 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { startLenis } from "@/lib/motion/lenis";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { scrollToId, startLenis } from "@/lib/motion/lenis";
 
 /**
  * Mounts Lenis everywhere except /fun, where the canvas owns input and
@@ -21,7 +22,25 @@ export function SmoothScroll() {
     if (reduced) return;
 
     const stop = startLenis();
-    return stop;
+    let cancelled = false;
+
+    const applyInitialHash = async () => {
+      const id = decodeURIComponent(window.location.hash.replace(/^#/, ""));
+      if (!id) return;
+      await document.fonts.ready;
+      if (cancelled) return;
+      ScrollTrigger.refresh();
+      window.requestAnimationFrame(() => scrollToId(id));
+    };
+
+    void applyInitialHash();
+    window.addEventListener("intro-complete", applyInitialHash);
+
+    return () => {
+      cancelled = true;
+      window.removeEventListener("intro-complete", applyInitialHash);
+      stop();
+    };
   }, [pathname]);
 
   return null;

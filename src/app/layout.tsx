@@ -1,29 +1,31 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono, Inter } from "next/font/google";
+import { IBM_Plex_Mono, Manrope } from "next/font/google";
 import "./globals.css";
 
 import { ThemeProvider } from "next-themes";
-import { Stage } from "@/components/layout/Stage";
+import { SpatialField } from "@/components/layout/SpatialField";
 import { CursorFx } from "@/components/ui/CursorFx";
 import { ChatWidgetGate } from "@/components/ui/ChatWidgetGate";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { ScrollRefresher } from "@/components/motion/ScrollRefresher";
 
-const mono = JetBrains_Mono({
+const mono = IBM_Plex_Mono({
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
   variable: "--font-mono",
   display: "swap",
 });
 
-const sans = Inter({
+const sans = Manrope({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Sefayet-Alam",
-  description: "Full-Stack Developer (MERN) • Flutter • Competitive Programmer",
+  title: "Sefayet Alam — AI/ML Engineer & NLP Researcher",
+  description:
+    "AI/ML engineer and NLP researcher building grounded agentic systems, full-stack products, and research-backed software.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -47,7 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ScrollRefresher />
 
           {/* z-0 — decorative 3D only */}
-          <Stage />
+          <SpatialField />
 
           {/* z-10 — page content, never inside a perspective context */}
           <div className="layer-content">{children}</div>

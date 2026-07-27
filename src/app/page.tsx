@@ -29,7 +29,10 @@ export default function HomePage() {
         <Experience experience={portfolio.experience} />
         <Skills skills={portfolio.skills} />
         <Projects projects={portfolio.projects} />
-        <Achievements highlights={portfolio.highlights} />
+        <Achievements
+          highlights={portfolio.highlights}
+          scholarUrl={portfolio.profile.links.scholar}
+        />
         <Certifications certifications={certs} />
       </div>
 
@@ -39,6 +42,7 @@ export default function HomePage() {
         github={portfolio.profile.links.github}
         linkedin={portfolio.profile.links.linkedin}
         codeforces={portfolio.profile.links.codeforces}
+        scholar={portfolio.profile.links.scholar}
       />
     </main>
   );
