@@ -21,7 +21,7 @@ export function ChatWidget() {
     {
       role: "assistant",
       content:
-        "Hi — I’m Sef-AI-yet. Ask recruiter questions about Sefayet (skills, projects, achievements, experience, salary).",
+        "Hi — I'm Sef-AI-yet. Ask recruiter questions about Sefayet (skills, projects, achievements, experience, salary).",
     },
   ]);
 
@@ -29,13 +29,17 @@ export function ChatWidget() {
 
   useEffect(() => {
     const onOpen = () => setOpen(true);
-    window.addEventListener("open-chat", onOpen as any);
-    return () => window.removeEventListener("open-chat", onOpen as any);
+    window.addEventListener("open-chat", onOpen as EventListener);
+    return () =>
+      window.removeEventListener("open-chat", onOpen as EventListener);
   }, []);
 
   useEffect(() => {
     if (!open) return;
-    listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: "smooth" });
+    listRef.current?.scrollTo({
+      top: listRef.current.scrollHeight,
+      behavior: "smooth",
+    });
   }, [messages, open]);
 
   async function send(text: string) {
@@ -59,43 +63,50 @@ export function ChatWidget() {
       if (!data?.ok) {
         setMessages((m) => [
           ...m,
-          { role: "assistant", content: `Error: ${data?.error || "Request failed"}` },
+          {
+            role: "assistant",
+            content: `Error: ${data?.error || "Request failed"}`,
+          },
         ]);
       } else {
         setMessages((m) => [...m, { role: "assistant", content: data.reply }]);
       }
-    } catch (e: any) {
-      setMessages((m) => [...m, { role: "assistant", content: `Error: ${e?.message || "Failed"}` }]);
+    } catch (e) {
+      const message = e instanceof Error ? e.message : "Failed";
+      setMessages((m) => [
+        ...m,
+        { role: "assistant", content: `Error: ${message}` },
+      ]);
     } finally {
       setBusy(false);
     }
   }
 
   return (
-    <div className="fixed bottom-4 right-4 z-[60] md:bottom-5 md:right-5">
+    <div className="fixed bottom-5 right-5 z-[60]">
       {/* Bubble */}
       {!open && (
         <button
           type="button"
           aria-label="Open AI chat"
           onClick={() => setOpen(true)}
-          className="group inline-flex h-14 w-14 items-center justify-center rounded-full border border-zinc-200 bg-white/70 shadow-lg backdrop-blur transition hover:-translate-y-0.5 hover:bg-white dark:border-zinc-800 dark:bg-zinc-950/60 dark:hover:bg-zinc-900"
+          className="inline-flex h-14 w-14 items-center justify-center border border-rule bg-accent text-accent-ink shadow-lg transition-opacity hover:opacity-90"
         >
-          <MessageCircle className="h-6 w-6 text-zinc-800 dark:text-zinc-100" />
+          <MessageCircle className="h-6 w-6" />
         </button>
       )}
 
       {/* Panel */}
       {open && (
-        <div className="w-[calc(100vw-24px)] max-w-[380px] overflow-hidden rounded-2xl border border-zinc-200 bg-white/80 shadow-2xl backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/70">
+        <div className="w-[calc(100vw-40px)] max-w-[390px] overflow-hidden border border-rule bg-raised shadow-2xl">
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-3 dark:border-zinc-800">
+          <div className="flex items-center justify-between border-b border-rule px-4 py-3">
             <div className="min-w-0">
-              <p className="truncate text-sm font-semibold text-zinc-900 dark:text-zinc-50">
+              <p className="truncate font-mono text-sm font-medium uppercase tracking-[0.14em] text-ink">
                 Sef-AI-yet
               </p>
-              <p className="truncate text-xs text-zinc-500 dark:text-zinc-400">
-                Recruiter assistant • fast answers
+              <p className="truncate font-mono text-[10px] uppercase tracking-[0.16em] text-muted">
+                Recruiter assistant
               </p>
             </div>
 
@@ -103,7 +114,7 @@ export function ChatWidget() {
               type="button"
               aria-label="Close"
               onClick={() => setOpen(false)}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-200 bg-white/60 text-zinc-700 hover:bg-white dark:border-zinc-800 dark:bg-zinc-950/50 dark:text-zinc-200 dark:hover:bg-zinc-900"
+              className="inline-flex h-9 w-9 items-center justify-center border border-rule text-ink transition-colors hover:bg-accent hover:text-accent-ink"
             >
               <X className="h-4 w-4" />
             </button>
@@ -112,7 +123,7 @@ export function ChatWidget() {
           {/* Messages */}
           <div
             ref={listRef}
-            className="max-h-[55vh] space-y-3 overflow-auto px-4 py-3"
+            className="max-h-[55vh] space-y-3 overflow-auto px-4 py-4"
           >
             <div className="flex flex-wrap gap-2">
               {SUGGESTIONS.map((s) => (
@@ -120,7 +131,7 @@ export function ChatWidget() {
                   key={s}
                   type="button"
                   onClick={() => send(s)}
-                  className="rounded-full border border-zinc-200 bg-white/60 px-3 py-1 text-xs text-zinc-700 hover:bg-white dark:border-zinc-800 dark:bg-zinc-950/40 dark:text-zinc-200 dark:hover:bg-zinc-900"
+                  className="border border-rule px-3 py-1 text-left font-mono text-[11px] text-muted transition-colors hover:bg-accent hover:text-accent-ink"
                 >
                   {s}
                 </button>
@@ -131,10 +142,10 @@ export function ChatWidget() {
               <div
                 key={i}
                 className={[
-                  "max-w-[92%] whitespace-pre-wrap break-words rounded-2xl px-3 py-2 text-sm leading-relaxed",
+                  "max-w-[92%] whitespace-pre-wrap break-words px-3 py-2 text-sm leading-relaxed",
                   m.role === "user"
-                    ? "ml-auto bg-zinc-900 text-zinc-50 dark:bg-zinc-50 dark:text-zinc-900"
-                    : "mr-auto bg-zinc-100 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-50",
+                    ? "ml-auto bg-accent text-accent-ink"
+                    : "mr-auto border border-rule text-ink",
                 ].join(" ")}
               >
                 {m.content}
@@ -142,7 +153,7 @@ export function ChatWidget() {
             ))}
 
             {busy && (
-              <div className="mr-auto w-fit rounded-2xl bg-zinc-100 px-3 py-2 text-sm text-zinc-700 dark:bg-zinc-900 dark:text-zinc-200">
+              <div className="mr-auto w-fit border border-rule px-3 py-2 font-mono text-xs uppercase tracking-wider text-muted">
                 Typing…
               </div>
             )}
@@ -154,18 +165,18 @@ export function ChatWidget() {
               e.preventDefault();
               if (!busy && input.trim()) send(input);
             }}
-            className="flex items-center gap-2 border-t border-zinc-200 px-3 py-3 dark:border-zinc-800"
+            className="flex items-center gap-2 border-t border-rule px-3 py-3"
           >
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask about skills, projects, salary…"
-              className="h-10 flex-1 rounded-xl border border-zinc-200 bg-white/70 px-3 text-sm text-zinc-900 outline-none placeholder:text-zinc-400 focus:ring-2 focus:ring-zinc-300 dark:border-zinc-800 dark:bg-zinc-950/40 dark:text-zinc-50 dark:placeholder:text-zinc-500 dark:focus:ring-zinc-700"
+              className="h-10 flex-1 border border-rule bg-surface px-3 text-sm text-ink outline-none placeholder:text-muted focus:border-accent"
             />
             <button
               type="submit"
               disabled={busy || !input.trim()}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-zinc-200 bg-white/70 text-zinc-900 transition hover:bg-white disabled:opacity-50 dark:border-zinc-800 dark:bg-zinc-950/40 dark:text-zinc-50 dark:hover:bg-zinc-900"
+              className="inline-flex h-10 w-10 items-center justify-center border border-rule text-ink transition-colors hover:bg-accent hover:text-accent-ink disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-ink"
             >
               <Send className="h-4 w-4" />
             </button>

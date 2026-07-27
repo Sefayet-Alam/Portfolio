@@ -16,7 +16,7 @@ export function ThemeToggle() {
       <button
         type="button"
         aria-label="Toggle theme"
-        className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-zinc-200 bg-white/60 text-zinc-900 shadow-sm backdrop-blur transition dark:border-zinc-800 dark:bg-zinc-950/40 dark:text-zinc-50"
+        className="inline-flex h-10 w-10 items-center justify-center border border-rule text-ink"
       >
         <Sun size={18} />
       </button>
@@ -31,13 +31,16 @@ export function ThemeToggle() {
       type="button"
       aria-label="Toggle theme"
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="group inline-flex h-10 w-10 items-center justify-center rounded-xl border border-zinc-200 bg-white/60 text-zinc-900 shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:bg-white dark:border-zinc-800 dark:bg-zinc-950/40 dark:text-zinc-50 dark:hover:bg-zinc-900"
+      className="group inline-flex h-10 w-10 items-center justify-center border border-rule text-ink transition-colors hover:bg-accent hover:text-accent-ink"
       title={isDark ? "Switch to light" : "Switch to dark"}
     >
       {isDark ? (
-        <Sun size={18} className="transition-transform group-hover:rotate-12" />
+        <Sun size={18} className="transition-transform group-hover:rotate-45" />
       ) : (
-        <Moon size={18} className="transition-transform group-hover:-rotate-12" />
+        <Moon
+          size={18}
+          className="transition-transform group-hover:-rotate-12"
+        />
       )}
     </button>
   );

@@ -4,8 +4,18 @@ import { useEffect, useMemo, useState } from "react";
 
 export function IntroLoader() {
   const greetings = useMemo(
-    () => ["Hello", "Ciao", "Hola", "Bonjour", "Salam", "こんにちは", "안녕하세요", "Namaste", "Merhaba"],
-    []
+    () => [
+      "Hello",
+      "Ciao",
+      "Hola",
+      "Bonjour",
+      "Salam",
+      "こんにちは",
+      "안녕하세요",
+      "Namaste",
+      "Merhaba",
+    ],
+    [],
   );
 
   const [show, setShow] = useState(false);
@@ -45,8 +55,7 @@ export function IntroLoader() {
 
   return (
     <div className={`intro-overlay ${leaving ? "intro-leave" : ""}`}>
-      <div className="intro-card">
-        <div className="intro-glow" />
+      <div className="px-6 text-center">
         <p className="intro-hello">{greetings[index]}</p>
         <p className="intro-sub">Welcome</p>
       </div>

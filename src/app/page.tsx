@@ -13,15 +13,18 @@ import { Certifications } from "@/components/sections/Certifications";
 import { Achievements } from "@/components/sections/Achievements";
 
 export default function HomePage() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const certs = (portfolio as any).certifications ?? [];
 
   return (
-    <main id="top" className="min-h-screen">
+    // overflow-x-clip contains the horizontal projects rail without
+    // breaking the sticky header — `overflow-x: hidden` would.
+    <main id="top" className="min-h-screen overflow-x-clip">
       <IntroLoader />
 
       <Header resumeHref={portfolio.profile.links.resume} />
 
-      <div className="mx-auto max-w-5xl px-4">
+      <div className="mx-auto max-w-6xl px-6">
         <Hero profile={portfolio.profile} />
         <Experience experience={portfolio.experience} />
         <Skills skills={portfolio.skills} />

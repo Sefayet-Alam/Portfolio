@@ -48,8 +48,8 @@ export default function YouTubeCard({
 
     if (!isLikelyValidId) {
         return (
-            <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-zinc-100 px-4 text-center text-sm text-zinc-700 dark:bg-zinc-900 dark:text-zinc-200">
-                <div className="font-medium">Invalid YouTube link</div>
+            <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-surface px-4 text-center text-sm text-muted">
+                <div className="font-mono uppercase tracking-wider text-ink">Invalid YouTube link</div>
                 <div className="text-xs opacity-80">
                     Please use a full YouTube URL (video id is usually 11 characters).
                 </div>
@@ -77,9 +77,9 @@ export default function YouTubeCard({
                         className="object-cover"
                     />
 
-                    <div className="absolute inset-0 grid place-items-center bg-black/20">
-                        <div className="rounded-full bg-black/60 p-4 backdrop-blur transition group-hover:scale-105">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+                    <div className="absolute inset-0 grid place-items-center bg-black/20 transition-colors group-hover:bg-black/30">
+                        <div className="bg-accent p-4 text-accent-ink transition-transform group-hover:scale-105">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                 <path d="M8 5v14l11-7z" />
                             </svg>
                         </div>

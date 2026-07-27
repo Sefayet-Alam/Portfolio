@@ -8,7 +8,7 @@ export default function PublicationsPage() {
     <main className="min-h-screen">
       <Header resumeHref={portfolio.profile.links.resume} />
 
-      <div className="mx-auto max-w-5xl px-4">
+      <div className="mx-auto max-w-6xl px-6">
         <Publications publications={portfolio.highlights.publications} />
       </div>
 

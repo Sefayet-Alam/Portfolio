@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Reveal } from "@/components/motion/Reveal";
 
 type Cert = {
   name: string;
@@ -9,43 +10,45 @@ type Cert = {
   bullets: string[];
 };
 
-export function Certifications({ certifications }: { certifications: Cert[] }) {
+export function Certifications({
+  certifications,
+}: {
+  certifications: Cert[];
+}) {
   if (!certifications?.length) return null;
 
   return (
-    <section id="certifications" className="py-14">
-      <div className="mb-6">
-        <h2 className="text-2xl font-semibold tracking-tight">Certificates & Licenses</h2>
-        <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-          
-        </p>
-      </div>
+    <section id="certifications" className="py-20 md:py-28">
+      <h2 className="border-b border-rule pb-5 font-mono text-sm uppercase tracking-[0.22em] text-ink">
+        <span className="text-accent">05</span> — Certificates &amp; Licenses
+      </h2>
 
-      <div className="grid gap-5 md:grid-cols-2">
+      <div className="mt-10 grid gap-6 md:grid-cols-2">
         {certifications.map((c) => (
-          <div
+          <Reveal
             key={c.name}
-            className="group overflow-hidden rounded-2xl border border-zinc-200 bg-white/60 shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950/40"
+            className="group overflow-hidden border border-rule bg-raised"
           >
-            <div className="relative h-44 w-full overflow-hidden">
+            <div className="relative h-48 w-full overflow-hidden border-b border-rule">
               {c.image ? (
                 <Image
                   src={c.image}
                   alt={c.name}
                   fill
-                  className="object-cover transition group-hover:scale-[1.02]"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                 />
               ) : (
-                <div className="h-full w-full bg-zinc-100 dark:bg-zinc-900" />
+                <div className="h-full w-full bg-surface" />
               )}
             </div>
 
-            <div className="p-5">
-              <div className="flex items-start justify-between gap-3">
+            <div className="p-6">
+              <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
-                  <p className="text-base font-semibold">{c.name}</p>
-                  <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-                    {c.issuer} • {c.date}
+                  <p className="text-base font-medium text-ink">{c.name}</p>
+                  <p className="mt-1 font-mono text-xs uppercase tracking-[0.14em] text-muted">
+                    {c.issuer} · {c.date}
                   </p>
                 </div>
 
@@ -54,20 +57,23 @@ export function Certifications({ certifications }: { certifications: Cert[] }) {
                     href={c.link}
                     target="_blank"
                     rel="noreferrer"
-                    className="rounded-lg bg-zinc-900 px-3 py-2 text-xs font-medium text-white transition hover:opacity-90 dark:bg-white dark:text-zinc-900"
+                    className="bg-accent px-4 py-2 font-mono text-xs uppercase tracking-wider text-accent-ink transition-opacity hover:opacity-90"
                   >
                     View
                   </a>
                 ) : null}
               </div>
 
-              <ul className="mt-4 list-disc space-y-1 pl-5 text-sm text-zinc-700 dark:text-zinc-200">
+              <ul className="mt-4 space-y-2 text-sm leading-relaxed text-muted">
                 {c.bullets.map((b) => (
-                  <li key={b}>{b}</li>
+                  <li key={b} className="flex gap-3">
+                    <span className="mt-2 h-px w-4 flex-none bg-accent" />
+                    <span>{b}</span>
+                  </li>
                 ))}
               </ul>
             </div>
-          </div>
+          </Reveal>
         ))}
       </div>
     </section>

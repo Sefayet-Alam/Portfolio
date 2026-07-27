@@ -22,6 +22,5 @@ export function useGsapContext(
     gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context((self) => fn(self), scopeRef.current ?? undefined);
     return () => ctx.revert();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 }

@@ -1,6 +1,5 @@
-"use client";
-
 import Image from "next/image";
+import { Reveal } from "@/components/motion/Reveal";
 
 type EntryLink = {
   label?: string;
@@ -48,7 +47,13 @@ function prettyLabelFromUrl(url: string) {
   }
 }
 
-function LinkChips({ links, legacyLink }: { links?: EntryLink[]; legacyLink?: string }) {
+function LinkChips({
+  links,
+  legacyLink,
+}: {
+  links?: EntryLink[];
+  legacyLink?: string;
+}) {
   const merged: EntryLink[] = [
     ...(legacyLink ? [{ label: "Link", url: legacyLink }] : []),
     ...(links ?? []),
@@ -60,7 +65,9 @@ function LinkChips({ links, legacyLink }: { links?: EntryLink[]; legacyLink?: st
     <div className="mt-3 flex flex-wrap gap-2">
       {merged.map((l) => {
         const label =
-          l.label && l.label.trim().length > 0 ? l.label.trim() : prettyLabelFromUrl(l.url);
+          l.label && l.label.trim().length > 0
+            ? l.label.trim()
+            : prettyLabelFromUrl(l.url);
 
         return (
           <a
@@ -68,7 +75,7 @@ function LinkChips({ links, legacyLink }: { links?: EntryLink[]; legacyLink?: st
             href={l.url}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-1 rounded-full border border-zinc-200 bg-white/60 px-3 py-1 text-xs text-zinc-900 backdrop-blur hover:bg-white dark:border-zinc-800 dark:bg-zinc-950/40 dark:text-zinc-100 dark:hover:bg-zinc-900"
+            className="inline-flex items-center gap-1 border border-rule px-3 py-1 font-mono text-[11px] uppercase tracking-wider text-ink transition-colors hover:bg-accent hover:text-accent-ink"
             title={l.url}
           >
             {label}
@@ -84,41 +91,51 @@ function LinkChips({ links, legacyLink }: { links?: EntryLink[]; legacyLink?: st
 
 function Timeline({ items }: { items: Item[] }) {
   return (
-    <div className="relative mt-8">
-      <div className="absolute left-6 top-0 h-full w-px bg-zinc-200 dark:bg-zinc-800" />
+    <div className="relative mt-10">
+      <div className="absolute left-6 top-0 hidden h-full w-px bg-rule sm:block" />
 
-      <div className="space-y-10">
+      <div className="space-y-12">
         {items.map((it) => (
-          <div key={`${it.title}-${it.date}`} className="relative pl-20">
-            <div className="absolute left-0 top-0">
-              <div className="relative h-12 w-12 overflow-hidden rounded-full border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-950">
+          <Reveal key={`${it.title}-${it.date}`} className="relative sm:pl-20">
+            <div className="absolute left-0 top-0 hidden sm:block">
+              <div className="relative h-12 w-12 overflow-hidden border border-rule bg-raised">
                 {it.logo ? (
-                  <Image src={it.logo} alt="logo" fill className="object-cover" sizes="48px" />
+                  <Image
+                    src={it.logo}
+                    alt=""
+                    fill
+                    className="object-cover"
+                    sizes="48px"
+                  />
                 ) : null}
               </div>
             </div>
 
             <div className="flex flex-col gap-1">
-              <p className="text-base font-semibold tracking-tight">{it.title}</p>
+              <p className="text-base font-medium tracking-tight text-ink">
+                {it.title}
+              </p>
 
               <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                <p className="text-sm text-zinc-600 dark:text-zinc-300">{it.org}</p>
-                <span className="text-sm text-zinc-500 dark:text-zinc-400">{it.date}</span>
+                <p className="text-sm text-muted">{it.org}</p>
+                <span className="font-mono text-xs uppercase tracking-[0.14em] text-accent">
+                  {it.date}
+                </span>
               </div>
 
-              {/* NEW: multiple links as chips (also supports old it.link) */}
+              {/* multiple links as chips (also supports legacy it.link) */}
               <LinkChips links={it.links} legacyLink={it.link} />
             </div>
 
-            <ul className="mt-4 space-y-2 text-sm text-zinc-600 dark:text-zinc-300">
+            <ul className="mt-4 space-y-2 text-sm leading-relaxed text-muted">
               {(it.bullets || []).slice(0, 4).map((b) => (
-                <li key={b} className="flex gap-2">
-                  <span className="mt-[7px] h-1.5 w-1.5 flex-none rounded-full bg-zinc-300 dark:bg-zinc-600" />
+                <li key={b} className="flex gap-3">
+                  <span className="mt-2 h-px w-4 flex-none bg-accent" />
                   <span>{b}</span>
                 </li>
               ))}
             </ul>
-          </div>
+          </Reveal>
         ))}
       </div>
     </div>
@@ -127,21 +144,23 @@ function Timeline({ items }: { items: Item[] }) {
 
 export function Publications({ publications }: PublicationsProps) {
   return (
-    <section className="py-10">
-      <div className="rounded-3xl border border-zinc-200 bg-white/70 p-6 shadow-[0_1px_0_rgba(0,0,0,0.03)] backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/50">
-        <h1 className="text-xl font-semibold tracking-tight md:text-2xl">Publications</h1>
-        <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+    <section className="py-20 md:py-28">
+      <div className="border-b border-rule pb-5">
+        <h1 className="font-mono text-sm uppercase tracking-[0.22em] text-ink">
+          Publications
+        </h1>
+        <p className="mt-3 text-sm text-muted">
           Selected papers, write-ups, and research outputs.
         </p>
-
-        {publications.length === 0 ? (
-          <div className="mt-8 rounded-2xl border border-dashed border-zinc-200 p-6 text-sm text-zinc-600 dark:border-zinc-800 dark:text-zinc-300">
-            No publications added yet.
-          </div>
-        ) : (
-          <Timeline items={publications} />
-        )}
       </div>
+
+      {publications.length === 0 ? (
+        <div className="mt-10 border border-dashed border-rule p-6 text-sm text-muted">
+          No publications added yet.
+        </div>
+      ) : (
+        <Timeline items={publications} />
+      )}
     </section>
   );
 }

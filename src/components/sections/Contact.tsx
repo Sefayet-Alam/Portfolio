@@ -10,53 +10,39 @@ type ContactProps = {
 
 export function Contact({ email, links }: ContactProps) {
   return (
-    <section id="contact" className="py-14">
-      <h2 className="text-lg font-semibold tracking-tight md:text-xl">Contact</h2>
+    <section id="contact" className="py-20 md:py-28">
+      <h2 className="border-b border-rule pb-5 font-mono text-sm uppercase tracking-[0.22em] text-ink">
+        Contact
+      </h2>
 
-      <div className="mt-6 rounded-2xl border border-zinc-200 bg-white p-5 shadow-[0_1px_0_rgba(0,0,0,0.03)]">
-        <p className="text-sm text-zinc-600">
+      <div className="mt-10 border border-rule bg-raised p-6">
+        <p className="text-sm text-muted">
           Email:{" "}
           <a
-            className="text-zinc-900 underline-offset-4 hover:underline"
+            className="text-ink underline-offset-4 hover:underline"
             href={`mailto:${email}`}
           >
             {email}
           </a>
         </p>
 
-        <div className="mt-4 flex flex-wrap gap-4 text-sm">
-          <a
-            className="text-zinc-600 underline-offset-4 transition hover:text-zinc-900 hover:underline"
-            href={links.resume}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Resume
-          </a>
-          <a
-            className="text-zinc-600 underline-offset-4 transition hover:text-zinc-900 hover:underline"
-            href={links.github}
-            target="_blank"
-            rel="noreferrer"
-          >
-            GitHub
-          </a>
-          <a
-            className="text-zinc-600 underline-offset-4 transition hover:text-zinc-900 hover:underline"
-            href={links.linkedin}
-            target="_blank"
-            rel="noreferrer"
-          >
-            LinkedIn
-          </a>
-          <a
-            className="text-zinc-600 underline-offset-4 transition hover:text-zinc-900 hover:underline"
-            href={links.codeforces}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Codeforces
-          </a>
+        <div className="mt-5 flex flex-wrap gap-2">
+          {[
+            { href: links.resume, label: "Résumé" },
+            { href: links.github, label: "GitHub" },
+            { href: links.linkedin, label: "LinkedIn" },
+            { href: links.codeforces, label: "Codeforces" },
+          ].map((l) => (
+            <a
+              key={l.label}
+              href={l.href}
+              target="_blank"
+              rel="noreferrer"
+              className="border border-rule px-4 py-2 font-mono text-xs uppercase tracking-wider text-ink transition-colors hover:bg-accent hover:text-accent-ink"
+            >
+              {l.label}
+            </a>
+          ))}
         </div>
       </div>
     </section>

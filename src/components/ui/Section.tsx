@@ -10,11 +10,11 @@ export function Section({
   children: ReactNode;
 }) {
   return (
-    <section id={id} className="py-14">
-      <div className="flex items-end justify-between gap-4">
-        <h2 className="text-lg font-semibold tracking-tight md:text-xl">{title}</h2>
-      </div>
-      <div className="mt-5">{children}</div>
+    <section id={id} className="py-20 md:py-28">
+      <h2 className="border-b border-rule pb-5 font-mono text-sm uppercase tracking-[0.22em] text-ink">
+        {title}
+      </h2>
+      <div className="mt-10">{children}</div>
     </section>
   );
 }
