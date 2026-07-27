@@ -1,4 +1,3 @@
-// components/sections/skill.tsx
 import {
   SiReact,
   SiExpress,
@@ -16,6 +15,7 @@ import {
 } from "react-icons/si";
 import { FaJava } from "react-icons/fa";
 import { Sparkles } from "lucide-react";
+import { Marquee } from "@/components/motion/Marquee";
 
 type SkillsProps = {
   skills: {
@@ -27,6 +27,7 @@ type SkillsProps = {
   };
 };
 
+// Keyed to exact label strings in portfolio.seed.json — do not rename.
 const iconMap: Record<string, React.ReactNode> = {
   // Languages
   JavaScript: <SiJavascript size={18} />,
@@ -57,53 +58,49 @@ function SkillChip({ label }: { label: string }) {
   const icon = iconMap[label];
 
   return (
-    <span
-      className="
-        inline-flex items-center gap-2
-        rounded-full border border-zinc-200 bg-white/70
-        px-3 py-1.5
-        text-sm leading-snug text-zinc-700 backdrop-blur
-        dark:border-zinc-800 dark:bg-zinc-950/50 dark:text-zinc-200
-        md:px-4 md:py-2 md:text-base
-      "
-    >
-      {icon ? (
-        <span className="text-zinc-700 dark:text-zinc-200">{icon}</span>
-      ) : null}
+    <span className="inline-flex shrink-0 items-center gap-2 border border-rule bg-raised px-4 py-2 font-mono text-sm text-ink">
+      {icon ? <span className="text-accent">{icon}</span> : null}
       <span>{label}</span>
     </span>
   );
 }
 
-function Block({ title, items }: { title: string; items: string[] }) {
+function Row({
+  title,
+  items,
+  reverse,
+}: {
+  title: string;
+  items: string[];
+  reverse?: boolean;
+}) {
   return (
-    <div className="rounded-2xl border border-zinc-200 bg-white/55 p-5 shadow-[0_1px_0_rgba(0,0,0,0.03)] backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/45">
-      <p className="text-base font-semibold text-zinc-900 dark:text-zinc-50 md:text-lg">
+    <div className="border-t border-rule py-6">
+      <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
         {title}
       </p>
-
-      <div className="mt-4 flex flex-wrap gap-2.5 md:gap-3">
+      <Marquee reverse={reverse} speed={36}>
         {items.map((x) => (
           <SkillChip key={x} label={x} />
         ))}
-      </div>
+      </Marquee>
     </div>
   );
 }
 
 export function Skills({ skills }: SkillsProps) {
   return (
-    <section id="skills" className="py-14">
-      <h2 className="text-xl font-semibold tracking-tight md:text-2xl">
-        Skills
+    <section id="skills" className="py-20 md:py-28">
+      <h2 className="border-b border-rule pb-5 font-mono text-sm uppercase tracking-[0.22em] text-ink">
+        <span className="text-accent">02</span> — Skills
       </h2>
 
-      <div className="mt-6 grid gap-4 md:grid-cols-2">
-        <Block title="Strengths" items={skills.strengths} />
-        <Block title="Languages" items={skills.languages} />
-        <Block title="Frameworks" items={skills.frameworks} />
-        <Block title="Databases" items={skills.databases} />
-        <Block title="Tools" items={skills.tools} />
+      <div className="mt-4">
+        <Row title="Strengths" items={skills.strengths} />
+        <Row title="Languages" items={skills.languages} reverse />
+        <Row title="Frameworks" items={skills.frameworks} />
+        <Row title="Databases" items={skills.databases} reverse />
+        <Row title="Tools" items={skills.tools} />
       </div>
     </section>
   );

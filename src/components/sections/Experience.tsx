@@ -1,7 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGsapContext } from "@/lib/motion/useGsapContext";
+import { MOTION } from "@/lib/motion/config";
 
 type Item = {
   logo: string;
@@ -18,83 +22,119 @@ type ExperienceProps = {
   };
 };
 
-function CardItem({ item }: { item: Item }) {
+function CardItem({ item, index }: { item: Item; index: number }) {
   return (
-    <div className="relative pl-12">
-      {/* logo */}
-      <div className="absolute left-0 top-0">
-        <div className="relative h-9 w-9 overflow-hidden rounded-full border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-950">
-          <Image src={item.logo} alt="" fill className="object-cover" sizes="36px" />
-        </div>
-      </div>
-
-      <div className="rounded-2xl border border-zinc-200 bg-white/55 p-4 shadow-sm backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/40">
-        <div className="flex flex-wrap items-start justify-between gap-2">
-          <div>
-            <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{item.title}</p>
-            <p className="text-sm text-zinc-600 dark:text-zinc-300">{item.org}</p>
+    <div
+      className="exp-card sticky top-28 border border-rule bg-raised p-6 md:p-8"
+      style={{ zIndex: index + 1 }}
+    >
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div className="flex items-start gap-4">
+          <div className="relative h-11 w-11 shrink-0 overflow-hidden border border-rule">
+            <Image
+              src={item.logo}
+              alt=""
+              fill
+              className="object-cover"
+              sizes="44px"
+            />
           </div>
-          <p className="text-xs text-zinc-500 dark:text-zinc-400">{item.date}</p>
+          <div>
+            <p className="text-lg font-medium text-ink">{item.title}</p>
+            <p className="text-sm text-muted">{item.org}</p>
+          </div>
         </div>
-
-        <ul className="mt-3 space-y-2 text-sm text-zinc-700 dark:text-zinc-200">
-          {item.bullets.map((b) => (
-            <li key={b} className="flex gap-2">
-              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-zinc-400 dark:bg-zinc-500" />
-              <span className="leading-relaxed">{b}</span>
-            </li>
-          ))}
-        </ul>
+        <p className="font-mono text-xs uppercase tracking-[0.14em] text-accent">
+          {item.date}
+        </p>
       </div>
+
+      <ul className="mt-5 space-y-3 text-sm leading-relaxed text-muted">
+        {item.bullets.map((b) => (
+          <li key={b} className="flex gap-3">
+            <span className="mt-2 h-px w-4 shrink-0 bg-accent" />
+            <span>{b}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
 
 export function Experience({ experience }: ExperienceProps) {
   const [tab, setTab] = useState<"work" | "studies">("work");
+  const root = useRef<HTMLElement | null>(null);
 
-  const items = useMemo(() => {
-    return tab === "work" ? experience.work : experience.studies;
-  }, [tab, experience.work, experience.studies]);
+  const items = useMemo(
+    () => (tab === "work" ? experience.work : experience.studies),
+    [tab, experience.work, experience.studies],
+  );
+
+  useGsapContext(
+    () => {
+      const mm = gsap.matchMedia();
+
+      mm.add(MOTION.desktop, () => {
+        const cards = gsap.utils.toArray<HTMLElement>(".exp-card");
+        cards.forEach((card, i) => {
+          if (i === cards.length - 1) return;
+          gsap.to(card, {
+            scale: 0.94,
+            opacity: 0.55,
+            ease: "none",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 140px",
+              end: "bottom 120px",
+              scrub: true,
+            },
+          });
+        });
+      });
+
+      return () => mm.revert();
+    },
+    [tab, items.length],
+    root,
+  );
+
+  // Tab switching changes document height; stale trigger positions
+  // would leave cards stacked at the wrong scroll offsets.
+  useEffect(() => {
+    const id = window.setTimeout(() => ScrollTrigger.refresh(), 80);
+    return () => window.clearTimeout(id);
+  }, [tab]);
 
   return (
-    <section id="experience" className="py-12">
-      <h2 className="text-2xl font-semibold tracking-tight">Experience</h2>
-      {/* Tabs (responsive + wide) */}
-      <div className="mt-5 rounded-2xl border border-zinc-200 bg-white/55 p-3 shadow-sm backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/40">
-        <div className="grid w-full grid-cols-2 gap-2">
-          <button
-            type="button"
-            onClick={() => setTab("work")}
-            className={[
-              "h-11 w-full rounded-xl text-sm font-semibold transition",
-              tab === "work"
-                ? "bg-zinc-900 text-white dark:bg-zinc-50 dark:text-black"
-                : "border border-zinc-200 bg-white/60 text-zinc-900 hover:bg-white dark:border-zinc-800 dark:bg-zinc-950/40 dark:text-zinc-50 dark:hover:bg-zinc-900",
-            ].join(" ")}
-          >
-            Work
-          </button>
+    <section ref={root} id="experience" className="py-20 md:py-28">
+      <div className="flex flex-wrap items-end justify-between gap-4 border-b border-rule pb-5">
+        <h2 className="font-mono text-sm uppercase tracking-[0.22em] text-ink">
+          <span className="text-accent">01</span> — Experience
+        </h2>
 
-          <button
-            type="button"
-            onClick={() => setTab("studies")}
-            className={[
-              "h-11 w-full rounded-xl text-sm font-semibold transition",
-              tab === "studies"
-                ? "bg-zinc-900 text-white dark:bg-zinc-50 dark:text-black"
-                : "border border-zinc-200 bg-white/60 text-zinc-900 hover:bg-white dark:border-zinc-800 dark:bg-zinc-950/40 dark:text-zinc-50 dark:hover:bg-zinc-900",
-            ].join(" ")}
-          >
-            Studies
-          </button>
-        </div>
-
-        <div className="mt-5 space-y-4">
-          {items.map((it) => (
-            <CardItem key={`${it.title}-${it.date}`} item={it} />
+        <div className="flex gap-1">
+          {(["work", "studies"] as const).map((t) => (
+            <button
+              key={t}
+              type="button"
+              onClick={() => setTab(t)}
+              className={[
+                "px-4 py-2 font-mono text-xs uppercase tracking-wider transition-colors",
+                tab === t
+                  ? "bg-accent text-accent-ink"
+                  : "border border-rule text-muted hover:text-ink",
+              ].join(" ")}
+            >
+              {t}
+            </button>
           ))}
         </div>
+      </div>
+
+      <div className="mt-8 space-y-6">
+        {items.map((it, i) => (
+          <CardItem key={`${it.title}-${it.date}`} item={it} index={i} />
+        ))}
       </div>
     </section>
   );
