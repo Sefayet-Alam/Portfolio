@@ -245,7 +245,7 @@
         "Persists farmer context and semantic memory while deterministic gates prevent incomplete recommendations"
       ],
       "repo": "https://github.com/Sefayet-Alam/UNKNOWNS_AgriSense",
-      "live": "https://agrisense.cortextech.dev/"
+      "live": "https://agrisense-web-nine.vercel.app/"
     },
     {
       "name": "Blog-Agency-App",
