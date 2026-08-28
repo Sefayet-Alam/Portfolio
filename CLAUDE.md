@@ -90,7 +90,7 @@ declared at the top of `src/components/fun/village.ts`. Note the README referenc
 
 Flow: `ChatWidget` → `POST /api/chat` → `retrieveKb()` runs a MongoDB `$text`
 search over `kb_chunks` (top 6) → chunks are injected as a system message
-alongside `systemPrompt()` → Groq (`GROQ_MODEL`, default `llama-3.1-8b-instant`,
+alongside `systemPrompt()` → Groq (`GROQ_MODEL`, default `openai/gpt-oss-20b`,
 temp 0.2) → reply string. Last 10 messages only, for cost.
 
 - Retrieval is **keyword text search, not embeddings**. No vector store.
@@ -112,7 +112,7 @@ temp 0.2) → reply string. Last 10 messages only, for cost.
 | `MONGODB_URI` | local `mongodb://127.0.0.1:27017/sefayet_portfolio` or an Atlas SRV string |
 | `MONGODB_DB` | optional, defaults to `sefayet_portfolio` |
 | `GROQ_API_KEY` | required by `/api/chat` |
-| `GROQ_MODEL` | optional, defaults to `llama-3.1-8b-instant` |
+| `GROQ_MODEL` | optional, defaults to `openai/gpt-oss-20b` |
 | `ADMIN_TOKEN` | `x-admin-token` header for `/api/admin` — enforced **only in production** |
 | `HIGGSFIELD_CREDENTIALS` | `KEY_ID:KEY_SECRET`, server-only, for `/api/media` |
 

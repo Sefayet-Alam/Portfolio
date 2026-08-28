@@ -154,6 +154,7 @@ Create a file named .env.local in the project root and paste:
 
   MONGODB_URI=mongodb://127.0.0.1:27017/sefayet_portfolio
   GROQ_API_KEY=your_groq_key_here
+  GROQ_MODEL=openai/gpt-oss-20b
   ADMIN_TOKEN=dev_seed_token
 
 4) Start MongoDB locally
@@ -281,6 +282,7 @@ Project → Settings → Environment Variables:
 
 - MONGODB_URI = mongodb+srv://.../sefayet_portfolio?retryWrites=true&w=majority
 - GROQ_API_KEY = your_groq_key_here
+- GROQ_MODEL = openai/gpt-oss-20b (optional)
 - ADMIN_TOKEN = your_admin_token_here
 
 Important:
