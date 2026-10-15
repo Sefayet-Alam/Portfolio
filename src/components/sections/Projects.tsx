@@ -132,7 +132,7 @@ export function Projects({ projects }: { projects: Project[] }) {
     <section id="projects" className="py-20 md:py-28">
       <div className="grid gap-7 md:grid-cols-[1fr_0.8fr] md:items-end">
         <div>
-          <p className="section-kicker">03 / Selected work</p>
+          <p className="section-kicker">04 / Selected work</p>
           <Reveal as="h2" className="section-title mt-4">
             Projects you can compare, not chase.
           </Reveal>

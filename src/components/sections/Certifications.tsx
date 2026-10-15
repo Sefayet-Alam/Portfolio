@@ -25,7 +25,7 @@ export function Certifications({
     <section id="certifications" className="py-20 md:py-28">
       <div className="grid gap-7 md:grid-cols-[1fr_0.8fr] md:items-end">
         <div>
-          <p className="section-kicker">05 / Credentials</p>
+          <p className="section-kicker">06 / Credentials</p>
           <Reveal as="h2" className="section-title mt-4">
             Credentials that back the craft.
           </Reveal>

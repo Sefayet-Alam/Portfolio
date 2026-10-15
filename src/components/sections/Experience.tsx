@@ -4,7 +4,7 @@ import { Reveal } from "@/components/motion/Reveal";
 import { Surface } from "@/components/ui/Surface";
 import { TimelineEntry, TimelineRail } from "@/components/ui/Timeline";
 
-type Item = {
+export type Item = {
   logo: string;
   title: string;
   org: string;
@@ -13,13 +13,19 @@ type Item = {
 };
 
 type ExperienceProps = {
-  experience: {
-    work: Item[];
-    studies: Item[];
-  };
+  work: Item[];
 };
 
-function JourneyCard({
+function initials(org: string) {
+  return org
+    .split(/[\s·]+/)
+    .filter((word) => /^[A-Z]/.test(word))
+    .slice(0, 2)
+    .map((word) => word[0])
+    .join("");
+}
+
+export function JourneyCard({
   item,
   kind,
   current = false,
@@ -44,7 +50,7 @@ function JourneyCard({
                 />
               ) : (
                 <span className="font-mono text-xs font-semibold text-accent">
-                  {item.org.slice(0, 2).toUpperCase()}
+                  {initials(item.org)}
                 </span>
               )}
             </div>
@@ -89,36 +95,30 @@ function JourneyCard({
   );
 }
 
-export function Experience({ experience }: ExperienceProps) {
-  const journey = [
-    ...experience.work.map((item) => ({ item, kind: "Work" as const })),
-    ...experience.studies.map((item) => ({ item, kind: "Study" as const })),
-  ];
-
+export function Experience({ work }: ExperienceProps) {
   return (
     <section id="experience" className="py-20 md:py-28">
       <div className="grid gap-7 md:grid-cols-[0.9fr_1.1fr] md:items-end">
         <div>
-          <p className="section-kicker">01 / Journey</p>
+          <p className="section-kicker">01 / Experience</p>
           <Reveal as="h2" className="section-title mt-4">
-            Learning and shipping on one timeline.
+            Professional experience.
           </Reveal>
         </div>
         <Reveal
           as="p"
           className="max-w-xl text-base leading-7 text-muted md:justify-self-end"
         >
-          Study and work stay visible together. The line connects formal
-          foundations, production experience, and the systems thinking behind both.
+          Industry roles and internships, most recent first.
         </Reveal>
       </div>
 
       <TimelineRail className="mt-11">
-        {journey.map(({ item, kind }) => (
+        {work.map((item) => (
           <JourneyCard
-            key={`${kind}-${item.title}-${item.date}`}
+            key={`${item.title}-${item.date}`}
             item={item}
-            kind={kind}
+            kind="Work"
             current={item.date.includes("Present")}
           />
         ))}

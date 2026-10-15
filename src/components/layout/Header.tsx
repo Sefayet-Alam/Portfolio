@@ -14,6 +14,7 @@ type HeaderProps = {
 const nav = [
   { id: "about", label: "About" },
   { id: "experience", label: "Experience" },
+  { id: "education", label: "Education" },
   { id: "skills", label: "Skills" },
   { id: "projects", label: "Projects" },
   { id: "highlights", label: "Achievements" },

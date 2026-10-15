@@ -7,6 +7,7 @@ import { IntroLoader } from "@/components/ui/IntroLoader";
 
 import { Hero } from "@/components/sections/Hero";
 import { Experience } from "@/components/sections/Experience";
+import { Education } from "@/components/sections/Education";
 import { Skills } from "@/components/sections/Skills";
 import { Projects } from "@/components/sections/Projects";
 import { Certifications } from "@/components/sections/Certifications";
@@ -26,7 +27,8 @@ export default function HomePage() {
 
       <div className="mx-auto max-w-6xl px-6">
         <Hero profile={portfolio.profile} />
-        <Experience experience={portfolio.experience} />
+        <Experience work={portfolio.experience.work} />
+        <Education studies={portfolio.experience.studies} />
         <Skills skills={portfolio.skills} />
         <Projects projects={portfolio.projects} />
         <Achievements

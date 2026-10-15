@@ -109,7 +109,7 @@ export function Skills({ skills }: SkillsProps) {
     <section id="skills" className="py-20 md:py-28">
       <div className="grid gap-7 md:grid-cols-[0.85fr_1.15fr] md:items-end">
         <div>
-          <p className="section-kicker">02 / Capability matrix</p>
+          <p className="section-kicker">03 / Capability matrix</p>
           <Reveal as="h2" className="section-title mt-4">
             The whole toolkit, at a glance.
           </Reveal>

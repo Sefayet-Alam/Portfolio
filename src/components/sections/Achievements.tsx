@@ -211,7 +211,7 @@ export function Achievements({ highlights, scholarUrl }: Props) {
     <section id="highlights" className="py-20 md:py-28">
       <div className="grid gap-7 md:grid-cols-[1fr_0.8fr] md:items-end">
         <div>
-          <p className="section-kicker">04 / Proof of work</p>
+          <p className="section-kicker">05 / Proof of work</p>
           <Reveal as="h2" className="section-title mt-4">
             Research and results, with receipts.
           </Reveal>

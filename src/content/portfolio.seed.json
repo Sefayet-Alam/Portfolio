@@ -353,7 +353,7 @@
         ]
       },
       {
-        "logo": "",
+        "logo": "/logos/iautomation.jpg",
         "title": "Assistant Programmer",
         "org": "i-Automation · Banani, Dhaka",
         "date": "Sep 2026 – Oct 2026",
@@ -394,7 +394,26 @@
           "CGPA: 3.49 / 4.00",
           "Strong focus on DSA and competitive programming",
           "Built web + mobile projects alongside contests",
-          "HSC (2020) & SSC (2018): GPA 5.00 / 5.00"
+          "Programming mentor at RUET Analytical Programming Lab (RAPL)"
+        ]
+      },
+      {
+        "logo": "/logos/ngdc.jpg",
+        "title": "Higher Secondary Certificate (HSC)",
+        "org": "New Govt. Degree College · Rajshahi",
+        "date": "2020",
+        "bullets": [
+          "GPA: 5.00 / 5.00"
+        ]
+      },
+      {
+        "logo": "/logos/rglhs.png",
+        "title": "Secondary School Certificate (SSC)",
+        "org": "Govt. Laboratory High School · Rajshahi",
+        "date": "2018",
+        "bullets": [
+          "GPA: 5.00 / 5.00",
+          "Regional runner-up in a Math Olympiad"
         ]
       }
     ]
