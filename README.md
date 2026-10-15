@@ -87,7 +87,8 @@ Fun Page (2D)
 
 Recruiter-first layout
 - Hero
-- Experience (work / studies)
+- Experience (work roles, most recent first)
+- Education (university, college, school)
 - Skills (icons)
 - Projects (cards with images + buttons)
 - Certificates & Licenses (projects-like cards)
@@ -120,7 +121,7 @@ src/
       admin/route.ts        seed/admin endpoint (token protected)
   components/
     layout/                 Header, Footer
-    sections/               Hero, Experience, Skills, Projects, Certifications, Achievements
+    sections/               Hero, Experience, Education, Skills, Projects, Certifications, Achievements
     ui/                     ChatWidget, CursorFx, BackgroundFx, IntroLoader, theme toggle etc.
   lib/
     ai/                     Groq, prompt, retrieval

@@ -9,7 +9,8 @@ Live at **https://sefayet-alam.vercel.app/** (Vercel, auto-deploys from `main`).
 
 Three surfaces in one Next.js app:
 
-1. **`/`** — the portfolio itself (hero, experience, skills, projects, achievements, certs).
+1. **`/`** — the portfolio itself, in this order: hero, 01 Experience, 02 Education,
+   03 Skills, 04 Projects, 05 Achievements, 06 Certifications.
 2. **`/fun`** — a hand-written 2D canvas "village" you walk around; houses open story overlays.
 3. **"Sef-AI-yet"** — a floating chat widget backed by RAG over a MongoDB knowledge base.
 
@@ -53,8 +54,8 @@ src/
       media/route.ts    POST — Higgsfield image/video generation (UNCOMMITTED, unguarded)
   components/
     layout/             Header, Footer
-    sections/           Hero, Experience, Skills, Projects, Achievements, Certifications,
-                        Publications, Contact
+    sections/           Hero, Experience, Education, Skills, Projects, Achievements,
+                        Certifications, Publications, Contact
     ui/                 ChatWidget, ChatWidgetGate, BackgroundFx, CursorFx, IntroLoader,
                         ThemeToggle, Card, Chip, Section
     fun/                FunGameClient (dynamic, ssr:false) → FunGame → village.ts,
@@ -81,6 +82,24 @@ image in the matching `public/` folder. Do not hardcode content into components.
 Its top-level keys: `profile`, `highlights` (achievements + publications),
 `projects`, `skills`, `experience` (work + studies), `achievements`, `certifications`.
 
+Experience / Education specifics:
+- `experience.work` renders in the **Experience** section (`#experience`), most recent
+  first. The "Current" badge is derived from `"Present"` in the entry's `date`.
+- `experience.studies` renders in the separate **Education** section (`#education`,
+  `Education.tsx`, which reuses the exported `JourneyCard` from `Experience.tsx`).
+  It stays under `experience.studies` on purpose: `src/lib/ai/seed.ts` reads that
+  path to build the chat KB. Current entries: RUET B.Sc. CSE, New Govt. Degree
+  College (HSC), Govt. Laboratory High School (SSC).
+- `logo` may be `""`; the card then shows the org's initials instead of an image.
+  Logos live in `public/logos/`.
+- The résumé is `public/resume.pdf` (linked via `profile.links.resume`). It is the
+  source for experience/education content — update the PDF and the JSON together.
+
+Navbar labels (`src/components/layout/Header.tsx`, `nav` array) are deliberately
+formal: About, Experience, Education, Skills, Projects, Achievements, Certifications.
+Each `id` must match a section `id`. Section kickers are numbered 01–06 in page
+order; renumber them if a section is added or moved.
+
 The village is driven by `src/content/fun.world.json`
 (`seed`, `size`, `playerSpawn`, `neighborhoods[].stops[]`, `npcs[]`) with types
 declared at the top of `src/components/fun/village.ts`. Note the README references
@@ -102,6 +121,17 @@ temp 0.2) → reply string. Last 10 messages only, for cost.
   if you touch the prompt.
 - Indexes (`key` unique, plus the compound text index) are created lazily on first
   `getCollections()` call, guarded by an in-process `indexed` flag.
+
+### Exploring the API in Swagger UI
+
+There is no OpenAPI spec or Swagger route in the repo. For ad-hoc testing, a
+throwaway Swagger UI was run outside the repo: a hand-written `openapi.json`
+covering `POST /api/chat`, `/api/admin`, `/api/media`, plus a tiny Node server
+on `:4000` that serves the UI and proxies `/api/*` to `TARGET` (default
+`http://localhost:3000`) so there are no CORS issues. Recreate it the same way if
+needed; don't add it to the app. Never "Try it out" on `/api/media` casually — it
+spends paid credits. Running `/api/admin` writes to whatever DB `MONGODB_URI`
+points at (may be the production Atlas DB).
 
 ## Environment
 
@@ -158,3 +188,8 @@ raising before changing.
 Push to `main` → Vercel builds and deploys. Database is MongoDB Atlas M0.
 Content updates are a JSON edit + commit; KB updates additionally need
 `POST /api/admin` with the `x-admin-token` header against the deployed URL.
+Until that reseed runs, Sef-AI-yet answers from the old KB (e.g. it will not
+know about new roles).
+
+Do not push without the owner's explicit go-ahead for that push — verify with
+`npm run build` and `npm run dev` first.

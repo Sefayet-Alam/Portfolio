@@ -1,6 +1,6 @@
 # Portfolio Redesign Progress Tracker
 
-**Last updated:** 2026-07-27  
+**Last updated:** 2026-10-16  
 **Repository:** `Sefayet-Alam/Portfolio`  
 **Branch:** `main`  
 **Published commit:** `0f5b05ea4fb6e45f19b9e6a0e94d9aa642aefcdd`  
@@ -107,6 +107,24 @@
 - Lighthouse scoring was not run.
 - The GitHub push triggered Vercel, but the resulting production deployment was
   not independently polled after the push.
+
+## Maintenance — 2026-10-16
+
+- [x] Replaced `public/resume.pdf` with the updated résumé.
+- [x] Experience now lists work only: Samsung R&D Institute Bangladesh
+      (Software Engineering Intern, Oct 2026 – Present, "Current"), i-Automation
+      (Assistant Programmer, Sep – Oct 2026), Vivasoft Limited, Remotasks (Outlier).
+- [x] New Education section: RUET (B.Sc. CSE, Apr 2022 – Aug 2026, CGPA 3.49),
+      New Govt. Degree College (HSC 2020, GPA 5.00), Govt. Laboratory High
+      School (SSC 2018, GPA 5.00, Math Olympiad regional runner-up).
+- [x] Added logos: `iautomation.jpg`, `ngdc.jpg`, `rglhs.png`; initials fallback
+      when `logo` is empty.
+- [x] Navbar labels made formal: About, Experience, Education, Skills,
+      Projects, Achievements, Certifications. Section kickers renumbered 01–06.
+- [x] `npm run build` passed; pushed as `ea97e48` and `08c5979`.
+- [ ] Reseed the chat KB (`POST /api/admin` with `x-admin-token` on the live
+      URL). Until then Sef-AI-yet still reports Vivasoft as the latest role.
+- [ ] Decide whether to keep the Remotasks (Outlier) entry (not on the new résumé).
 
 ## Resume Point
 
