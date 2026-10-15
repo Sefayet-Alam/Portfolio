@@ -343,14 +343,33 @@
   "experience": {
     "work": [
       {
+        "logo": "/logos/SRBD.png",
+        "title": "Software Engineering Intern",
+        "org": "Samsung R&D Institute Bangladesh (SRBD) · Dhaka",
+        "date": "Oct 2026 – Present",
+        "bullets": [
+          "Working on SmartThings, Samsung's IoT / smart-home platform, contributing to development, testing and debugging alongside senior engineers",
+          "Learned GDScript and the Godot Engine during the internship and applied them to assigned development work"
+        ]
+      },
+      {
+        "logo": "",
+        "title": "Assistant Programmer",
+        "org": "i-Automation · Banani, Dhaka",
+        "date": "Sep 2026 – Oct 2026",
+        "bullets": [
+          "Developed application features and integrated APIs with database components (SQL), working with senior developers",
+          "Tested, debugged and troubleshot issues before release, following coding standards and a Git workflow (branching, merging, code review)"
+        ]
+      },
+      {
         "logo": "/logos/vivasoft.png",
         "title": "Industrial Trainee (Apprenticeship)",
-        "org": "Vivasoft Limited",
+        "org": "Vivasoft Limited · Rajshahi",
         "date": "Mar 2025",
         "bullets": [
-          "12-day mentor-led MERN attachment",
-          "Built MVP with Next.js/Redux + Express REST + MongoDB",
-          "LangChain summarization; Git/Husky; Postman"
+          "Built the SellSense MVP end to end in a 12-day mentor-led attachment (Next.js, Express REST APIs, MongoDB)",
+          "Worked with Git, Husky hooks and mentor code review"
         ]
       },
       {
@@ -370,10 +389,12 @@
         "logo": "/logos/ruet.png",
         "title": "B.Sc. in Computer Science & Engineering",
         "org": "Rajshahi University of Engineering & Technology (RUET)",
-        "date": "Apr 2022 – May 2026 (Expected)",
+        "date": "Apr 2022 – Aug 2026",
         "bullets": [
+          "CGPA: 3.49 / 4.00",
           "Strong focus on DSA and competitive programming",
-          "Built web + mobile projects alongside contests"
+          "Built web + mobile projects alongside contests",
+          "HSC (2020) & SSC (2018): GPA 5.00 / 5.00"
         ]
       }
     ]

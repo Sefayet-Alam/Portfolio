@@ -13,11 +13,11 @@ type HeaderProps = {
 
 const nav = [
   { id: "about", label: "About" },
-  { id: "experience", label: "Journey" },
+  { id: "experience", label: "Experience" },
   { id: "skills", label: "Skills" },
-  { id: "projects", label: "Work" },
-  { id: "highlights", label: "Proof" },
-  { id: "certifications", label: "Credentials" },
+  { id: "projects", label: "Projects" },
+  { id: "highlights", label: "Achievements" },
+  { id: "certifications", label: "Certifications" },
 ];
 
 export function Header({ resumeHref }: HeaderProps) {

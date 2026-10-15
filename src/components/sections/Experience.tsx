@@ -33,14 +33,20 @@ function JourneyCard({
       <Surface as="article" interactive className="p-6 md:p-7">
         <div className="grid gap-5 md:grid-cols-[1fr_auto] md:items-start">
           <div className="flex items-start gap-4">
-            <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-rule bg-surface">
-              <Image
-                src={item.logo}
-                alt=""
-                fill
-                className="object-cover"
-                sizes="48px"
-              />
+            <div className="relative grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-xl border border-rule bg-surface">
+              {item.logo ? (
+                <Image
+                  src={item.logo}
+                  alt=""
+                  fill
+                  className="object-cover"
+                  sizes="48px"
+                />
+              ) : (
+                <span className="font-mono text-xs font-semibold text-accent">
+                  {item.org.slice(0, 2).toUpperCase()}
+                </span>
+              )}
             </div>
             <div>
               <div className="flex flex-wrap items-center gap-2">
@@ -85,8 +91,8 @@ function JourneyCard({
 
 export function Experience({ experience }: ExperienceProps) {
   const journey = [
-    ...experience.studies.map((item) => ({ item, kind: "Study" as const })),
     ...experience.work.map((item) => ({ item, kind: "Work" as const })),
+    ...experience.studies.map((item) => ({ item, kind: "Study" as const })),
   ];
 
   return (
@@ -108,12 +114,12 @@ export function Experience({ experience }: ExperienceProps) {
       </div>
 
       <TimelineRail className="mt-11">
-        {journey.map(({ item, kind }, index) => (
+        {journey.map(({ item, kind }) => (
           <JourneyCard
             key={`${kind}-${item.title}-${item.date}`}
             item={item}
             kind={kind}
-            current={index === 0}
+            current={item.date.includes("Present")}
           />
         ))}
       </TimelineRail>
