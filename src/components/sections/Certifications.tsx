@@ -2,6 +2,7 @@ import Image from "next/image";
 import { ArrowUpRight, BadgeCheck } from "lucide-react";
 import { PointerTilt } from "@/components/motion/PointerTilt";
 import { Reveal } from "@/components/motion/Reveal";
+import { SectionMotion } from "@/components/motion/SectionMotion";
 import { actionClassName } from "@/components/ui/ActionButton";
 import { Surface } from "@/components/ui/Surface";
 
@@ -39,7 +40,7 @@ export function Certifications({
         </Reveal>
       </div>
 
-      <div className="mt-10 grid gap-5 md:grid-cols-2">
+      <SectionMotion variant="deal" className="mt-10 grid gap-5 md:grid-cols-2">
         {certifications.map((certificate) => (
           <PointerTilt key={certificate.name} maxTilt={2.5} lift={4}>
             <Surface
@@ -118,7 +119,7 @@ export function Certifications({
             </Surface>
           </PointerTilt>
         ))}
-      </div>
+      </SectionMotion>
     </section>
   );
 }

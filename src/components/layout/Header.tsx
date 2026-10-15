@@ -41,7 +41,7 @@ export function Header({ resumeHref }: HeaderProps) {
   return (
     <header className="sticky top-0 z-50 px-3 pt-3 sm:px-6">
       <div className="mx-auto max-w-6xl overflow-hidden rounded-[20px] border border-rule bg-raised-soft shadow-[0_18px_55px_rgba(0,0,0,0.08)] backdrop-blur-xl">
-        <div className="flex min-h-16 items-center justify-between gap-6 px-4 sm:px-5">
+        <div className="flex min-h-16 items-center justify-between gap-4 px-4 sm:px-5">
           <a
             href="#about"
             onClick={go("about")}
@@ -51,18 +51,18 @@ export function Header({ resumeHref }: HeaderProps) {
               SA
               <span className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full border-2 border-raised bg-signal" />
             </span>
-            <span className="hidden text-sm font-semibold tracking-[-0.02em] text-ink sm:block">
+            <span className="hidden text-sm font-semibold tracking-[-0.02em] text-ink sm:block xl:hidden">
               Sefayet Alam
             </span>
           </a>
 
-          <nav className="hidden items-center gap-1 xl:flex" aria-label="Primary">
+          <nav className="hidden items-center gap-0.5 xl:flex" aria-label="Primary">
             {nav.map((item) => (
               <a
                 key={item.id}
                 href={`#${item.id}`}
                 onClick={go(item.id)}
-                className="rounded-lg px-3 py-2 font-mono text-[11px] uppercase tracking-[0.11em] text-muted transition-[color,background-color,transform] duration-200 hover:-translate-y-0.5 hover:bg-accent-soft hover:text-ink"
+                className="whitespace-nowrap rounded-lg px-2 py-2 font-mono text-[11px] uppercase tracking-[0.06em] text-muted transition-[color,background-color,transform] duration-200 hover:-translate-y-0.5 hover:bg-accent-soft hover:text-ink"
               >
                 {item.label}
               </a>
@@ -70,21 +70,21 @@ export function Header({ resumeHref }: HeaderProps) {
           </nav>
 
           <div className="flex items-center gap-2">
-            <div className="hidden items-center gap-2 xl:flex">
+            <div className="hidden shrink-0 items-center gap-2 xl:flex">
               <ThemeToggle />
 
               <button
                 type="button"
                 onClick={openChat}
-                className={actionClassName("quiet", "px-3")}
+                aria-label="Ask AI"
+                className={actionClassName("quiet", "whitespace-nowrap px-3")}
               >
                 <Sparkles size={14} />
-                Ask AI
               </button>
 
               <Link
                 href="/fun"
-                className={actionClassName("secondary", "px-3")}
+                className={actionClassName("secondary", "whitespace-nowrap px-3")}
               >
                 Fun site
               </Link>
@@ -93,7 +93,7 @@ export function Header({ resumeHref }: HeaderProps) {
                 href={resumeHref}
                 target="_blank"
                 rel="noreferrer"
-                className={actionClassName("primary", "px-3")}
+                className={actionClassName("primary", "whitespace-nowrap px-3")}
               >
                 Résumé
                 <ArrowUpRight size={14} />

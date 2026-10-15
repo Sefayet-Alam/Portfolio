@@ -58,8 +58,9 @@ export function TimelineEntry({
   active?: boolean;
 }) {
   return (
-    <div className={`relative pl-11 sm:pl-14 ${className}`}>
+    <div data-timeline-entry className={`relative pl-11 sm:pl-14 ${className}`}>
       <span
+        data-timeline-dot
         className={[
           "absolute left-[9px] top-8 z-10 h-3.5 w-3.5 rounded-full border-[3px] border-surface sm:left-[13px]",
           active

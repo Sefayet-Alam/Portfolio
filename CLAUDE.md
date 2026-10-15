@@ -44,7 +44,7 @@ There is no test suite. Verification = `npm run build` + `npm run lint` + clicki
 ```
 src/
   app/
-    layout.tsx          ThemeProvider + BackgroundFx + CursorFx + ChatWidgetGate, wraps everything
+    layout.tsx          ThemeProvider + SpatialField (bg) + CursorFx + ChatWidgetGate, wraps everything
     page.tsx            home — composes sections from portfolio.seed.json
     fun/page.tsx        full-screen village page (no header)
     publication/page.tsx
@@ -53,7 +53,14 @@ src/
       admin/route.ts    POST — reseed kb_chunks from portfolio.seed.json (token-gated in prod)
       media/route.ts    POST — Higgsfield image/video generation (UNCOMMITTED, unguarded)
   components/
-    layout/             Header, Footer
+    layout/             Header, Footer, SpatialField (colour wash + vignette + grain) →
+                        NeuralField (canvas neural net; page scroll drives a forward
+                        pass input → output with a glowing scan band, static under
+                        prefers-reduced-motion, follows the theme class)
+    motion/             Reveal (headings), SectionMotion (per-section card entrances:
+                        slide=Experience, flip=Education, assemble=Skills, clip=Projects,
+                        cascade=Achievements, deal=Certifications; one-shot .beam-run
+                        border sweep on each card), PointerTilt, SmoothScroll (Lenis)
     sections/           Hero, Experience, Education, Skills, Projects, Achievements,
                         Certifications, Publications, Contact
     ui/                 ChatWidget, ChatWidgetGate, BackgroundFx, CursorFx, IntroLoader,

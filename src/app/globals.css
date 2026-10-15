@@ -254,25 +254,73 @@ button {
   line-height: 0.98;
 }
 
-.spatial-node {
-  fill: var(--raised);
-  stroke: var(--accent);
-  stroke-width: 1.2;
+/* Background stage finish */
+.stage-vignette {
+  background: radial-gradient(120% 90% at 50% 40%, transparent 55%, var(--surface) 100%);
+  opacity: 0.85;
 }
 
-.spatial-path {
-  fill: none;
-  stroke: var(--plane-1);
-  stroke-width: 1;
-  vector-effect: non-scaling-stroke;
+.stage-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  animation: grain-shift 0.9s steps(4) infinite;
 }
 
-.spatial-signal {
-  fill: none;
-  stroke: var(--plane-2);
-  stroke-width: 1.4;
-  stroke-linecap: round;
-  vector-effect: non-scaling-stroke;
+.dark .stage-grain {
+  opacity: 0.09;
+}
+
+@keyframes grain-shift {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-3%, 2%); }
+  50% { transform: translate(2%, -3%); }
+  75% { transform: translate(-2%, -1%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* One-shot "border beam" that sweeps a card's edge as it lands. */
+@property --beam-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.beam-run {
+  position: relative;
+}
+
+.beam-run::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--beam-angle),
+    transparent 0deg 250deg,
+    var(--accent) 300deg,
+    var(--signal) 340deg,
+    transparent 360deg
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  animation: beam-sweep 1.8s cubic-bezier(0.45, 0, 0.2, 1) forwards;
+}
+
+@keyframes beam-sweep {
+  0% { --beam-angle: 0deg; opacity: 0; }
+  10% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { --beam-angle: 360deg; opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage-grain { animation: none; }
+  .beam-run::after { display: none; }
 }
 
 /* Lenis */

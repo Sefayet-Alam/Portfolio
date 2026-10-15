@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { BookOpen, BriefcaseBusiness } from "lucide-react";
 import { Reveal } from "@/components/motion/Reveal";
+import { SectionMotion } from "@/components/motion/SectionMotion";
 import { Surface } from "@/components/ui/Surface";
 import { TimelineEntry, TimelineRail } from "@/components/ui/Timeline";
 
@@ -113,16 +114,18 @@ export function Experience({ work }: ExperienceProps) {
         </Reveal>
       </div>
 
-      <TimelineRail className="mt-11">
-        {work.map((item) => (
-          <JourneyCard
-            key={`${item.title}-${item.date}`}
-            item={item}
-            kind="Work"
-            current={item.date.includes("Present")}
-          />
-        ))}
-      </TimelineRail>
+      <SectionMotion variant="slide" selector="[data-timeline-entry]">
+        <TimelineRail className="mt-11">
+          {work.map((item) => (
+            <JourneyCard
+              key={`${item.title}-${item.date}`}
+              item={item}
+              kind="Work"
+              current={item.date.includes("Present")}
+            />
+          ))}
+        </TimelineRail>
+      </SectionMotion>
     </section>
   );
 }

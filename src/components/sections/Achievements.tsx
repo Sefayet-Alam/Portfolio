@@ -8,6 +8,7 @@ import {
   Trophy,
 } from "lucide-react";
 import { Reveal } from "@/components/motion/Reveal";
+import { SectionMotion } from "@/components/motion/SectionMotion";
 import { Surface } from "@/components/ui/Surface";
 import { TimelineEntry, TimelineRail } from "@/components/ui/Timeline";
 
@@ -245,7 +246,7 @@ export function Achievements({ highlights, scholarUrl }: Props) {
               <ArrowUpRight size={11} />
             </a>
           </div>
-          <div className="grid gap-4 lg:grid-cols-2">
+          <SectionMotion variant="cascade" className="grid gap-4 lg:grid-cols-2">
             {highlights.publications.map((item, index) => (
               <ResearchCard
                 key={`${item.title}-${item.date}`}
@@ -253,10 +254,11 @@ export function Achievements({ highlights, scholarUrl }: Props) {
                 index={index}
               />
             ))}
-          </div>
+          </SectionMotion>
         </div>
       ) : null}
 
+      <SectionMotion variant="cascade" selector="[data-timeline-entry]">
       <TimelineRail className="mt-8">
         {orderedGroups.map(([year, items]) => (
           <TimelineEntry key={year} active={year === "Ongoing"}>
@@ -281,6 +283,7 @@ export function Achievements({ highlights, scholarUrl }: Props) {
           </TimelineEntry>
         ))}
       </TimelineRail>
+      </SectionMotion>
     </section>
   );
 }

@@ -1,4 +1,5 @@
 import { Reveal } from "@/components/motion/Reveal";
+import { SectionMotion } from "@/components/motion/SectionMotion";
 import { TimelineRail } from "@/components/ui/Timeline";
 import { JourneyCard, type Item } from "@/components/sections/Experience";
 
@@ -25,15 +26,17 @@ export function Education({ studies }: EducationProps) {
         </Reveal>
       </div>
 
-      <TimelineRail className="mt-11">
-        {studies.map((item) => (
-          <JourneyCard
-            key={`${item.title}-${item.date}`}
-            item={item}
-            kind="Study"
-          />
-        ))}
-      </TimelineRail>
+      <SectionMotion variant="flip" selector="[data-timeline-entry]">
+        <TimelineRail className="mt-11">
+          {studies.map((item) => (
+            <JourneyCard
+              key={`${item.title}-${item.date}`}
+              item={item}
+              kind="Study"
+            />
+          ))}
+        </TimelineRail>
+      </SectionMotion>
     </section>
   );
 }

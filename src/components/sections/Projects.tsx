@@ -5,6 +5,7 @@ import { ArrowUpRight, Github } from "lucide-react";
 import YouTubeCard from "@/components/YouTubeCard";
 import { PointerTilt } from "@/components/motion/PointerTilt";
 import { Reveal } from "@/components/motion/Reveal";
+import { SectionMotion } from "@/components/motion/SectionMotion";
 import { actionClassName } from "@/components/ui/ActionButton";
 import { Surface } from "@/components/ui/Surface";
 
@@ -146,7 +147,7 @@ export function Projects({ projects }: { projects: Project[] }) {
         </Reveal>
       </div>
 
-      <div className="mt-10 grid gap-5 lg:grid-cols-12">
+      <SectionMotion variant="clip" className="mt-10 grid gap-5 lg:grid-cols-12">
         {projects.map((project, index) => {
           const className =
             index === 0
@@ -164,7 +165,7 @@ export function Projects({ projects }: { projects: Project[] }) {
             />
           );
         })}
-      </div>
+      </SectionMotion>
     </section>
   );
 }

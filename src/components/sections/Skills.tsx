@@ -16,6 +16,7 @@ import {
 import { FaJava } from "react-icons/fa";
 import { Boxes, Database, Languages, Sparkles, Wrench } from "lucide-react";
 import { Reveal } from "@/components/motion/Reveal";
+import { SectionMotion } from "@/components/motion/SectionMotion";
 import { Surface } from "@/components/ui/Surface";
 
 type SkillsProps = {
@@ -123,7 +124,7 @@ export function Skills({ skills }: SkillsProps) {
         </Reveal>
       </div>
 
-      <div className="mt-10 grid gap-4 lg:grid-cols-12">
+      <SectionMotion variant="assemble" className="mt-10 grid gap-4 lg:grid-cols-12">
         <CapabilityGroup
           title="Core strengths"
           description="The habits behind the implementation."
@@ -159,7 +160,7 @@ export function Skills({ skills }: SkillsProps) {
           icon={<Wrench size={18} />}
           className="lg:col-span-12"
         />
-      </div>
+      </SectionMotion>
     </section>
   );
 }
