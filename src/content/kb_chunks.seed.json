@@ -2,7 +2,7 @@
   {
     "key": "profile_core",
     "title": "Profile",
-    "text": "• Name: Khandoker Sefayet Alam\n• Location: Rajshahi, Bangladesh\n• Roles: AI/ML Engineer, NLP Researcher, Full-Stack Developer\n• Snapshot: 2 active NLP research projects; Codeforces Expert (max 1770); 3500+ problems solved\n• Interests: Grounded agentic systems, natural language processing, reliable APIs, and deployable AI products\n• Fast proof: AgriSense multi-agent platform, ongoing NLP research, strong contest results, and shipped full-stack projects",
+    "text": "• Name: Khandoker Sefayet Alam\n• Location: Rajshahi, Bangladesh\n• Roles: AI/ML Engineer, NLP Researcher, Full-Stack Developer\n• Snapshot: 3 active AI research projects (2 NLP, 1 multimodal paper under review at ICCIT 2026); Codeforces Expert (max 1770); 3500+ problems solved\n• Interests: Grounded agentic systems, natural language processing, reliable APIs, and deployable AI products\n• Fast proof: AgriSense multi-agent platform, ongoing NLP research, strong contest results, and shipped full-stack projects",
     "tags": ["profile", "summary", "hireability"],
     "source": "manual_kb_import",
     "updatedAt": { "$date": "2026-01-09T00:00:00.000Z" }
@@ -34,7 +34,7 @@
   {
     "key": "quick_6_bullets",
     "title": "6-Bullet Summary",
-    "text": "• AI/ML engineer and NLP researcher with 2 active research projects\n• Led AgriSense, a grounded LangGraph crop-planning platform\n• Competitive Programmer: Codeforces Expert (max 1770), 3500+ problems solved\n• Strong contest performance (IUPC/ICPC regional placements)\n• Builds deployable full-stack AI systems and reliable APIs\n• Strong fundamentals: DSA, debugging, clean architecture, fast iteration",
+    "text": "• AI/ML engineer and NLP researcher with 3 active research projects (incl. MAGE-SBF, under review at ICCIT 2026)\n• Led AgriSense, a grounded LangGraph crop-planning platform\n• Competitive Programmer: Codeforces Expert (max 1770), 3500+ problems solved\n• Strong contest performance (IUPC/ICPC regional placements)\n• Builds deployable full-stack AI systems and reliable APIs\n• Strong fundamentals: DSA, debugging, clean architecture, fast iteration",
     "tags": ["summary", "recruiter", "hireability"],
     "source": "manual_kb_import",
     "updatedAt": { "$date": "2026-01-09T00:00:00.000Z" }

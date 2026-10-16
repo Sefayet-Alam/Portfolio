@@ -17,6 +17,15 @@ type EntryLink = {
   url: string;
 };
 
+type ResearchMedia = {
+  src: string;
+  label: string;
+  caption: string;
+  tag: string;
+  credit?: string;
+  creditUrl?: string;
+};
+
 type Item = {
   logo?: string;
   title: string;
@@ -25,6 +34,21 @@ type Item = {
   bullets: string[];
   link?: string;
   links?: EntryLink[];
+  /** Research cards only: badge text, e.g. "Submitted" / "In progress". */
+  status?: string;
+  /** Research cards only: kicker text, e.g. "Conference paper". */
+  kind?: string;
+  /** Research cards only: header visual; defaults to the word-embedding plot. */
+  media?: ResearchMedia;
+};
+
+const DEFAULT_RESEARCH_MEDIA: ResearchMedia = {
+  src: "https://upload.wikimedia.org/wikipedia/commons/8/87/2016_02_mini_embedding.png",
+  label: "Representation space",
+  caption: "Language mapped as relationships",
+  tag: "Word2vec · t-SNE",
+  credit: "Visual: Ewulczyn (WMF), CC BY-SA 4.0",
+  creditUrl: "https://commons.wikimedia.org/wiki/File:2016_02_mini_embedding.png",
 };
 
 type Props = {
@@ -122,32 +146,36 @@ function AchievementCard({ item }: { item: Item }) {
 }
 
 function ResearchCard({ item, index }: { item: Item; index: number }) {
-  const Icon = index === 0 ? BookMarked : FlaskConical;
+  const kind = item.kind ?? (index === 0 ? "Thesis research" : "Journal research");
+  const status = item.status ?? (index === 0 ? "Submitted" : "In progress");
+  const Icon = /thesis/i.test(kind) ? BookMarked : FlaskConical;
+  const media = item.media ?? DEFAULT_RESEARCH_MEDIA;
+  const isDefaultMedia = !item.media;
 
   return (
     <Surface as="article" interactive className="relative overflow-hidden p-2.5">
       <div className="group/media relative h-44 overflow-hidden rounded-[16px] border border-rule bg-[#090b12]">
         <Image
-          src="https://upload.wikimedia.org/wikipedia/commons/8/87/2016_02_mini_embedding.png"
+          src={media.src}
           alt=""
           fill
-          sizes="(max-width: 1024px) 100vw, 50vw"
-          className={`object-cover opacity-70 mix-blend-screen transition-transform duration-300 group-hover/media:scale-[1.035] ${
-            index === 0 ? "object-[50%_42%]" : "object-[58%_62%]"
+          sizes="(max-width: 1024px) 100vw, 33vw"
+          className={`object-cover transition-transform duration-300 group-hover/media:scale-[1.035] ${
+            isDefaultMedia
+              ? `opacity-70 mix-blend-screen ${index % 2 === 0 ? "object-[50%_42%]" : "object-[58%_62%]"}`
+              : "object-center opacity-90"
           }`}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#090b12] via-[#090b12]/25 to-transparent" />
         <div className="absolute inset-x-4 bottom-3 flex items-end justify-between gap-3 text-white">
           <div>
             <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-white/60">
-              Representation space
+              {media.label}
             </p>
-            <p className="mt-1 text-sm font-medium">
-              Language mapped as relationships
-            </p>
+            <p className="mt-1 text-sm font-medium">{media.caption}</p>
           </div>
-          <span className="rounded-lg border border-white/15 bg-white/10 px-2 py-1 font-mono text-[8px] uppercase tracking-[0.12em] text-white/70 backdrop-blur">
-            Word2vec · t-SNE
+          <span className="shrink-0 rounded-lg border border-white/15 bg-white/10 px-2 py-1 font-mono text-[8px] uppercase tracking-[0.12em] text-white/70 backdrop-blur">
+            {media.tag}
           </span>
         </div>
       </div>
@@ -158,13 +186,11 @@ function ResearchCard({ item, index }: { item: Item; index: number }) {
             <Icon size={19} />
           </span>
           <span className="rounded-xl border border-rule bg-raised px-3 py-2 font-mono text-[9px] uppercase tracking-[0.14em] text-signal">
-            {index === 0 ? "Submitted" : "In progress"}
+            {status}
           </span>
         </div>
 
-        <p className="section-kicker mt-7">
-          {index === 0 ? "Thesis research" : "Journal research"}
-        </p>
+        <p className="section-kicker mt-7">{kind}</p>
         <h3 className="mt-2 text-xl font-semibold tracking-[-0.035em] text-ink">
           {item.title}
         </h3>
@@ -181,15 +207,21 @@ function ResearchCard({ item, index }: { item: Item; index: number }) {
           ))}
         </ul>
         <ProofLinks item={item} />
-        <a
-          href="https://commons.wikimedia.org/wiki/File:2016_02_mini_embedding.png"
-          target="_blank"
-          rel="noreferrer"
-          className="mt-5 inline-flex items-center gap-1.5 font-mono text-[8px] uppercase tracking-[0.12em] text-muted transition-colors hover:text-ink"
-        >
-          Visual: Ewulczyn (WMF), CC BY-SA 4.0
-          <ArrowUpRight size={10} />
-        </a>
+        {media.credit && media.creditUrl ? (
+          <a
+            href={media.creditUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-5 inline-flex items-center gap-1.5 font-mono text-[8px] uppercase tracking-[0.12em] text-muted transition-colors hover:text-ink"
+          >
+            {media.credit}
+            <ArrowUpRight size={10} />
+          </a>
+        ) : media.credit ? (
+          <p className="mt-5 font-mono text-[8px] uppercase tracking-[0.12em] text-muted">
+            {media.credit}
+          </p>
+        ) : null}
       </div>
     </Surface>
   );
@@ -246,7 +278,12 @@ export function Achievements({ highlights, scholarUrl }: Props) {
               <ArrowUpRight size={11} />
             </a>
           </div>
-          <SectionMotion variant="cascade" className="grid gap-4 lg:grid-cols-2">
+          <SectionMotion
+            variant="cascade"
+            className={`grid gap-4 ${
+              highlights.publications.length >= 3 ? "md:grid-cols-2 xl:grid-cols-3" : "lg:grid-cols-2"
+            }`}
+          >
             {highlights.publications.map((item, index) => (
               <ResearchCard
                 key={`${item.title}-${item.date}`}

@@ -2,7 +2,7 @@
   "profile": {
     "name": "Khandoker Sefayet Alam",
     "title": "AI/ML Engineer • NLP Researcher • Full-Stack Developer",
-    "tagline": "2 ongoing NLP research projects • 2× ICPC Dhaka Regionalist • B.Sc. in CSE",
+    "tagline": "3 active AI research projects (NLP + multimodal) • 2× ICPC Dhaka Regionalist • B.Sc. in CSE",
     "location": "🇧🇩 Rajshahi, Bangladesh",
     "email": "sefayetalam14@gmail.com",
     "images": {
@@ -206,9 +206,33 @@
     "publications": [
       {
         "logo": "/logos/IEEE.png",
+        "title": "MAGE-SBF: Leakage-Audited Similarity-Boosted Fusion for Out-of-Context Image-Caption Detection",
+        "org": "Submitted to ICCIT 2026 — 29th International Conference on Computer and Information Technology (IEEE Bangladesh Section)",
+        "date": "Under review · 2026",
+        "status": "Submitted",
+        "kind": "Conference paper · Multimodal AI",
+        "bullets": [
+          "Fully offline, leakage-audited system that flags real images paired with misleading captions — no web retrieval or API calls",
+          "88 dense geometric similarity features from CLIP ViT-L/14 embeddings, fused by a stacked tabular ensemble (Logistic Regression, HistGBDT, ExtraTrees, Random Forest, MLP)",
+          "AUROC 87.43% on NewsCLIPpings and 84.21% on MMFakeBench after auditing out leaked forgery-label metadata",
+          "Submission is under review—not presented as accepted or published"
+        ],
+        "media": {
+          "src": "/research/mage-sbf-pipeline.jpg",
+          "label": "MAGE-SBF pipeline",
+          "caption": "Image + caption → CLIP → stacked fusion → OOC score",
+          "tag": "CLIP ViT-L/14",
+          "credit": "Figure: MAGE-SBF manuscript"
+        },
+        "links": []
+      },
+      {
+        "logo": "/logos/IEEE.png",
         "title": "NLP Thesis — Sarcasm Detection",
         "org": "Manuscript submitted to IEEE Access",
         "date": "Under review · 2026",
+        "status": "Submitted",
+        "kind": "Thesis research",
         "bullets": [
           "Undergraduate thesis focused on sarcasm detection using natural language processing",
           "Submitted to IEEE Access; targeting a Q2 journal outcome",
@@ -220,6 +244,8 @@
         "title": "Ongoing NLP Journal Research",
         "org": "Research manuscript in progress",
         "date": "Ongoing · 2026",
+        "status": "In progress",
+        "kind": "Journal research",
         "bullets": [
           "Second active natural language processing research project",
           "Manuscript is being developed with a Q1 journal target",

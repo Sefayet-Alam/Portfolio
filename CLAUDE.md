@@ -102,6 +102,14 @@ Experience / Education specifics:
 - The résumé is `public/resume.pdf` (linked via `profile.links.resume`). It is the
   source for experience/education content — update the PDF and the JSON together.
 
+Research (`highlights.publications`) renders as cards in the Achievements section
+and on `/publication`. Optional per-entry fields: `status` (badge, e.g. "Submitted"),
+`kind` (kicker, e.g. "Conference paper · Multimodal AI") and `media`
+(`{src, label, caption, tag, credit?, creditUrl?}`; defaults to the word2vec plot).
+Never present a submission as accepted/published until it is — e.g. MAGE-SBF is
+**submitted to ICCIT 2026** (29th ICCIT, IEEE Bangladesh Section, 18–20 Dec 2026,
+Cox's Bazar), under review. Its figure is `public/research/mage-sbf-pipeline.jpg`.
+
 Navbar labels (`src/components/layout/Header.tsx`, `nav` array) are deliberately
 formal: About, Experience, Education, Skills, Projects, Achievements, Certifications.
 Each `id` must match a section `id`. Section kickers are numbered 01–06 in page
