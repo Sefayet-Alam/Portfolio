@@ -90,7 +90,7 @@ function ProjectCard({
           </div>
 
           <ul className="mt-5 space-y-2.5 text-sm leading-6 text-muted">
-            {project.bullets.slice(0, featured ? 3 : 2).map((bullet) => (
+            {project.bullets.slice(0, featured ? 6 : 2).map((bullet) => (
               <li key={bullet} className="flex gap-3">
                 <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-signal" />
                 <span>{bullet}</span>

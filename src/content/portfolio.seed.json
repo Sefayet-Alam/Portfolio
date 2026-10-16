@@ -238,6 +238,15 @@
           "Submitted to IEEE Access; targeting a Q2 journal outcome",
           "Submission is under review—not presented as accepted or published"
         ],
+        "media": {
+          "src": "/research/nlp-word-tiles.jpg",
+          "label": "Reading between the lines",
+          "caption": "What the words say vs. what they mean",
+          "tag": "Sarcasm · NLP",
+          "credit": "Visual: Teresa Berndtsson / Better Images of AI, CC BY 4.0",
+          "creditUrl": "https://commons.wikimedia.org/wiki/File:Letter_Word_Text_Taxonomy_by_Teresa_Berndtsson.jpg",
+          "position": "50% 34%"
+        },
         "links": []
       },
       {
@@ -251,6 +260,15 @@
           "Manuscript is being developed with a Q1 journal target",
           "Title and venue will be added when ready for public disclosure"
         ],
+        "media": {
+          "src": "/research/nlp-word-embeddings.jpg",
+          "label": "Representation space",
+          "caption": "Words clustered by meaning and role",
+          "tag": "Embeddings · t-SNE",
+          "credit": "Visual: Siobhán Grayson, CC BY-SA 4.0",
+          "creditUrl": "https://commons.wikimedia.org/wiki/File:T-SNE_visualisation_of_word_embeddings_generated_using_19th_century_literature.png",
+          "position": "50% 45%"
+        },
         "links": []
       }
     ]
@@ -268,7 +286,10 @@
       "bullets": [
         "Led a multi-agent crop-planning system grounded in farm profiles, BARC data, and live weather",
         "Built explainable crop ranking, seasonal plans, financial projections, and what-if simulations",
-        "Persists farmer context and semantic memory while deterministic gates prevent incomplete recommendations"
+        "Persists farmer context and semantic memory while deterministic gates prevent incomplete recommendations",
+        "Classifies uploaded leaf photos with an on-device quantized TFLite disease model, returning label, confidence, and alternatives",
+        "Answers in Bengali (including Banglish input) and transcribes voice notes, so low-literacy farmers can use it",
+        "Runs a background weather scan that checks saved season plans against Open-Meteo forecasts and raises proactive alerts"
       ],
       "repo": "https://github.com/Sefayet-Alam/UNKNOWNS_AgriSense",
       "live": "https://agrisense-web-nine.vercel.app/"

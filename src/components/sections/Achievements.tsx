@@ -24,6 +24,8 @@ type ResearchMedia = {
   tag: string;
   credit?: string;
   creditUrl?: string;
+  /** CSS object-position for the crop, e.g. "50% 30%". */
+  position?: string;
 };
 
 type Item = {
@@ -160,6 +162,7 @@ function ResearchCard({ item, index }: { item: Item; index: number }) {
           alt=""
           fill
           sizes="(max-width: 1024px) 100vw, 33vw"
+          style={media.position ? { objectPosition: media.position } : undefined}
           className={`object-cover transition-transform duration-300 group-hover/media:scale-[1.035] ${
             isDefaultMedia
               ? `opacity-70 mix-blend-screen ${index % 2 === 0 ? "object-[50%_42%]" : "object-[58%_62%]"}`

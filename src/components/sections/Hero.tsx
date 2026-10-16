@@ -148,9 +148,15 @@ export function Hero({ profile }: HeroProps) {
             </MagneticAction>
 
             <MagneticAction>
-              <ActionLink href={gmail} variant="secondary" external>
+              <ActionLink
+                href={gmail}
+                variant="secondary"
+                external
+                label={`Email ${profile.email}`}
+                className="normal-case! tracking-[0.01em]! text-[0.8rem]!"
+              >
                 <Mail size={15} />
-                Email me
+                {profile.email}
               </ActionLink>
             </MagneticAction>
 
